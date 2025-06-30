@@ -7,13 +7,24 @@
 <PageTitle>Home</PageTitle>
 
 <MudPaper Class="d-flex justify-center" Style="min-height: 100vh; width: 100vw;" Elevation="0">
-	<MudPaper Width="70%" Height="1000px" Square="true" Elevation="0" Style="height: 100%; overflow: scroll;">
+	<MudPaper Width="60%" Height="1000px" Square="true" Elevation="0" Style="height: 100%; overflow: scroll;">
 		<MudGrid>
 			@foreach (var movie in trendingMovies)
 			{
 				<MudItem xs="3">
-					<img src="@GetImageUrl(movie.PosterPath)" />
-					<p>@movie.Title</p>
+					<MudPaper Class="d-flex align-center justify-center mud-width-full mt-8 movie-poster-container" Elevation="3">
+						<MudImage 		
+							Class="movie-poster"
+							Src="@GetImageUrl(movie.PosterPath)"
+								  Alt="Movie Poster"
+								  Style="max-height: 100%; max-width: 100%; object-fit: cover;">
+
+						</MudImage>
+						<div class="movie-description">
+							<h5>@movie.Title</h5>
+							<p>@movie.Overview</p>
+						</div>
+					</MudPaper>
 				</MudItem>
 			}
 		</MudGrid>
