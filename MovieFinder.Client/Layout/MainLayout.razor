@@ -1,3 +1,45 @@
 ﻿@inherits LayoutComponentBase
+<MudThemeProvider Theme="@MovieTheme" IsDarkMode="true"/>
+<MudPopoverProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />
 
-@Body
+
+<MudLayout>
+    <MudMainContent>
+        @Body
+    </MudMainContent>
+</MudLayout>
+
+@code {
+    public static MudTheme MovieTheme = new MudTheme()
+		{
+			PaletteDark =
+			{
+				Black = "#27272F",
+				Background = "#0f0e17",
+				BackgroundGray = "#171E24",
+				Surface = "#1C2A35",
+				DrawerBackground = "#27272F",
+                DrawerText = "rgba(255,255,255, 0.50)",
+				DrawerIcon = "rgba(255,255,255, 0.50)",
+				AppbarBackground = "#27272F",
+				AppbarText = "rgba(255,255,255, 0.70)",
+				TextPrimary = "rgba(255,255,255, 0.70)",
+				TextSecondary = "rgba(255,255,255, 0.50)",
+				ActionDefault = "#ADADB1",
+				ActionDisabled = "rgba(255,255,255, 0.26)",
+				ActionDisabledBackground = "rgba(255,255,255, 0.12)",
+				Divider = "rgba(240, 173, 78, 1)",
+				DividerLight = "rgba(255,255,255, 0.06)",
+                TableLines = "rgba(255,255,255, 0.12)",
+				LinesDefault = "rgba(255,255,255, 0.12)",
+				LinesInputs = "rgba(255,255,255, 0.3)",
+				TextDisabled = "rgba(255,255,255, 0.2)",
+				Error = "#FF621C",
+				Primary = "#ff8906",
+				PrimaryContrastText = "#423030",
+				Secondary = "#FFCC33"
+			}
+		};
+}

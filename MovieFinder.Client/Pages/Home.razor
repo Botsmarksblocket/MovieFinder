@@ -1,7 +1,44 @@
-﻿@page "/"
+﻿@using Services
+@using Models
+@inject ITMDBService TMDB
+@inject ISnackbar Snackbar
+@page "/"
 
 <PageTitle>Home</PageTitle>
 
-<h1>Hello, world!</h1>
+<MudPaper Class="d-flex justify-center" Style="min-height: 100vh; width: 100vw;" Elevation="0">
+	<MudPaper Width="70%" Height="1000px" Square="true" Elevation="0" Style="height: 100%; overflow: scroll;">
+		<MudGrid>
+			@foreach (var movie in trendingMovies)
+			{
+				<MudItem xs="3">
+					<img src="@GetImageUrl(movie.PosterPath)" />
+					<p>@movie.Title</p>
+				</MudItem>
+			}
+		</MudGrid>
+	</MudPaper>
+</MudPaper>
 
-Welcome to your new app.
+@code {
+	private List<Movie> trendingMovies = new();
+
+	protected override async Task OnInitializedAsync()
+	{
+		try
+		{
+			var reponse = await TMDB.GetTrendingMoviesAsync();
+			trendingMovies = reponse ?? new List<Movie>();
+			StateHasChanged();
+		}
+
+		catch
+		{
+			Snackbar.Add($"Something went wrong when trying to retrieve the movies.", Severity.Error);
+		}
+	}
+	private string GetImageUrl(string posterPath)
+	{
+		return $"https://image.tmdb.org/t/p/w500{posterPath}";
+	}
+}
