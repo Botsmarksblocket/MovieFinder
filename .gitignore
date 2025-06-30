@@ -64,3 +64,6 @@ nunit-*.xml
 *.suo
 *.userosscache
 *.sln.docstates
+
+# Appsettings
+appsettings.Development.json
