@@ -66,4 +66,4 @@ nunit-*.xml
 *.sln.docstates
 
 # Appsettings
-wwwroot/appsettings.Development.json
+**/appsettings.Development.json

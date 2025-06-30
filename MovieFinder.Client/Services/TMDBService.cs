@@ -10,11 +10,12 @@ namespace MovieFinder.Client.Services
     public class TMDBService : ITMDBService
     {
         private HttpClient _httpClient { get; }
-        private readonly string _apiKey = "d5d8dd2a24bb984ea8c1b1f884b38f44";
+        private readonly string _apiKey;
 
-        public TMDBService(HttpClient httpClient)
+        public TMDBService(HttpClient httpClient, IConfiguration config)
         {
             _httpClient = httpClient;
+            _apiKey = config["TMDB:ApiKey"];
         }
 
         public async Task<List<Movie>> GetTrendingMoviesAsync()
