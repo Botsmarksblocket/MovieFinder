@@ -13,12 +13,22 @@
 			{
 				<MudItem xs="3">
 					<MudPaper Class="d-flex align-center justify-center mud-width-full mt-8 movie-poster-container" Elevation="3">
-						<MudImage 		
-							Class="movie-poster"
-							Src="@GetImageUrl(movie.PosterPath)"
-								  Alt="Movie Poster"
-								  Style="max-height: 100%; max-width: 100%; object-fit: cover;">
+						<div class="movie-rating">
+							@if (movie.Rating != 0)
+							{
+								<p>
+									@String.Format("{0:.#}", movie.Rating) / 10
+								</p>
+							}
+							else
+							{
+								<p>Rating not found</p>
+							}
 
+						</div>
+						<MudImage Class="movie-poster"
+								  Src="@GetImageUrl(movie.PosterPath)"
+								  Alt="Movie Poster">
 						</MudImage>
 						<div class="movie-description">
 							<h5>@movie.Title</h5>
@@ -52,4 +62,5 @@
 	{
 		return $"https://image.tmdb.org/t/p/w500{posterPath}";
 	}
+
 }
