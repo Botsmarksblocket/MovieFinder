@@ -11,18 +11,16 @@
 	<MudPaper Width="70%" Square="true" Elevation="0">
 
 		<MudPaper>
-
 			<MudSelect T="int"
+					   Clearable="true"
 					   Label="Select genres"
-					   MultiSelection="true"					   
-					   SelectedValuesChanged="OnGenreSelectionChanged"
-				>
+					   MultiSelection="true"
+					   SelectedValuesChanged="OnGenreSelectionChanged">
 				@foreach (var genre in _genres)
 				{
 					<MudSelectItem Value="@genre.Id">@genre.Name</MudSelectItem>
 				}
 			</MudSelect>
-
 		</MudPaper>
 		<MudGrid>
 			@foreach (var movie in _allMovies)
@@ -44,7 +42,8 @@
 						</div>
 						<MudImage Class="movie-poster"
 								  Src="@GetImageUrl(movie.PosterPath)"
-								  Alt="Movie Poster">
+								  Alt="Movie Poster"
+								  FallbackSrc="/Images/notfound.png">
 						</MudImage>
 						<div class="movie-description">
 							<h3>@movie.Title</h3>
@@ -94,7 +93,9 @@
 
 	private string GetImageUrl(string posterPath)
 	{
-		return $"https://image.tmdb.org/t/p/w500{posterPath}";
+		return string.IsNullOrWhiteSpace(posterPath)
+		? ""
+		: $"https://image.tmdb.org/t/p/w500{posterPath}";
 	}
 
 }
