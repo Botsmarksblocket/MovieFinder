@@ -7,18 +7,23 @@
 <PageTitle>Home</PageTitle>
 
 <MudPaper Class="d-flex justify-center" Style="min-height: 100vh; width: 100vw;" Elevation="0">
-	<MudPaper Width="60%" Height="1000px" Square="true" Elevation="0" Style="height: 100%; overflow: scroll;">
+	<MudPaper Width="70%" Square="true" Elevation="0">
+		<MudPaper>
+			<p>Meme</p>
+
+
+		</MudPaper>
 		<MudGrid>
 			@foreach (var movie in trendingMovies)
 			{
-				<MudItem xs="3">
-					<MudPaper Class="d-flex align-center justify-center mud-width-full mt-8 movie-poster-container" Elevation="3">
+				<MudItem xs="12" sm="6" md="4" lg="3">
+					<MudPaper Class="d-flex align-center justify-center mud-width-full mt-7 movie-poster-container" Elevation="3">
 						<div class="movie-rating">
 							@if (movie.Rating != 0)
 							{
-								<p>
+								<h4>
 									@String.Format("{0:.#}", movie.Rating) / 10
-								</p>
+								</h4>
 							}
 							else
 							{
@@ -31,8 +36,8 @@
 								  Alt="Movie Poster">
 						</MudImage>
 						<div class="movie-description">
-							<h5>@movie.Title</h5>
-							<p>@movie.Overview</p>
+							<h3>@movie.Title</h3>
+							<h4>@movie.Overview</h4>
 						</div>
 					</MudPaper>
 				</MudItem>
