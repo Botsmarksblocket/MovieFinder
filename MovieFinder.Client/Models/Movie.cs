@@ -5,8 +5,13 @@ namespace MovieFinder.Client.Models
     public class Movie
     {
         public int Id { get; set; }
+        [JsonPropertyName("title")]
         public string Title { get; set; }
 
+        [JsonPropertyName("vote_average")]
+        public double Rating { get; set; }
+
+        [JsonPropertyName("overview")]
         public string Overview { get; set; }
         [JsonPropertyName("poster_path")]
         public string PosterPath { get; set; }
