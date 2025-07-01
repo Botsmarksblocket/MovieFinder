@@ -12,7 +12,11 @@
 
 		<MudPaper>
 
-			<MudSelect T="int" Label="Select genre" MultiSelection="true">
+			<MudSelect T="int"
+					   Label="Select genres"
+					   MultiSelection="true"					   
+					   SelectedValuesChanged="OnGenreSelectionChanged"
+				>
 				@foreach (var genre in _genres)
 				{
 					<MudSelectItem Value="@genre.Id">@genre.Name</MudSelectItem>
@@ -54,7 +58,6 @@
 </MudPaper>
 
 @code {
-	private int value { get; set; }
 	private List<Movie> _allMovies = new();
 	private List<Genre> _genres = new();
 	private List<int> _selectedGenreIds = new();
