@@ -12,7 +12,6 @@ namespace MovieFinder.Client.Services
         Task<List<Movie>> GetTrendingMoviesAsync();
         Task<List<Genre>> GetGenresAsync();
         Task<List<Movie>> GetFilteredMoviesAsync(QueryParameters parameters);
-        Task<List<Movie>> GetMovieByGenreAsync(List<int> genreIds);
     }
     public class TMDBService : ITMDBService
     {
@@ -62,15 +61,6 @@ namespace MovieFinder.Client.Services
 
             var response = await _httpClient.GetFromJsonAsync<SearchResult>(url);
 
-            return response?.Results ?? new List<Movie>();
-        }
-
-        //Retrieves all the movies with the selected genres
-        public async Task<List<Movie>> GetMovieByGenreAsync(List<int> genreIds)
-        {
-            var genresParameters = string.Join(",", genreIds);
-            var url = $"https://api.themoviedb.org/3/discover/movie?api_key={_apiKey}&with_genres={genresParameters}";
-            var response = await _httpClient.GetFromJsonAsync<SearchResult>(url);
             return response?.Results ?? new List<Movie>();
         }
     }
