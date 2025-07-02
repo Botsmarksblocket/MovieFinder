@@ -10,24 +10,41 @@
 <MudPaper Class="d-flex justify-center" Style="min-height: 100vh; width: 100vw;" Elevation="0">
 	<MudPaper Width="70%" Square="true" Elevation="0">
 
-		<MudPaper Elevation="0">
-			<MudSelect MultiSelectionTextFunc="@(new Func<List<string>, string>(GetMultiSelectionText))"
-					   T="int"
-					   Clearable="true"
-					   Label="Select genres"
-					   MultiSelection="true"
-					   SelectedValuesChanged="OnGenreSelectionChanged">
-				@foreach (var genre in _genres)
-				{
-					<MudSelectItem Value="@genre.Id">@genre.Name</MudSelectItem>
-				}
-			</MudSelect>
-		</MudPaper>
+		<MudGrid>
+
+
+			<MudItem xs="6">
+				<MudSelect MultiSelectionTextFunc="@(new Func<List<string>, string>(GetMultiSelectionText))"
+				T="int"
+				Clearable="true"
+				Label="Select genres"
+				MultiSelection="true"
+				SelectedValuesChanged="OnGenreSelectionChanged">
+					@foreach (var genre in _genres)
+					{
+						<MudSelectItem Value="@genre.Id">@genre.Name</MudSelectItem>
+					}
+				</MudSelect>
+			</MudItem>
+
+			<MudItem xs="6">
+				<MudSlider @bind-Value="_selectedRating"
+				Min="0"
+				Max="10"
+				Step="0.1"
+				Immediate="true"
+				Size="Size.Medium">
+						Minimum rating: @_selectedRating.ToString()
+				</MudSlider>
+			</MudItem>
+
+		</MudGrid>
+
 		<MudGrid>
 			@foreach (var movie in _allMovies)
 			{
 				<MudItem xs="12" sm="6" md="4" lg="3">
-					<MudPaper Class="d-flex align-center justify-center mud-width-full mt-7 movie-poster-container" Elevation="3">
+					<MudPaper Class="d-flex align-center justify-center mt-7 movie-poster-container" Elevation="3">
 						<div class="movie-rating">
 							@if (movie.Rating != 0)
 							{
@@ -35,6 +52,7 @@
 									@String.Format("{0:.#}", movie.Rating) / 10
 								</h4>
 							}
+
 							else
 							{
 								<p>Rating not found</p>
@@ -42,10 +60,11 @@
 
 						</div>
 						<MudImage Class="movie-poster"
-								  Src="@GetImageUrl(movie.PosterPath)"
-								  Alt="Movie Poster"
-								  FallbackSrc="/Images/notfound.png">
+						Src="@GetImageUrl(movie.PosterPath)"
+						Alt="Movie Poster"
+						FallbackSrc="/Images/notfound.png">
 						</MudImage>
+
 						<div class="movie-description">
 							<h3>@movie.Title</h3>
 
@@ -72,6 +91,7 @@
 	private List<Genre> _genres = new();
 	private List<int> _selectedGenreIds = new();
 	private Options options = new();
+	private double _selectedRating = 0;
 
 	//Loads the genres and trending movies upon page initialization
 	protected override async Task OnInitializedAsync()
@@ -88,27 +108,31 @@
 		}
 	}
 
+	private async Task OnFilterChanged()
+	{
+		if (_selectedGenreIds.Count == 0)
+		{
+			_allMovies = await TMDB.GetTrendingMoviesAsync();
+		}
+
+		else
+		{
+			_allMovies = await TMDB.GetFilteredMoviesAsync(_selectedGenreIds);
+		}
+	}
+
 	//Updates the movies displayed when choosing genres. If no genres are selected the trending movies gets shown instead
 	private async Task OnGenreSelectionChanged(IEnumerable<int> newSelection)
 	{
 		_selectedGenreIds = newSelection.ToList();
-
-		if (_selectedGenreIds.Count > 0)
-		{
-			_allMovies = await TMDB.GetMovieByGenreAsync(_selectedGenreIds);
-		}
-		else
-		{
-			_allMovies = await TMDB.GetTrendingMoviesAsync();
-		}
-		StateHasChanged();
+		await OnFilterChanged();
 	}
 
 	//Display logic for the multiselection text for genres
 	private string GetMultiSelectionText(List<string> selectedValues)
-	{		
+	{
 		int count = selectedValues.Count();
-		
+
 		if (count == 1)
 		{
 			return "1 genre selected";
