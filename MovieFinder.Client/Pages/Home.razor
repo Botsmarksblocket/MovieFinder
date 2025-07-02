@@ -32,9 +32,9 @@
 				Min="0"
 				Max="10"
 				Step="0.1"
-				Immediate="true"
+				Immediate="false"
 				Size="Size.Medium">
-						Minimum rating: @_selectedRating.ToString()
+					Minimum rating: @_selectedRating.ToString()
 				</MudSlider>
 			</MudItem>
 
@@ -89,8 +89,8 @@
 @code {
 	private List<Movie> _allMovies = new();
 	private List<Genre> _genres = new();
-	private List<int> _selectedGenreIds = new();
-	private Options options = new();
+	private Options _options = new();
+	private QueryParameters _parameters = new();
 	private double _selectedRating = 0;
 
 	//Loads the genres and trending movies upon page initialization
@@ -109,22 +109,22 @@
 	}
 
 	private async Task OnFilterChanged()
-	{
-		if (_selectedGenreIds.Count == 0)
+	{		
+		if (_parameters.SelectedGenreIds.Count == 0)
 		{
 			_allMovies = await TMDB.GetTrendingMoviesAsync();
 		}
 
 		else
 		{
-			_allMovies = await TMDB.GetFilteredMoviesAsync(_selectedGenreIds);
+			_allMovies = await TMDB.GetFilteredMoviesAsync(_parameters);
 		}
 	}
 
 	//Updates the movies displayed when choosing genres. If no genres are selected the trending movies gets shown instead
 	private async Task OnGenreSelectionChanged(IEnumerable<int> newSelection)
 	{
-		_selectedGenreIds = newSelection.ToList();
+		_parameters.SelectedGenreIds = newSelection.ToList();
 		await OnFilterChanged();
 	}
 
