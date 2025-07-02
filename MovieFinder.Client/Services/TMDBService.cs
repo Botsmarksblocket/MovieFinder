@@ -1,4 +1,5 @@
-﻿using System.Net.Http.Json;
+﻿using System.Globalization;
+using System.Net.Http.Json;
 using System.Web;
 using Microsoft.AspNetCore.WebUtilities;
 using MovieFinder.Client.Models;
@@ -46,21 +47,22 @@ namespace MovieFinder.Client.Services
 
             var queryParameters = new Dictionary<string, string>
             {
-                ["api_key"] = _apiKey
+                ["api_key"] = _apiKey,
+                ["sort_by"] = "vote_count.asc"
             };
 
-            if (parameters.SelectedGenreIds.Count > 0)
+            if (parameters.SelectedGenreIds != null && parameters.SelectedGenreIds.Count() > 0)
             {
-
                 queryParameters["with_genres"] = string.Join(",", parameters.SelectedGenreIds);
             }
+
+            queryParameters["vote_average.gte"] = parameters.MinimumRating.ToString(CultureInfo.InvariantCulture);
 
             var url = QueryHelpers.AddQueryString(baseUrl, queryParameters);
 
             var response = await _httpClient.GetFromJsonAsync<SearchResult>(url);
 
             return response?.Results ?? new List<Movie>();
-
         }
 
         //Retrieves all the movies with the selected genres

@@ -28,13 +28,15 @@
 			</MudItem>
 
 			<MudItem xs="6">
-				<MudSlider @bind-Value="_selectedRating"
+				<MudSlider
+				T="double"
+				ValueChanged="OnMinimumRatingChanged"
 				Min="0"
 				Max="10"
 				Step="0.1"
 				Immediate="false"
 				Size="Size.Medium">
-					Minimum rating: @_selectedRating.ToString()
+					Minimum rating: @_minimumRating.ToString()
 				</MudSlider>
 			</MudItem>
 
@@ -91,7 +93,7 @@
 	private List<Genre> _genres = new();
 	private Options _options = new();
 	private QueryParameters _parameters = new();
-	private double _selectedRating = 0;
+	private double _minimumRating = 0;
 
 	//Loads the genres and trending movies upon page initialization
 	protected override async Task OnInitializedAsync()
@@ -109,16 +111,14 @@
 	}
 
 	private async Task OnFilterChanged()
-	{		
-		if (_parameters.SelectedGenreIds.Count == 0)
-		{
-			_allMovies = await TMDB.GetTrendingMoviesAsync();
-		}
+	{
+		_allMovies = await TMDB.GetFilteredMoviesAsync(_parameters);
+	}
 
-		else
-		{
-			_allMovies = await TMDB.GetFilteredMoviesAsync(_parameters);
-		}
+	private async Task OnMinimumRatingChanged(double minimumRating)
+	{
+		_parameters.MinimumRating = minimumRating;
+		await OnFilterChanged();
 	}
 
 	//Updates the movies displayed when choosing genres. If no genres are selected the trending movies gets shown instead
