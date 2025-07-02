@@ -1,4 +1,7 @@
-﻿using System.Net.Http.Json;
+﻿using System.Globalization;
+using System.Net.Http.Json;
+using System.Web;
+using Microsoft.AspNetCore.WebUtilities;
 using MovieFinder.Client.Models;
 using static System.Net.WebRequestMethods;
 
@@ -8,7 +11,7 @@ namespace MovieFinder.Client.Services
     {
         Task<List<Movie>> GetTrendingMoviesAsync();
         Task<List<Genre>> GetGenresAsync();
-        Task<List<Movie>> GetMovieByGenreAsync(List<int> genreIds);
+        Task<List<Movie>> GetFilteredMoviesAsync(QueryParameters parameters);
     }
     public class TMDBService : ITMDBService
     {
@@ -37,12 +40,27 @@ namespace MovieFinder.Client.Services
             return response?.Genres ?? new List<Genre>();
         }
 
-        //Retrieves all the movies with the selected genres
-        public async Task<List<Movie>> GetMovieByGenreAsync(List<int> genreIds)
+        public async Task<List<Movie>> GetFilteredMoviesAsync(QueryParameters parameters)
         {
-            var genresParameters = string.Join(",", genreIds);
-            var url = $"https://api.themoviedb.org/3/discover/movie?api_key={_apiKey}&with_genres={genresParameters}";
+            var baseUrl = $"https://api.themoviedb.org/3/discover/movie";
+
+            var queryParameters = new Dictionary<string, string>
+            {
+                ["api_key"] = _apiKey,
+                ["vote_count.gte"] = "50",
+            };
+
+            if (parameters.SelectedGenreIds != null && parameters.SelectedGenreIds.Count() > 0)
+            {
+                queryParameters["with_genres"] = string.Join(",", parameters.SelectedGenreIds);
+            }
+
+            queryParameters["vote_average.gte"] = parameters.MinimumRating.ToString(CultureInfo.InvariantCulture);
+
+            var url = QueryHelpers.AddQueryString(baseUrl, queryParameters);
+
             var response = await _httpClient.GetFromJsonAsync<SearchResult>(url);
+
             return response?.Results ?? new List<Movie>();
         }
     }

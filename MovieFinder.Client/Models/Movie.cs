@@ -12,7 +12,7 @@ namespace MovieFinder.Client.Models
         public double Rating { get; set; }
 
         [JsonPropertyName("overview")]
-        public string Overview { get; set; }
+        public string Description { get; set; }
         [JsonPropertyName("poster_path")]
         public string PosterPath { get; set; }
     }
