@@ -48,7 +48,7 @@ namespace MovieFinder.Client.Services
             var queryParameters = new Dictionary<string, string>
             {
                 ["api_key"] = _apiKey,
-                ["sort_by"] = "vote_count.asc"
+                ["vote_count.gte"] = "50",
             };
 
             if (parameters.SelectedGenreIds != null && parameters.SelectedGenreIds.Count() > 0)

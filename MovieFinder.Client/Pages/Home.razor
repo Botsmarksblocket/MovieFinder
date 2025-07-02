@@ -30,13 +30,14 @@
 			<MudItem xs="6">
 				<MudSlider
 				T="double"
+				Value="@_parameters.MinimumRating"
 				ValueChanged="OnMinimumRatingChanged"
 				Min="0"
 				Max="10"
 				Step="0.1"
 				Immediate="false"
 				Size="Size.Medium">
-					Minimum rating: @_minimumRating.ToString()
+					Minimum rating: @_parameters.MinimumRating.ToString()
 				</MudSlider>
 			</MudItem>
 
@@ -93,7 +94,6 @@
 	private List<Genre> _genres = new();
 	private Options _options = new();
 	private QueryParameters _parameters = new();
-	private double _minimumRating = 0;
 
 	//Loads the genres and trending movies upon page initialization
 	protected override async Task OnInitializedAsync()
