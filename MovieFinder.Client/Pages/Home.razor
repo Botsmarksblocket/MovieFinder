@@ -10,12 +10,13 @@
 <MudPaper Class="d-flex justify-center" Style="min-height: 100vh; width: 100vw;" Elevation="0">
 	<MudPaper Width="70%" Square="true" Elevation="0">
 
-		<MudPaper>
-			<MudSelect T="int"
-			Clearable="true"
-			Label="Select genres"
-			MultiSelection="true"
-			SelectedValuesChanged="OnGenreSelectionChanged">
+		<MudPaper Elevation="0">
+			<MudSelect MultiSelectionTextFunc="@(new Func<List<string>, string>(GetMultiSelectionText))"
+					   T="int"
+					   Clearable="true"
+					   Label="Select genres"
+					   MultiSelection="true"
+					   SelectedValuesChanged="OnGenreSelectionChanged">
 				@foreach (var genre in _genres)
 				{
 					<MudSelectItem Value="@genre.Id">@genre.Name</MudSelectItem>
@@ -41,9 +42,9 @@
 
 						</div>
 						<MudImage Class="movie-poster"
-						Src="@GetImageUrl(movie.PosterPath)"
-						Alt="Movie Poster"
-						FallbackSrc="/Images/notfound.png">
+								  Src="@GetImageUrl(movie.PosterPath)"
+								  Alt="Movie Poster"
+								  FallbackSrc="/Images/notfound.png">
 						</MudImage>
 						<div class="movie-description">
 							<h3>@movie.Title</h3>
@@ -52,7 +53,7 @@
 
 							@if (@movie.Description.Length > 500)
 							{
-								<h4>@movie.Description.Substring(0,500) ...</h4>
+								<h4>@movie.Description.Substring(0, 500) ...</h4>
 							}
 							else
 							{
@@ -72,6 +73,22 @@
 	private List<int> _selectedGenreIds = new();
 	private Options options = new();
 
+	//Loads the genres and trending movies upon page initialization
+	protected override async Task OnInitializedAsync()
+	{
+		try
+		{
+			_genres = await TMDB.GetGenresAsync();
+			_allMovies = await TMDB.GetTrendingMoviesAsync();
+		}
+
+		catch
+		{
+			Snackbar.Add($"Something went wrong when trying to retrieve the movies.", Severity.Error);
+		}
+	}
+
+	//Updates the movies displayed when choosing genres. If no genres are selected the trending movies gets shown instead
 	private async Task OnGenreSelectionChanged(IEnumerable<int> newSelection)
 	{
 		_selectedGenreIds = newSelection.ToList();
@@ -87,17 +104,18 @@
 		StateHasChanged();
 	}
 
-	protected override async Task OnInitializedAsync()
-	{
-		try
+	//Display logic for the multiselection text for genres
+	private string GetMultiSelectionText(List<string> selectedValues)
+	{		
+		int count = selectedValues.Count();
+		
+		if (count == 1)
 		{
-			_genres = await TMDB.GetGenresAsync();
-			_allMovies = await TMDB.GetTrendingMoviesAsync();
+			return "1 genre selected";
 		}
-
-		catch
+		else
 		{
-			Snackbar.Add($"Something went wrong when trying to retrieve the movies.", Severity.Error);
+			return $"{count} genres selected";
 		}
 	}
 
@@ -107,5 +125,4 @@
 		? ""
 		: $"https://image.tmdb.org/t/p/w500{posterPath}";
 	}
-
 }
