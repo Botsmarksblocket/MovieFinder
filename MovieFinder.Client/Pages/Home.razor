@@ -12,10 +12,10 @@
 
 		<MudPaper>
 			<MudSelect T="int"
-					   Clearable="true"
-					   Label="Select genres"
-					   MultiSelection="true"
-					   SelectedValuesChanged="OnGenreSelectionChanged">
+			Clearable="true"
+			Label="Select genres"
+			MultiSelection="true"
+			SelectedValuesChanged="OnGenreSelectionChanged">
 				@foreach (var genre in _genres)
 				{
 					<MudSelectItem Value="@genre.Id">@genre.Name</MudSelectItem>
@@ -41,13 +41,23 @@
 
 						</div>
 						<MudImage Class="movie-poster"
-								  Src="@GetImageUrl(movie.PosterPath)"
-								  Alt="Movie Poster"
-								  FallbackSrc="/Images/notfound.png">
+						Src="@GetImageUrl(movie.PosterPath)"
+						Alt="Movie Poster"
+						FallbackSrc="/Images/notfound.png">
 						</MudImage>
 						<div class="movie-description">
 							<h3>@movie.Title</h3>
-							<h4>@movie.Overview</h4>
+
+							@* Shortens the movie description if it's too long *@
+
+							@if (@movie.Description.Length > 500)
+							{
+								<h4>@movie.Description.Substring(0,500) ...</h4>
+							}
+							else
+							{
+								<h4>@movie.Description</h4>
+							}
 						</div>
 					</MudPaper>
 				</MudItem>
