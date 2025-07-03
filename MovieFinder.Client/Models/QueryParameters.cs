@@ -3,7 +3,8 @@
     public class QueryParameters
     {
         public List<int> GenreIds { get; set; }
-        public double MinimumRating { get; set; } = 5;
+        public double MinimumRating { get; set; } = 0;
         public int ReleaseYear { get; set; }
+        public string SortBy { get; set; } = "None";
     }
 }

@@ -59,6 +59,11 @@ namespace MovieFinder.Client.Services
                 queryParameters["with_genres"] = string.Join(",", parameters.GenreIds);
             }
 
+            if (!String.IsNullOrEmpty(parameters.SortBy))
+            {
+                queryParameters["sort_by"] = parameters.SortBy;
+            }
+
             queryParameters["vote_average.gte"] = parameters.MinimumRating.ToString(CultureInfo.InvariantCulture);
 
             var url = QueryHelpers.AddQueryString(baseUrl, queryParameters);
