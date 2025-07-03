@@ -9,7 +9,6 @@ namespace MovieFinder.Client.Services
 {
     public interface ITMDBService
     {
-        Task<List<Movie>> GetTrendingMoviesAsync();
         Task<List<Genre>> GetGenresAsync();
         Task<List<Movie>> GetFilteredMoviesAsync(QueryParameters parameters);
     }
@@ -22,14 +21,6 @@ namespace MovieFinder.Client.Services
         {
             _httpClient = httpClient;
             _apiKey = config["TMDB:ApiKey"];
-        }
-
-        //Retrieves all the trending movies
-        public async Task<List<Movie>> GetTrendingMoviesAsync()
-        {
-            var url = $"https://api.themoviedb.org/3/trending/movie/day?api_key={_apiKey}";
-            var response = await _httpClient.GetFromJsonAsync<SearchResult>(url);
-            return response?.Results ?? new List<Movie>();
         }
 
         //Retrieves all movie genres

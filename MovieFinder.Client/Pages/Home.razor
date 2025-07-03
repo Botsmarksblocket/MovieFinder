@@ -42,7 +42,6 @@
 					}
 				</MudSelect>
 			</MudItem>
-
 			<MudItem xs="12" md="6">
 				<MudSelect T="string"
 						   Value="@_parameters.SortBy"
@@ -90,16 +89,20 @@
 							}
 
 						</div>
+
 						<MudImage Class="movie-poster"
 								  Src="@GetImageUrl(movie.PosterPath)"
 								  Alt="Movie Poster"
 								  FallbackSrc="/Images/notfound.png">
 						</MudImage>
 
+
 						<div class="movie-description">
 							<h3>@movie.Title</h3>
-							@* Shortens the movie description if it's too long *@
 
+							<MudRating Class="mud-rating-item" SelectedValue="2" ReadOnly="true"></MudRating>
+
+							@* Shortens the movie description if it's too long *@
 							@if (@movie.Description.Length > 500)
 							{
 								<h4>@movie.Description.Substring(0, 500) ...</h4>
@@ -112,6 +115,7 @@
 					</MudPaper>
 				</MudItem>
 			}
+
 		</MudGrid>
 	</MudPaper>
 </MudPaper>
@@ -128,7 +132,7 @@
 		try
 		{
 			_genres = await TMDB.GetGenresAsync();
-			_allMovies = await TMDB.GetTrendingMoviesAsync();
+			_allMovies = await TMDB.GetFilteredMoviesAsync(_parameters);
 		}
 
 		catch
