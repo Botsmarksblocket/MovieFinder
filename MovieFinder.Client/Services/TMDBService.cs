@@ -9,7 +9,6 @@ namespace MovieFinder.Client.Services
 {
     public interface ITMDBService
     {
-        Task<List<Movie>> GetTrendingMoviesAsync();
         Task<List<Genre>> GetGenresAsync();
         Task<List<Movie>> GetFilteredMoviesAsync(QueryParameters parameters);
     }
@@ -22,14 +21,6 @@ namespace MovieFinder.Client.Services
         {
             _httpClient = httpClient;
             _apiKey = config["TMDB:ApiKey"];
-        }
-
-        //Retrieves all the trending movies
-        public async Task<List<Movie>> GetTrendingMoviesAsync()
-        {
-            var url = $"https://api.themoviedb.org/3/trending/movie/day?api_key={_apiKey}";
-            var response = await _httpClient.GetFromJsonAsync<SearchResult>(url);
-            return response?.Results ?? new List<Movie>();
         }
 
         //Retrieves all movie genres
@@ -47,12 +38,21 @@ namespace MovieFinder.Client.Services
             var queryParameters = new Dictionary<string, string>
             {
                 ["api_key"] = _apiKey,
-                ["vote_count.gte"] = "50",
             };
 
-            if (parameters.SelectedGenreIds != null && parameters.SelectedGenreIds.Count() > 0)
+            if (parameters.ReleaseYear != 0)
             {
-                queryParameters["with_genres"] = string.Join(",", parameters.SelectedGenreIds);
+                queryParameters["primary_release_year"] = parameters.ReleaseYear.ToString();
+            }
+
+            if (parameters.GenreIds != null && parameters.GenreIds.Count() > 0)
+            {
+                queryParameters["with_genres"] = string.Join(",", parameters.GenreIds);
+            }
+
+            if (!String.IsNullOrEmpty(parameters.SortBy))
+            {
+                queryParameters["sort_by"] = parameters.SortBy;
             }
 
             queryParameters["vote_average.gte"] = parameters.MinimumRating.ToString(CultureInfo.InvariantCulture);

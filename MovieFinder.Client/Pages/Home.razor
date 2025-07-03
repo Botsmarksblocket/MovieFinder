@@ -8,18 +8,16 @@
 <PageTitle>Home</PageTitle>
 
 <MudPaper Class="d-flex justify-center" Style="min-height: 100vh; width: 100vw;" Elevation="0">
-	<MudPaper Width="70%" Square="true" Elevation="0">
-
+	<MudPaper Width="75%" Square="true" Elevation="0">
 		<MudGrid>
-
-
-			<MudItem xs="6">
+			<MudItem xs="12" md="6">
 				<MudSelect MultiSelectionTextFunc="@(new Func<List<string>, string>(GetMultiSelectionText))"
-				T="int"
-				Clearable="true"
-				Label="Select genres"
-				MultiSelection="true"
-				SelectedValuesChanged="OnGenreSelectionChanged">
+						   T="int"
+						   Clearable="true"
+						   Label="Genres"
+						   MultiSelection="true"
+						   Variant="Variant.Outlined"
+						   SelectedValuesChanged="OnGenreSelectionChanged">
 					@foreach (var genre in _genres)
 					{
 						<MudSelectItem Value="@genre.Id">@genre.Name</MudSelectItem>
@@ -27,26 +25,55 @@
 				</MudSelect>
 			</MudItem>
 
-			<MudItem xs="6">
-				<MudSlider
-				T="double"
-				Value="@_parameters.MinimumRating"
-				ValueChanged="OnMinimumRatingChanged"
-				Min="0"
-				Max="10"
-				Step="0.1"
-				Immediate="false"
-				Size="Size.Medium">
+			<MudItem xs="12" md="6">
+				<MudSelect T="int"
+						   Value="@_parameters.ReleaseYear"
+						   ValueChanged="OnReleaseYearChanged"
+						   Label="Release year"
+						   Variant="Variant.Outlined">
+
+					<MudSelectItem Value="0">None</MudSelectItem>
+					@for (int i = DateTime.Now.Year; i > 1900; i--)
+					{
+						var localVariable = i;
+						<MudSelectItem Value="@i">
+							@localVariable
+						</MudSelectItem>
+					}
+				</MudSelect>
+			</MudItem>
+			<MudItem xs="12" md="6">
+				<MudSelect T="string"
+						   Value="@_parameters.SortBy"
+						   ValueChanged="OnSortByChanged"
+						   Label="Sort by"
+						   Variant="Variant.Outlined">
+					<MudSelectItem Value="@("None")">None</MudSelectItem>
+					<MudSelectItem Value="@("popularity.desc")">Most popular</MudSelectItem>
+					<MudSelectItem Value="@("popularity.asc")">Least popular</MudSelectItem>
+					<MudSelectItem Value="@("vote_average.desc")">Highest rating</MudSelectItem>
+					<MudSelectItem Value="@("vote_average.asc")">Lowest rating</MudSelectItem>
+				</MudSelect>
+			</MudItem>
+
+			<MudItem xs="12" md="6">
+				<MudSlider T="double"
+						   Value="@_parameters.MinimumRating"
+						   ValueChanged="OnMinimumRatingChanged"
+						   Min="0"
+						   Max="10"
+						   Step="0.1"
+						   Immediate="false"
+						   Size="Size.Medium">
 					Minimum rating: @_parameters.MinimumRating.ToString()
 				</MudSlider>
 			</MudItem>
-
 		</MudGrid>
 
 		<MudGrid>
 			@foreach (var movie in _allMovies)
 			{
-				<MudItem xs="12" sm="6" md="4" lg="3">
+				<MudItem xs="6" md="4" lg="3">
 					<MudPaper Class="d-flex align-center justify-center mt-7 movie-poster-container" Elevation="3">
 						<div class="movie-rating">
 							@if (movie.Rating != 0)
@@ -62,17 +89,23 @@
 							}
 
 						</div>
+
 						<MudImage Class="movie-poster"
-						Src="@GetImageUrl(movie.PosterPath)"
-						Alt="Movie Poster"
-						FallbackSrc="/Images/notfound.png">
+								  Src="@GetImageUrl(movie.PosterPath)"
+								  Alt="Movie Poster"
+								  FallbackSrc="/Images/notfound.png">
 						</MudImage>
+
 
 						<div class="movie-description">
 							<h3>@movie.Title</h3>
 
-							@* Shortens the movie description if it's too long *@
+							<MudRating Class="mud-rating-item"
+									   SelectedValue="CalculateRating(movie.Rating)"
+									   ReadOnly="true"
+									   />
 
+							@* Shortens the movie description if it's too long *@
 							@if (@movie.Description.Length > 500)
 							{
 								<h4>@movie.Description.Substring(0, 500) ...</h4>
@@ -85,6 +118,7 @@
 					</MudPaper>
 				</MudItem>
 			}
+
 		</MudGrid>
 	</MudPaper>
 </MudPaper>
@@ -101,7 +135,7 @@
 		try
 		{
 			_genres = await TMDB.GetGenresAsync();
-			_allMovies = await TMDB.GetTrendingMoviesAsync();
+			_allMovies = await TMDB.GetFilteredMoviesAsync(_parameters);
 		}
 
 		catch
@@ -115,6 +149,18 @@
 		_allMovies = await TMDB.GetFilteredMoviesAsync(_parameters);
 	}
 
+	private async Task OnSortByChanged(string sortBy)
+	{
+		_parameters.SortBy = sortBy;
+		await OnFilterChanged();
+	}
+
+	private async Task OnReleaseYearChanged(int releaseYear)
+	{
+		_parameters.ReleaseYear = releaseYear;
+		await OnFilterChanged();
+	}
+
 	private async Task OnMinimumRatingChanged(double minimumRating)
 	{
 		_parameters.MinimumRating = minimumRating;
@@ -124,8 +170,21 @@
 	//Updates the movies displayed when choosing genres. If no genres are selected the trending movies gets shown instead
 	private async Task OnGenreSelectionChanged(IEnumerable<int> newSelection)
 	{
-		_parameters.SelectedGenreIds = newSelection.ToList();
+		_parameters.GenreIds = newSelection.ToList();
 		await OnFilterChanged();
+	}
+
+	// Rounds a movies double rating (0 - 10) to an integer on a (0 - 5 ) scale
+	private int CalculateRating(double rating)
+	{
+		int calculatedRating;
+		if (rating != 0)
+		{
+			rating = rating / 2;
+			calculatedRating = (int)Math.Round(rating);
+			return calculatedRating;
+		}
+		return 0;
 	}
 
 	//Display logic for the multiselection text for genres
