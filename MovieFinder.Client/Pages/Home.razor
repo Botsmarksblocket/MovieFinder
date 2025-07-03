@@ -100,7 +100,10 @@
 						<div class="movie-description">
 							<h3>@movie.Title</h3>
 
-							<MudRating Class="mud-rating-item" SelectedValue="2" ReadOnly="true"></MudRating>
+							<MudRating Class="mud-rating-item"
+									   SelectedValue="CalculateRating(movie.Rating)"
+									   ReadOnly="true"
+									   />
 
 							@* Shortens the movie description if it's too long *@
 							@if (@movie.Description.Length > 500)
@@ -171,7 +174,18 @@
 		await OnFilterChanged();
 	}
 
-
+	// Rounds a movies double rating (0 - 10) to an integer on a (0 - 5 ) scale
+	private int CalculateRating(double rating)
+	{
+		int calculatedRating;
+		if (rating != 0)
+		{
+			rating = rating / 2;
+			calculatedRating = (int)Math.Round(rating);
+			return calculatedRating;
+		}
+		return 0;
+	}
 
 	//Display logic for the multiselection text for genres
 	private string GetMultiSelectionText(List<string> selectedValues)
