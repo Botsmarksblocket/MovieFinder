@@ -49,9 +49,14 @@ namespace MovieFinder.Client.Services
                 ["api_key"] = _apiKey,
             };
 
-            if (parameters.SelectedGenreIds != null && parameters.SelectedGenreIds.Count() > 0)
+            if (parameters.ReleaseYear != 0)
             {
-                queryParameters["with_genres"] = string.Join(",", parameters.SelectedGenreIds);
+                queryParameters["primary_release_year"] = parameters.ReleaseYear.ToString();
+            }
+
+            if (parameters.GenreIds != null && parameters.GenreIds.Count() > 0)
+            {
+                queryParameters["with_genres"] = string.Join(",", parameters.GenreIds);
             }
 
             queryParameters["vote_average.gte"] = parameters.MinimumRating.ToString(CultureInfo.InvariantCulture);

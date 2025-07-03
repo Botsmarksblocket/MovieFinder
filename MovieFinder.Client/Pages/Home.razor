@@ -148,7 +148,7 @@
 	//Updates the movies displayed when choosing genres. If no genres are selected the trending movies gets shown instead
 	private async Task OnGenreSelectionChanged(IEnumerable<int> newSelection)
 	{
-		_parameters.SelectedGenreIds = newSelection.ToList();
+		_parameters.GenreIds = newSelection.ToList();
 		await OnFilterChanged();
 	}
 
