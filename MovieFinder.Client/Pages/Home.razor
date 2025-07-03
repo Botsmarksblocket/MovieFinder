@@ -47,8 +47,9 @@
 						   ValueChanged="OnReleaseYearChanged"
 						   Label="Release year"
 						   Variant="Variant.Outlined"
-						   Clearable="true">
+						   >
 
+					<MudSelectItem Value="0">None</MudSelectItem>
 					@for (int i = DateTime.Now.Year; i > 1900; i--)
 					{
 						var localVariable = i;
@@ -88,7 +89,6 @@
 
 						<div class="movie-description">
 							<h3>@movie.Title</h3>
-
 							@* Shortens the movie description if it's too long *@
 
 							@if (@movie.Description.Length > 500)
