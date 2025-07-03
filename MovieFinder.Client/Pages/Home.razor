@@ -15,11 +15,12 @@
 
 			<MudItem xs="6">
 				<MudSelect MultiSelectionTextFunc="@(new Func<List<string>, string>(GetMultiSelectionText))"
-				T="int"
-				Clearable="true"
-				Label="Select genres"
-				MultiSelection="true"
-				SelectedValuesChanged="OnGenreSelectionChanged">
+						   T="int"
+						   Clearable="true"
+						   Label="Genres"
+						   MultiSelection="true"
+						   Variant="Variant.Outlined"
+						   SelectedValuesChanged="OnGenreSelectionChanged">
 					@foreach (var genre in _genres)
 					{
 						<MudSelectItem Value="@genre.Id">@genre.Name</MudSelectItem>
@@ -28,17 +29,34 @@
 			</MudItem>
 
 			<MudItem xs="6">
-				<MudSlider
-				T="double"
-				Value="@_parameters.MinimumRating"
-				ValueChanged="OnMinimumRatingChanged"
-				Min="0"
-				Max="10"
-				Step="0.1"
-				Immediate="false"
-				Size="Size.Medium">
+				<MudSlider T="double"
+						   Value="@_parameters.MinimumRating"
+						   ValueChanged="OnMinimumRatingChanged"
+						   Min="0"
+						   Max="10"
+						   Step="0.1"
+						   Immediate="false"
+						   Size="Size.Medium">
 					Minimum rating: @_parameters.MinimumRating.ToString()
 				</MudSlider>
+			</MudItem>
+
+			<MudItem xs="6">
+				<MudSelect T="int"
+						   Value="@_parameters.ReleaseYear"
+						   ValueChanged="OnReleaseYearChanged"
+						   Label="Release year"
+						   Variant="Variant.Outlined"
+						   Clearable="true">
+
+					@for (int i = DateTime.Now.Year; i > 1900; i--)
+					{
+						var localVariable = i;
+						<MudSelectItem Value="@i">
+							@localVariable
+						</MudSelectItem>
+					}
+				</MudSelect>
 			</MudItem>
 
 		</MudGrid>
@@ -63,9 +81,9 @@
 
 						</div>
 						<MudImage Class="movie-poster"
-						Src="@GetImageUrl(movie.PosterPath)"
-						Alt="Movie Poster"
-						FallbackSrc="/Images/notfound.png">
+								  Src="@GetImageUrl(movie.PosterPath)"
+								  Alt="Movie Poster"
+								  FallbackSrc="/Images/notfound.png">
 						</MudImage>
 
 						<div class="movie-description">
@@ -113,6 +131,12 @@
 	private async Task OnFilterChanged()
 	{
 		_allMovies = await TMDB.GetFilteredMoviesAsync(_parameters);
+	}
+
+	private async Task OnReleaseYearChanged(int releaseYear)
+	{
+		_parameters.ReleaseYear = releaseYear;
+		await OnFilterChanged();
 	}
 
 	private async Task OnMinimumRatingChanged(double minimumRating)
