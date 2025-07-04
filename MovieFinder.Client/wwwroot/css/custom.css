@@ -16,11 +16,16 @@
     position: absolute;
     top: 0;
     width: 100%;
-    background: linear-gradient(to right, rgba(64, 4, 4, 0), rgba(237, 221, 83, 1));
+    background: linear-gradient(to right, rgba(64, 4, 4, 0), rgba(59, 130, 246, 1));
     right: 0px;
     color: white;
     text-align: right;
     padding-right: 5px;
+}
+
+/*For changing the background of the MudInput-fields*/
+.mud-input.mud-input-filled {
+    background-color: #16202b !important;
 }
 
 .movie-description {

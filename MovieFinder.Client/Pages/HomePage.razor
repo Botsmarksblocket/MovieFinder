@@ -18,7 +18,7 @@
 						   Clearable="true"
 						   Label="Genres"
 						   MultiSelection="true"
-						   Variant="Variant.Outlined"
+						   Variant="Variant.Filled"
 						   SelectedValuesChanged="OnGenreSelectionChanged">
 					@foreach (var genre in _genres)
 					{
@@ -32,7 +32,7 @@
 						   Value="@_parameters.ReleaseYear"
 						   ValueChanged="OnReleaseYearChanged"
 						   Label="Release year"
-						   Variant="Variant.Outlined">
+						   Variant="Variant.Filled">
 
 					<MudSelectItem Value="0">None</MudSelectItem>
 					@for (int i = DateTime.Now.Year; i > 1900; i--)
@@ -49,7 +49,7 @@
 						   Value="@_parameters.SortBy"
 						   ValueChanged="OnSortByChanged"
 						   Label="Sort by"
-						   Variant="Variant.Outlined">
+						   Variant="Variant.Filled">
 					<MudSelectItem Value="@("None")">None</MudSelectItem>
 					<MudSelectItem Value="@("popularity.desc")">Most popular</MudSelectItem>
 					<MudSelectItem Value="@("popularity.asc")">Least popular</MudSelectItem>
@@ -78,7 +78,7 @@
 								 Label="Search for movie"
 								 @bind-Value="_selectedMovie"
 								 SearchFunc="@SearchMovie"
-								 Variant="Variant.Outlined"
+								 Variant="Variant.Filled"
 								 ShowProgressIndicator="true"
 								 ToStringFunc="@(m => m?.Title)"
 								 ResetValueOnEmptyText="true">
