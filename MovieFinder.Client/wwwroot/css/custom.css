@@ -28,6 +28,10 @@
     background-color: #16202b !important;
 }
 
+.mud-input {
+    --mud-palette-lines-inputs: rgba(100, 200, 255, 0.3) !important;
+}
+
 .movie-description {
     position: absolute;
     background-color: rgba(0, 0, 0, 0.7);
