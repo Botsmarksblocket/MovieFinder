@@ -10,6 +10,7 @@ namespace MovieFinder.Client.Services
     public interface ITMDBService
     {
         Task<List<Genre>> GetGenresAsync();
+        Task<List<Movie>> GetMovieAsync(string searchWord);
         Task<List<Movie>> GetFilteredMoviesAsync(QueryParameters parameters);
     }
     public class TMDBService : ITMDBService
@@ -31,31 +32,47 @@ namespace MovieFinder.Client.Services
             return response?.Genres ?? new List<Genre>();
         }
 
-        public async Task<List<Movie>> GetFilteredMoviesAsync(QueryParameters parameters)
+        public async Task<List<Movie>> GetMovieAsync(string searchWord)
+        {
+            var baseUrl = $"https://api.themoviedb.org/3/search/movie";
+
+            var queryParameters = new Dictionary<string, string>
+            {
+                ["api_key"] = _apiKey,
+                ["query"] = searchWord
+            };
+
+            var url = QueryHelpers.AddQueryString(baseUrl, queryParameters);
+            var response = await _httpClient.GetFromJsonAsync<SearchResult>(url);
+
+            return response?.Results ?? new List<Movie>();
+        }
+
+        public async Task<List<Movie>> GetFilteredMoviesAsync(QueryParameters parameter)
         {
             var baseUrl = $"https://api.themoviedb.org/3/discover/movie";
 
             var queryParameters = new Dictionary<string, string>
             {
-                ["api_key"] = _apiKey,
+                ["api_key"] = _apiKey
             };
 
-            if (parameters.ReleaseYear != 0)
+            if (parameter.ReleaseYear != 0)
             {
-                queryParameters["primary_release_year"] = parameters.ReleaseYear.ToString();
+                queryParameters["primary_release_year"] = parameter.ReleaseYear.ToString();
             }
 
-            if (parameters.GenreIds != null && parameters.GenreIds.Count() > 0)
+            if (parameter.GenreIds != null && parameter.GenreIds.Count() > 0)
             {
-                queryParameters["with_genres"] = string.Join(",", parameters.GenreIds);
+                queryParameters["with_genres"] = string.Join(",", parameter.GenreIds);
             }
 
-            if (!String.IsNullOrEmpty(parameters.SortBy))
+            if (!String.IsNullOrEmpty(parameter.SortBy))
             {
-                queryParameters["sort_by"] = parameters.SortBy;
+                queryParameters["sort_by"] = parameter.SortBy;
             }
 
-            queryParameters["vote_average.gte"] = parameters.MinimumRating.ToString(CultureInfo.InvariantCulture);
+            queryParameters["vote_average.gte"] = parameter.MinimumRating.ToString(CultureInfo.InvariantCulture);
 
             var url = QueryHelpers.AddQueryString(baseUrl, queryParameters);
 

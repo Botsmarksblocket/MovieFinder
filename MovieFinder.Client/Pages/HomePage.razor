@@ -9,7 +9,7 @@
 
 <PageTitle>Home</PageTitle>
 
-<MudPaper Class="d-flex justify-center" Style="min-height: 100vh; width: 100vw;" Elevation="0">
+<MudPaper Class="d-flex justify-center" Elevation="0">
 	<MudPaper Width="75%" Square="true" Elevation="0">
 		<MudGrid>
 			<MudItem xs="12" md="6">
@@ -73,6 +73,33 @@
 		</MudGrid>
 
 		<MudGrid>
+			<MudItem xs="12" sm="6" md="4">
+				<MudAutocomplete T="Movie"
+								 Label="Search for movie"
+								 @bind-Value="_selectedMovie"
+								 SearchFunc="@SearchMovie"
+								 Variant="Variant.Outlined"
+								 ShowProgressIndicator="true"
+								 ToStringFunc="@(m => m?.Title)"
+								 ResetValueOnEmptyText="true">
+					<ItemTemplate>
+						<MudPaper Class="d-flex align-items-center p-2">
+
+							<MudImage Style="width: 100px; margin-right: 10px;"
+									  Src="@GetImageUrl(context.PosterPath)"
+									  Alt="Movie Poster"
+									  FallbackSrc="/Images/notfound.png">
+							</MudImage>
+							<h4>@context.Title (@context.ReleaseDate)</h4>
+						</MudPaper>
+					</ItemTemplate>
+				</MudAutocomplete>
+
+			</MudItem>
+
+		</MudGrid>
+
+		<MudGrid>
 			@foreach (var movie in _allMovies)
 			{
 				<MudItem xs="6" md="4" lg="3">
@@ -121,20 +148,25 @@
 					</NavLink>
 
 				</MudItem>
-
 			}
-
-
 		</MudGrid>
 	</MudPaper>
 </MudPaper>
 
 @code {
 	private List<Movie> _allMovies = new();
+	private Movie _selectedMovie;
+
 	private List<Genre> _genres = new();
 	private Options _options = new();
 	private QueryParameters _parameters = new();
 	SlugHelper slugHelper = new();
+
+	private async Task<IEnumerable<Movie>> SearchMovie(string movieName, CancellationToken token)
+	{
+		return await TMDB.GetMovieAsync(movieName);
+
+	}
 
 
 	//Loads the genres and trending movies upon page initialization
@@ -217,7 +249,7 @@
 		: $"https://image.tmdb.org/t/p/w500{posterPath}";
 	}
 
-	//Generates a valid url for a specific using the Slugify library
+	//Generates a valid url for a specific movie using the Slugify library
 	private string GenerateUrl(int id, string movieTitle)
 	{
 		return $"/movie/{id}/{slugHelper.GenerateSlug(movieTitle)}";

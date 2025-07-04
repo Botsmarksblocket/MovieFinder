@@ -15,5 +15,12 @@ namespace MovieFinder.Client.Models
         public string Description { get; set; }
         [JsonPropertyName("poster_path")]
         public string PosterPath { get; set; }
+
+        [JsonPropertyName("release_date")]
+        public string ReleaseDateRaw { get; set; }
+
+        [JsonIgnore]
+        public string ReleaseDate =>
+        DateTime.TryParse(ReleaseDateRaw, out var date) ? date.Year.ToString() : "Unknown";
     }
 }
