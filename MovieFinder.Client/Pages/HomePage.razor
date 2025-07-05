@@ -13,12 +13,12 @@
 		<MudGrid>
 			<MudItem xs="12" md="6">
 				<MudSelect MultiSelectionTextFunc="@(new Func<List<string>, string>(GetMultiSelectionText))"
-						   T="int"
-						   Clearable="true"
-						   Label="Genres"
-						   MultiSelection="true"
-						   Variant="Variant.Outlined"
-						   SelectedValuesChanged="OnGenreSelectionChanged">
+				T="int"
+				Clearable="true"
+				Label="Genres"
+				MultiSelection="true"
+				Variant="Variant.Outlined"
+				SelectedValuesChanged="OnGenreSelectionChanged">
 					@foreach (var genre in _genres)
 					{
 						<MudSelectItem Value="@genre.Id">@genre.Name</MudSelectItem>
@@ -28,10 +28,10 @@
 
 			<MudItem xs="12" md="6">
 				<MudSelect T="int"
-						   Value="@_parameters.ReleaseYear"
-						   ValueChanged="OnReleaseYearChanged"
-						   Label="Release year"
-						   Variant="Variant.Outlined">
+				Value="@_parameters.ReleaseYear"
+				ValueChanged="OnReleaseYearChanged"
+				Label="Release year"
+				Variant="Variant.Outlined">
 
 					<MudSelectItem Value="0">None</MudSelectItem>
 					@for (int i = DateTime.Now.Year; i > 1900; i--)
@@ -45,13 +45,13 @@
 			</MudItem>
 			<MudItem xs="12" md="6">
 				<MudSelect T="string"
-						   Value="@_parameters.SortBy"
-						   ValueChanged="OnSortByChanged"
-						   Label="Sort by"
-						   Variant="Variant.Outlined">
+				Value="@_parameters.SortBy"
+				ValueChanged="OnSortByChanged"
+				Label="Sort by"
+				Variant="Variant.Outlined">
 					<MudSelectItem Value="@("None")">None</MudSelectItem>
-					<MudSelectItem Value="@("popularity.desc")">Most popular</MudSelectItem>
-					<MudSelectItem Value="@("popularity.asc")">Least popular</MudSelectItem>
+					<MudSelectItem Value="@("vote_count.desc")">Most votes</MudSelectItem>
+					<MudSelectItem Value="@("vote_count.asc")">Least votes (minimum 10)</MudSelectItem>
 					<MudSelectItem Value="@("vote_average.desc")">Highest rating</MudSelectItem>
 					<MudSelectItem Value="@("vote_average.asc")">Lowest rating</MudSelectItem>
 				</MudSelect>
@@ -59,13 +59,13 @@
 
 			<MudItem xs="12" md="6">
 				<MudSlider T="double"
-						   Value="@_parameters.MinimumRating"
-						   ValueChanged="OnMinimumRatingChanged"
-						   Min="0"
-						   Max="10"
-						   Step="0.1"
-						   Immediate="false"
-						   Size="Size.Medium">
+				Value="@_parameters.MinimumRating"
+				ValueChanged="OnMinimumRatingChanged"
+				Min="0"
+				Max="10"
+				Step="0.1"
+				Immediate="false"
+				Size="Size.Medium">
 					Minimum rating: @_parameters.MinimumRating.ToString()
 				</MudSlider>
 			</MudItem>
@@ -74,20 +74,20 @@
 		<MudGrid>
 			<MudItem xs="12" sm="6" md="4">
 				<MudAutocomplete T="Movie"
-								 Label="Search movie"
-								 @bind-Value="_selectedMovie"
-								 SearchFunc="@SearchMovie"
-								 Variant="Variant.Outlined"
-								 ShowProgressIndicator="true"
-								 ToStringFunc="@(m => m?.Title)"
-								 ResetValueOnEmptyText="true">
+				Label="Search movie"
+				@bind-Value="_selectedMovie"
+				SearchFunc="@SearchMovie"
+				Variant="Variant.Outlined"
+				ShowProgressIndicator="true"
+				ToStringFunc="@(m => m?.Title)"
+				ResetValueOnEmptyText="true">
 					<ItemTemplate>
 						<MudPaper Class="d-flex align-items-center p-2">
 
 							<MudImage Style="width: 100px; margin-right: 10px;"
-									  Src="@GetImageUrl(context.PosterPath)"
-									  Alt="Movie Poster"
-									  FallbackSrc="/Images/notfound.png">
+							Src="@GetImageUrl(context.PosterPath)"
+							Alt="Movie Poster"
+							FallbackSrc="/Images/notfound.png">
 							</MudImage>
 							<h4>@context.Title (@context.ReleaseDate)</h4>
 						</MudPaper>
@@ -107,7 +107,7 @@
 								@if (movie.Rating != 0)
 								{
 									<h4>
-										@String.Format("{0:.#}", movie.Rating) / 10
+										@String.Format("{0:.#}", movie.Rating) / 10 (@movie.VoteCount votes)
 									</h4>
 								}
 
@@ -118,11 +118,21 @@
 
 							</div>
 
-							<MudImage Class="movie-poster"
-									  Src="@GetImageUrl(movie.PosterPath)"
-									  Alt="Movie Poster"
-									  FallbackSrc="/Images/notfound.png">
-							</MudImage>
+							@if (GetImageUrl(movie.PosterPath) == "")
+							{
+								<div class="not-found">
+									<h3>@movie.Title</h3>
+								</div>
+							}
+							else
+							{
+								<MudImage Class="movie-poster"
+										  Src="@GetImageUrl(movie.PosterPath)"
+										  Alt="Movie Poster"
+										  >
+								</MudImage>
+							}
+
 
 							<div class="movie-description">
 								<h3>@movie.Title</h3>

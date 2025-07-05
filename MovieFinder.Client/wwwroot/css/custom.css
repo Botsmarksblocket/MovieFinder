@@ -12,6 +12,14 @@
     object-fit: cover;
 }
 
+.not-found {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    background-color: green;
+}
+
 .movie-rating {
     position: absolute;
     top: 0;
