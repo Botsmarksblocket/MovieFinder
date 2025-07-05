@@ -39,7 +39,7 @@ namespace MovieFinder.Client.Services
             var queryParameters = new Dictionary<string, string>
             {
                 ["api_key"] = _apiKey,
-                ["query"] = searchWord
+                ["query"] = searchWord,
             };
 
             var url = QueryHelpers.AddQueryString(baseUrl, queryParameters);
@@ -54,7 +54,8 @@ namespace MovieFinder.Client.Services
 
             var queryParameters = new Dictionary<string, string>
             {
-                ["api_key"] = _apiKey
+                ["api_key"] = _apiKey,
+                ["vote_count.gte"] = "10"
             };
 
             if (parameter.ReleaseYear != 0)

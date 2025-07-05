@@ -16,6 +16,9 @@ namespace MovieFinder.Client.Models
         [JsonPropertyName("poster_path")]
         public string PosterPath { get; set; }
 
+        [JsonPropertyName("vote_count")]
+        public int VoteCount { get; set; }
+
         [JsonPropertyName("release_date")]
         public string ReleaseDateRaw { get; set; }
 
