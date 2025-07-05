@@ -1,6 +1,5 @@
 ﻿@using Services
 @using Models
-@using ChoosableOptions
 @using Slugify
 @inject ITMDBService TMDB
 @inject ISnackbar Snackbar
@@ -10,7 +9,7 @@
 <PageTitle>Home</PageTitle>
 
 <MudPaper Class="d-flex justify-center" Elevation="0">
-	<MudPaper Width="75%" Square="true" Elevation="0">
+	<MudPaper Width="75%" Square="true" Style="min-height: 100vh;" Elevation="0">
 		<MudGrid>
 			<MudItem xs="12" md="6">
 				<MudSelect MultiSelectionTextFunc="@(new Func<List<string>, string>(GetMultiSelectionText))"
@@ -75,7 +74,7 @@
 		<MudGrid>
 			<MudItem xs="12" sm="6" md="4">
 				<MudAutocomplete T="Movie"
-								 Label="Search for movie"
+								 Label="Search movie"
 								 @bind-Value="_selectedMovie"
 								 SearchFunc="@SearchMovie"
 								 Variant="Variant.Outlined"
@@ -94,9 +93,7 @@
 						</MudPaper>
 					</ItemTemplate>
 				</MudAutocomplete>
-
 			</MudItem>
-
 		</MudGrid>
 
 		<MudGrid>
@@ -158,7 +155,6 @@
 	private Movie _selectedMovie;
 
 	private List<Genre> _genres = new();
-	private Options _options = new();
 	private QueryParameters _parameters = new();
 	SlugHelper slugHelper = new();
 

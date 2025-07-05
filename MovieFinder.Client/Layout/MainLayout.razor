@@ -1,44 +1,46 @@
 ﻿@inherits LayoutComponentBase
-<MudThemeProvider Theme="@MovieTheme" IsDarkMode="true"/>
+<MudThemeProvider Theme="@MovieTheme" IsDarkMode="true" />
 <MudPopoverProvider />
 <MudDialogProvider />
 <MudSnackbarProvider />
 
 <MudLayout>
-    <MudMainContent>
-        @Body
-    </MudMainContent>
+	<MudAppBar Style="background-color: #2d4659;" Elevation="0">
+		<MudText Typo="Typo.h6">My App</MudText>
+	</MudAppBar>
+	<MudMainContent>
+		@Body
+	</MudMainContent>
 </MudLayout>
 
 @code {
-    public static MudTheme MovieTheme = new MudTheme()
-        {
-            PaletteDark = new PaletteDark()
-            {
-                Black = "#0b0d10",
-                Background = "#10151c",
-                BackgroundGray = "#182027",
-                Surface = "#1e2a33",
-                DrawerBackground = "#141b23",
-                DrawerText = "rgba(255,255,255, 0.65)",
-                DrawerIcon = "rgba(255,255,255, 0.65)",
-                AppbarBackground = "#121820",
-                AppbarText = "rgba(255,255,255, 0.78)",
-                TextPrimary = "rgba(255,255,255, 0.90)",
-                TextSecondary = "rgba(255,255,255, 0.60)",
-                ActionDefault = "#38bdf8",
-                ActionDisabled = "rgba(255,255,255, 0.30)",
-                ActionDisabledBackground = "rgba(255,255,255, 0.10)",
-                Divider = "rgba(56, 189, 248, 1)",
-                DividerLight = "rgba(255,255,255, 0.08)",
-                TableLines = "rgba(255,255,255, 0.10)",
-                LinesDefault = "rgba(255,255,255, 0.10)",
-                LinesInputs = "rgba(255,255,255, 0.25)",
-                TextDisabled = "rgba(255,255,255, 0.30)",
-                Error = "#ef4444",
-                Primary = "#3b82f6",
-                PrimaryContrastText = "#ffffff",
-                Secondary = "#14b8a6"
-            }
-        };
+	public static MudTheme MovieTheme = new MudTheme()
+		{
+			PaletteDark = new PaletteDark()
+			{
+				Black = "#0b0d10",
+				Background = "#10151c",
+				BackgroundGray = "#182027",
+				Surface = "#1e2a33",
+				DrawerBackground = "#141b23",
+				DrawerText = "rgba(255,255,255, 0.65)",
+				DrawerIcon = "rgba(255,255,255, 0.65)",
+				AppbarText = "rgba(255,255,255, 0.78)",
+				TextPrimary = "rgba(255,255,255, 0.90)",
+				TextSecondary = "rgba(255,255,255, 0.60)",
+				ActionDefault = "#38bdf8",
+				ActionDisabled = "rgba(255,255,255, 0.30)",
+				ActionDisabledBackground = "rgba(255,255,255, 0.10)",
+				Divider = "rgba(56, 189, 248, 1)",
+				DividerLight = "rgba(255,255,255, 0.08)",
+				TableLines = "rgba(255,255,255, 0.10)",
+				LinesDefault = "rgba(255,255,255, 0.10)",
+				LinesInputs = "rgba(255,255,255, 0.25)",
+				TextDisabled = "rgba(255,255,255, 0.30)",
+				Error = "#ef4444",
+				Primary = "#3b82f6",
+				PrimaryContrastText = "#ffffff",
+				Secondary = "#14b8a6"
+			}
+		};
 }
