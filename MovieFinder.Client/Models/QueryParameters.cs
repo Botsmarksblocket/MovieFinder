@@ -6,5 +6,6 @@
         public double MinimumRating { get; set; } = 0;
         public int ReleaseYear { get; set; }
         public string SortBy { get; set; } = "None";
+        public int Page { get; set; } = 1;
     }
 }
