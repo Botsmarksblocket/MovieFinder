@@ -11,7 +11,7 @@ namespace MovieFinder.Client.Services
     {
         Task<List<Genre>> GetGenresAsync();
         Task<List<Movie>> GetMovieAsync(string searchWord);
-        Task<List<Movie>> GetFilteredMoviesAsync(QueryParameters parameters);
+        Task<SearchResult> GetFilteredMoviesAsync(QueryParameters parameters);
     }
     public class TMDBService : ITMDBService
     {
@@ -48,14 +48,15 @@ namespace MovieFinder.Client.Services
             return response?.Results ?? new List<Movie>();
         }
 
-        public async Task<List<Movie>> GetFilteredMoviesAsync(QueryParameters parameter)
+        public async Task<SearchResult> GetFilteredMoviesAsync(QueryParameters parameter)
         {
             var baseUrl = $"https://api.themoviedb.org/3/discover/movie";
 
             var queryParameters = new Dictionary<string, string>
             {
                 ["api_key"] = _apiKey,
-                ["vote_count.gte"] = "10"
+                ["vote_count.gte"] = "10",
+                ["page"] = parameter.Page.ToString()
             };
 
             if (parameter.ReleaseYear != 0)
@@ -77,9 +78,8 @@ namespace MovieFinder.Client.Services
 
             var url = QueryHelpers.AddQueryString(baseUrl, queryParameters);
 
-            var response = await _httpClient.GetFromJsonAsync<SearchResult>(url);
-
-            return response?.Results ?? new List<Movie>();
+            return await _httpClient.GetFromJsonAsync<SearchResult>(url)
+                    ?? new SearchResult { Results = new List<Movie>() };
         }
     }
 }
