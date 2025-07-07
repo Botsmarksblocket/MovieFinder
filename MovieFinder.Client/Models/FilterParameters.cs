@@ -1,11 +1,11 @@
 ﻿namespace MovieFinder.Client.Models
 {
-    public class QueryParameters
+    public class FilterParameters
     {
         public List<int> GenreIds { get; set; }
         public double MinimumRating { get; set; } = 0;
         public int ReleaseYear { get; set; }
         public string SortBy { get; set; } = "None";
-        public int Page { get; set; } = 1;
+        public int Page { get; set; } 
     }
 }

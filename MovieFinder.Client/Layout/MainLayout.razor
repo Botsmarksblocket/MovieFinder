@@ -1,4 +1,8 @@
 ﻿@inherits LayoutComponentBase
+@using Models
+@using Services
+@using Slugify
+@inject ITMDBService TMDB
 <MudThemeProvider Theme="@MovieTheme" IsDarkMode="true" />
 <MudPopoverProvider />
 <MudDialogProvider />
@@ -7,13 +11,66 @@
 <MudLayout>
 	<MudAppBar Style="background-color: #2d4659;" Elevation="0">
 		<MudText Typo="Typo.h6">My App</MudText>
+		<MudGrid>
+			<MudItem xs="12" sm="6" md="4">
+
+				<MudAutocomplete T="Movie"
+								 Label="Search movie"
+								 @bind-Value="_selectedMovie"
+								 SearchFunc="@SearchMovie"
+								 Variant="Variant.Outlined"
+								 ShowProgressIndicator="true"
+								 ToStringFunc="@(m => m?.Title)"
+								 ResetValueOnEmptyText="true"
+								 DebounceInterval="300"
+								 Clearable="true"
+								 Dense="true"
+								 CoerceText="true"
+				>
+					<ItemTemplate>
+						<NavLink href="@GenerateUrl(context.Id, context.Title)">
+							<MudPaper Class="d-flex align-items-center p-2">
+								<MudImage Style="width: 100px; margin-right: 10px;"
+										  Src="@GetImageUrl(context.PosterPath)"
+										  Alt="Movie Poster"
+										  FallbackSrc="/Images/notfound.png">
+								</MudImage>
+								<h4>@context.Title (@context.ReleaseDate)</h4>
+							</MudPaper>
+						</NavLink>
+					</ItemTemplate>
+				</MudAutocomplete>
+			</MudItem>
+		</MudGrid>
 	</MudAppBar>
+
 	<MudMainContent>
 		@Body
 	</MudMainContent>
 </MudLayout>
 
 @code {
+	private SlugHelper slugHelper = new();
+
+	//Generates a valid url for a specific movie using the Slugify library
+	private string GenerateUrl(int id, string movieTitle)
+	{
+		return $"/movie/{id}/{slugHelper.GenerateSlug(movieTitle)}";
+	}
+
+	private Movie _selectedMovie;
+
+	private async Task<IEnumerable<Movie>> SearchMovie(string movieName, CancellationToken token)
+	{
+		return await TMDB.GetMovieAsync(movieName);
+	}
+
+	private string GetImageUrl(string posterPath)
+	{
+		return string.IsNullOrWhiteSpace(posterPath)
+		? ""
+		: $"https://image.tmdb.org/t/p/w780{posterPath}";
+	}
 	public static MudTheme MovieTheme = new MudTheme()
 		{
 			PaletteDark = new PaletteDark()
