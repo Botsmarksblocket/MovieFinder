@@ -10,14 +10,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-}
-
-.not-found {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    background-color: green;
+    image-rendering: auto;
 }
 
 .movie-rating {
@@ -54,21 +47,40 @@
     justify-content: center;
     align-items: center;
     text-align: center;
-    padding-top: 100px;
     transform: translateY(100%);
     transition: transform 0.4s ease-in-out;
     min-width: 100%;
+}
+
+.movie-poster-container:hover .not-found h3 {
+    display: none;
 }
 
 .movie-poster-container:hover .movie-description {
     transform: translateY(0);
 }
 
+.not-found {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    color: black;
+    background-color: rgb(245, 248, 250);
+    text-align: center;
+}
+
+.flex-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
 .fade-in {
     opacity: 1;
     animation-name: fadeInOpacity;
     animation-timing-function: ease-in;
-    animation-duration: 1s;
+    animation-duration: 1.5s;
 }
 
 @keyframes fadeInOpacity {
