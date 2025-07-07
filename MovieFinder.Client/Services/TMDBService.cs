@@ -11,7 +11,7 @@ namespace MovieFinder.Client.Services
     {
         Task<List<Genre>> GetGenresAsync();
         Task<List<Movie>> GetMovieAsync(string searchWord);
-        Task<SearchResult> GetFilteredMoviesAsync(QueryParameters parameters);
+        Task<SearchResult> GetFilteredMoviesAsync(FilterParameters parameters);
     }
     public class TMDBService : ITMDBService
     {
@@ -48,7 +48,7 @@ namespace MovieFinder.Client.Services
             return response?.Results ?? new List<Movie>();
         }
 
-        public async Task<SearchResult> GetFilteredMoviesAsync(QueryParameters parameter)
+        public async Task<SearchResult> GetFilteredMoviesAsync(FilterParameters parameter)
         {
             var baseUrl = $"https://api.themoviedb.org/3/discover/movie";
 
