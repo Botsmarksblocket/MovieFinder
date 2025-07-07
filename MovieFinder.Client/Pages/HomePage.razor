@@ -4,6 +4,7 @@
 @inject ITMDBService TMDB
 @inject ISnackbar Snackbar
 @inject IJSRuntime JS
+@implements IDisposable
 
 @page "/"
 
@@ -169,6 +170,8 @@
 	private FilterParameters _parameters = new();
 	private SlugHelper slugHelper = new();
 
+	private DotNetObjectReference<HomePage> _dotNetRef;
+
 	private bool _isLoading = false;
 
 	//Loads genres, trending movies and invokes JS upon page initialization
@@ -176,7 +179,8 @@
 	{
 		try
 		{
-			await JS.InvokeVoidAsync("scrollHelper.registerScroll", DotNetObjectReference.Create(this));
+			_dotNetRef = DotNetObjectReference.Create(this);
+			await JS.InvokeVoidAsync("scrollHelper.registerScroll", _dotNetRef);
 			_genres = await TMDB.GetGenresAsync();
 			await LoadMoviesAsync();
 		}
@@ -185,6 +189,12 @@
 		{
 			Snackbar.Add($"Something went wrong when trying to retrieve the movies.", Severity.Error);
 		}
+	}
+
+	public void Dispose()
+	{
+		JS.InvokeVoidAsync("scrollHelper.removeScroll");
+		_dotNetRef?.Dispose();
 	}
 
 	//Resets the page parameters and load the movies with the filter parameters

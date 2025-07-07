@@ -7,6 +7,8 @@ using static System.Net.WebRequestMethods;
 
 namespace MovieFinder.Client.Services
 {
+    //Service which calls TMDB API to retrieve movie genres, list of filtered movies and specific movies
+
     public interface ITMDBService
     {
         Task<List<Genre>> GetGenresAsync();
@@ -32,6 +34,7 @@ namespace MovieFinder.Client.Services
             return response?.Genres ?? new List<Genre>();
         }
 
+        //Retrieves specific movie which user searched for
         public async Task<List<Movie>> GetMovieAsync(string searchWord)
         {
             var baseUrl = $"https://api.themoviedb.org/3/search/movie";
@@ -48,6 +51,7 @@ namespace MovieFinder.Client.Services
             return response?.Results ?? new List<Movie>();
         }
 
+        //Retrieves list of movies from TMDB based on provided filter parameters.
         public async Task<SearchResult> GetFilteredMoviesAsync(FilterParameters parameter)
         {
             var baseUrl = $"https://api.themoviedb.org/3/discover/movie";
