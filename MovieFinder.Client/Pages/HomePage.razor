@@ -101,9 +101,8 @@
 		<MudGrid>
 			@foreach (var movie in _allMovies)
 			{
-				<MudItem xs="6" md="4" lg="3">
+				<MudItem xs="6" md="4" lg="3" Class="fade-in">
 					<NavLink href="@GenerateUrl(movie.Id, movie.Title)">
-
 						<MudPaper Class="d-flex align-center justify-center mt-7 movie-poster-container" Elevation="3">
 							<div class="movie-rating">
 								@if (movie.Rating != 0)
@@ -191,6 +190,7 @@
 		}
 	}
 
+	//Cleans up resources by removin js scroll even listener and disposes the .NET object reference to prevent memory leaks
 	public void Dispose()
 	{
 		JS.InvokeVoidAsync("scrollHelper.removeScroll");

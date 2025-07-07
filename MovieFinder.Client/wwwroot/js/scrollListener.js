@@ -1,4 +1,13 @@
-﻿window.scrollHelper = {
+﻿/**
+ * scrollHelper manages a single scroll event listener that notifies Blazor
+ * when the user scrolls near the bottom of the page (within 300 pixels).
+ * 
+ * - registerScroll(dotNetHelper): Adds the scroll listener, invoking
+ *   the Blazor method 'OnScrollNearBottom' when near bottom.
+ * - removeScroll(): Removes the scroll listener to clean up resources.
+ */
+
+window.scrollHelper = {
     _scrollHandler: null,
 
     registerScroll: function (dotNetHelper) {
