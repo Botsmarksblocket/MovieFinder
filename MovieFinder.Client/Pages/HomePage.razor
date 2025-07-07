@@ -74,31 +74,6 @@
 		</MudGrid>
 
 		<MudGrid>
-			<MudItem xs="12" sm="6" md="4">
-				<MudAutocomplete T="Movie"
-								 Label="Search movie"
-								 @bind-Value="_selectedMovie"
-								 SearchFunc="@SearchMovie"
-								 Variant="Variant.Outlined"
-								 ShowProgressIndicator="true"
-								 ToStringFunc="@(m => m?.Title)"
-								 ResetValueOnEmptyText="true">
-					<ItemTemplate>
-						<MudPaper Class="d-flex align-items-center p-2">
-
-							<MudImage Style="width: 100px; margin-right: 10px;"
-									  Src="@GetImageUrl(context.PosterPath)"
-									  Alt="Movie Poster"
-									  FallbackSrc="/Images/notfound.png">
-							</MudImage>
-							<h4>@context.Title (@context.ReleaseDate)</h4>
-						</MudPaper>
-					</ItemTemplate>
-				</MudAutocomplete>
-			</MudItem>
-		</MudGrid>
-
-		<MudGrid>
 			@foreach (var movie in _allMovies)
 			{
 				<MudItem xs="12" sm="6" md="4" lg="3" Class="fade-in">
@@ -164,7 +139,6 @@
 @code {
 	private SearchResult _searchResult;
 	private List<Movie> _allMovies = new();
-	private Movie _selectedMovie;
 	private List<Genre> _genres = new();
 	private FilterParameters _parameters = new();
 	private SlugHelper slugHelper = new();
@@ -228,11 +202,6 @@
 			return;
 
 		await LoadMoreMovies();
-	}
-
-	private async Task<IEnumerable<Movie>> SearchMovie(string movieName, CancellationToken token)
-	{
-		return await TMDB.GetMovieAsync(movieName);
 	}
 
 	private async Task OnSortByChanged(string sortBy)
