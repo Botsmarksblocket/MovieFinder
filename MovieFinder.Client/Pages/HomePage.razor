@@ -11,7 +11,7 @@
 <PageTitle>Home</PageTitle>
 
 <MudPaper Class="d-flex justify-center" Elevation="0">
-	<MudPaper Width="75%" Square="true" Style="min-height: 100vh;" Elevation="0">
+	<MudPaper Width="75%" Style="min-height: 100vh;" Elevation="0">
 		<MudGrid>
 			<MudItem xs="12" md="6">
 				<MudSelect MultiSelectionTextFunc="@(new Func<List<string>, string>(GetMultiSelectionText))"
@@ -111,7 +111,7 @@
 							}
 
 							<div class="movie-description">
-								<h3>@movie.Title</h3>
+								<h3>@movie.Title (@movie.ReleaseDate)</h3>
 
 								<MudRating Class="mud-rating-item"
 										   SelectedValue="CalculateRating(movie.Rating)"
