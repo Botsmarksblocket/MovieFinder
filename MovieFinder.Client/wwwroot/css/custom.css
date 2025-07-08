@@ -76,6 +76,14 @@
     flex-direction: column;
 }
 
+.appbar-container{
+    display:flex;
+    align-content: center;
+    flex-direction:row;
+    justify-content:center;
+    max-width: 75%;    
+}
+
 .fade-in {
     opacity: 1;
     animation-name: fadeInOpacity;
