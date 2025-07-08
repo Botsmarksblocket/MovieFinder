@@ -10,40 +10,48 @@
 
 <MudLayout>
 	<MudAppBar Fixed="true" Style="background-color: #2d4659;" Elevation="0">
-		<div style="width: 75%; margin: 0 auto;">
-			<MudGrid Justify="Justify.Center">
-				<MudItem xs="2" Class="mt-2">
-					<MudImage
-						Fluid="true"
-						Width="70"
-						Src="/Images/tmdb.svg"></MudImage>
+		<div style="width: 76%; margin: 0 auto;">
+			<MudGrid Justify="Justify.Center" Spacing="2">
+				<MudItem xs="3" md="1" Class="mt-2">
+					<MudImage Width="60"
+							  Src="/Images/tmdb.svg"></MudImage>
 				</MudItem>
 
-				<MudItem xs="10">
-				<MudAutocomplete T="Movie"
-								 Label="Search movie"
-								 @bind-Value="_selectedMovie"
-								 SearchFunc="@SearchMovie"
-								 Variant="Variant.Filled"
-								 ShowProgressIndicator="true"
-								 ToStringFunc="@(m => m?.Title)"
-								 ResetValueOnEmptyText="true"
-								 DebounceInterval="300"
-								 Margin="Margin.Dense"
-								 Clearable="true"
-								 Dense="true"
-								 MaxHeight="500"
-								 CoerceText="true">
-					<ItemTemplate>
-						<NavLink href="@GenerateUrl(context.Id, context.Title)" class="d-flex align-center">
-							<MudImage Style="width: 100px; margin-right: 10px;"
-									  Src="@GetImageUrl(context.PosterPath)"
-									  Alt="Movie Poster"
-									  FallbackSrc="/Images/notfound.png" />
-							<h4>@context.Title (@context.ReleaseDate)</h4>
-						</NavLink>
-					</ItemTemplate>
-				</MudAutocomplete>
+				<MudItem xs="9" md="11" Class="mt-1">
+					<MudAutocomplete T="Movie"
+									 FullWidth="true"
+									 Label="Search movie"
+									 Value="_selectedMovie"
+									 ValueChanged="OnMovieSelected"
+									 SearchFunc="@SearchMovie"
+									 Variant="Variant.Filled"
+									 ShowProgressIndicator="true"
+									 ToStringFunc="@(m => m?.Title)"
+									 ResetValueOnEmptyText="true"
+									 DebounceInterval="300"
+									 Margin="Margin.Dense"
+									 Clearable="true"
+									 Dense="true"
+									 MaxHeight="400"
+									 CoerceText="false"
+									 RelativeWidth="DropdownWidth.Relative"
+									 PopoverClass="full-width-dropdown">
+						<ItemTemplate>
+							<NavLink href="@GenerateUrl(context.Id, context.Title)">
+								<MudStack Row="true">
+									<MudImage Style="width: 47px; height: 71px; margin-right: 10px;"
+											  Src="@GetImageUrl(context.PosterPath)"
+											  Alt="Movie Poster"
+											  FallbackSrc="/Images/notfound.png" />
+
+									<MudStack Justify="Justify.Center" Spacing="0">
+										<h4>@context.Title</h4>
+										<h5>@context.ReleaseDate</h5>
+									</MudStack>
+								</MudStack>
+							</NavLink>
+						</ItemTemplate>
+					</MudAutocomplete>
 				</MudItem>
 			</MudGrid>
 		</div>
@@ -61,6 +69,11 @@
 	private string GenerateUrl(int id, string movieTitle)
 	{
 		return $"/movie/{id}/{slugHelper.GenerateSlug(movieTitle)}";
+	}
+
+	private async Task OnMovieSelected(Movie selected)
+	{
+		_selectedMovie = null;
 	}
 
 	private Movie _selectedMovie;
