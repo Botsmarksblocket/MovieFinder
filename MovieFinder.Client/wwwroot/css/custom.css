@@ -75,7 +75,9 @@
     min-width: 105%;
 }
 
-.movie-poster-container:hover .not-found h3 {
+/* When hovering over a movie card without a poster, hide h1/h3 text to reveal the description underneath */
+.movie-poster-container:hover .not-found > h3,
+.movie-poster-container:hover .not-found > h1 {
     display: none;
 }
 
