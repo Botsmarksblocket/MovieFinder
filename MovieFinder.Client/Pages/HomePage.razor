@@ -10,6 +10,13 @@
 
 <PageTitle>Home</PageTitle>
 
+<MudScrollToTop>
+	<MudFab
+		Style="background-color: rgb(19, 130, 246)" 
+		StartIcon="@Icons.Material.Filled.ArrowCircleUp" />
+</MudScrollToTop>
+
+
 <MudPaper Class="d-flex justify-center" Elevation="0">
 	<MudPaper Width="75%" Style="min-height: 100vh;" Elevation="0" Class="mt-6">
 		<MudGrid>
@@ -247,7 +254,7 @@
 	private string GetMultiSelectionText(List<string> selectedValues)
 	{
 		var genreNames = _genres
-		    .Where(g => selectedValues.Contains(g.Id.ToString()))
+			.Where(g => selectedValues.Contains(g.Id.ToString()))
 			.Select(g => g.Name)
 			.ToList();
 
