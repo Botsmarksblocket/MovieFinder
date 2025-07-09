@@ -9,15 +9,15 @@
 <MudSnackbarProvider />
 
 <MudLayout>
-	<MudAppBar Fixed="true" Style="background-color: #2d4659;" Elevation="0">
+	<MudAppBar Fixed="true" Style="background-color: #2d4659;" Elevation="0" >
 		<div style="width: 76%; margin: 0 auto;">
 			<MudGrid Justify="Justify.Center" Spacing="2">
-				<MudItem xs="3" md="1" Class="mt-2">
+				<MudItem xs="3" md="2" Class="d-flex align-items-center">
 					<MudImage Width="60"
 							  Src="/Images/tmdb.svg"></MudImage>
 				</MudItem>
 
-				<MudItem xs="9" md="11" Class="mt-1">
+				<MudItem xs="9" md="10" Class="d-flex align-items-center">
 					<MudAutocomplete T="Movie"
 									 FullWidth="true"
 									 Label="Search movie"
@@ -32,10 +32,10 @@
 									 Margin="Margin.Dense"
 									 Clearable="true"
 									 Dense="true"
-									 MaxHeight="400"
+									 MaxHeight="300"
 									 CoerceText="false"
-									 RelativeWidth="DropdownWidth.Relative"
-									 PopoverClass="full-width-dropdown">
+									 RelativeWidth="DropdownWidth.Adaptive"
+									 PopoverClass="wide-popover-mobile">
 						<ItemTemplate>
 							<NavLink href="@GenerateUrl(context.Id, context.Title)">
 								<MudStack Row="true">

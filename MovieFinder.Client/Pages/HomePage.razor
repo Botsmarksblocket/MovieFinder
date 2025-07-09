@@ -13,7 +13,7 @@
 <MudPaper Class="d-flex justify-center" Elevation="0">
 	<MudPaper Width="75%" Style="min-height: 100vh;" Elevation="0" Class="mt-6">
 		<MudGrid>
-			<MudItem xs="12" sm="6">
+			<MudItem xs="12" md="6">
 				<MudSelect MultiSelectionTextFunc="@(new Func<List<string>, string>(GetMultiSelectionText))"
 						   T="int"
 						   Clearable="true"
@@ -45,7 +45,7 @@
 					}
 				</MudSelect>
 			</MudItem>
-			<MudItem xs="12" sm="6">
+			<MudItem xs="12" md="6">
 				<MudSelect T="string"
 						   Value="@_parameters.SortBy"
 						   ValueChanged="OnSortByChanged"
