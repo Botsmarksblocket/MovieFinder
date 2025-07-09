@@ -11,6 +11,7 @@ namespace MovieFinder.Client.Services
 
     public interface ITMDBService
     {
+        Task<MovieDetails> GetMovieDetailsAsync(int movieId);
         Task<List<Genre>> GetGenresAsync();
         Task<List<Movie>> GetSearchedMoviesAsync(string searchWord);
         Task<SearchResult> GetFilteredMoviesAsync(FilterParameters parameters);
@@ -24,6 +25,22 @@ namespace MovieFinder.Client.Services
         {
             _httpClient = httpClient;
             _apiKey = config["TMDB:ApiKey"];
+        }
+
+        //Returns details about a specific movie
+        public async Task <MovieDetails> GetMovieDetailsAsync(int movieId)
+        {
+            var baseUrl = $"https://api.themoviedb.org/3/movie/{movieId}";
+
+            var queryParameters = new Dictionary<string, string>
+            {
+                ["api_key"] = _apiKey,
+            };
+
+            var url = QueryHelpers.AddQueryString(baseUrl, queryParameters);
+            var response = await _httpClient.GetFromJsonAsync<MovieDetails>(url);
+
+            return response;
         }
 
         //Retrieves all movie genres
