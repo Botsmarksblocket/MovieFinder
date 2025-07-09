@@ -4,10 +4,13 @@
 @page "/movie/{id:int}/{slug}"
 
 <PageTitle>@_movie.Title</PageTitle>
+<MudPaper Class="d-flex justify-center backdrop-image"
+		  Style=@($"background-image: url('{GetImageUrl(_movie.BackdropPath)}');") Elevation="0">
+	<MudPaper Width="75%" Style="min-height: 100vh; opacity: 0.7;" Elevation="0" Class="mt-6">
+	</MudPaper>
+</MudPaper>
 
 
-
-<MudImage Src="@GetImageUrl(_movie.BackdropPath)"></MudImage>
 
 @code {
 	[Parameter]
