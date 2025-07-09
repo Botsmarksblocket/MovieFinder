@@ -19,7 +19,6 @@
 								  Src="/Images/tmdb.svg">
 						</MudImage>
 					</NavLink>
-
 				</MudItem>
 
 				<MudItem xs="9" md="10" Class="d-flex align-items-center">
@@ -82,7 +81,7 @@
 
 	private async Task<IEnumerable<Movie>> SearchMovie(string movieName, CancellationToken token)
 	{
-		return await TMDB.GetMovieAsync(movieName);
+		return await TMDB.GetSearchedMoviesAsync(movieName);
 	}
 
 	private string GetImageUrl(string posterPath)

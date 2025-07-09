@@ -91,6 +91,7 @@
 								{
 									<p>Rating not found</p>
 								}
+
 							</div>
 
 							@* If the poster cannot be found *@
@@ -245,15 +246,23 @@
 	//Display logic for the multiselection text for genres
 	private string GetMultiSelectionText(List<string> selectedValues)
 	{
-		int count = selectedValues.Count();
+		var genreNames = _genres
+		    .Where(g => selectedValues.Contains(g.Id.ToString()))
+			.Select(g => g.Name)
+			.ToList();
 
-		if (count == 1)
+
+		if (genreNames.Count == 1)
 		{
-			return "1 genre selected";
+			return genreNames[0];
+		}
+		else if (genreNames.Count > 1)
+		{
+			return string.Join(" | ", genreNames) + " | ";
 		}
 		else
 		{
-			return $"{count} genres selected";
+			return "No genres selected";
 		}
 	}
 
