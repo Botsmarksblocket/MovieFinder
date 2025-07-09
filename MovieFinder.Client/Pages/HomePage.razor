@@ -142,7 +142,7 @@
 	private List<Movie> _allMovies = new();
 	private List<Genre> _genres = new();
 	private FilterParameters _parameters = new();
-	private SlugHelper slugHelper = new();
+	private SlugHelper _slugHelper = new();
 
 	private DotNetObjectReference<HomePage> _dotNetRef;
 
@@ -276,6 +276,6 @@
 	//Generates a valid url for a specific movie using the Slugify library
 	private string GenerateUrl(int id, string movieTitle)
 	{
-		return $"/movie/{id}/{slugHelper.GenerateSlug(movieTitle)}";
+		return $"/movie/{id}/{_slugHelper.GenerateSlug(movieTitle)}";
 	}
 }

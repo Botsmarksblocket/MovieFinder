@@ -1,10 +1,32 @@
-﻿@page "/movie/{id:int}/{slug}"
+﻿@using Services
+@using Models
+@inject ITMDBService TMDB
+@page "/movie/{id:int}/{slug}"
+
+<PageTitle>@_movie.Title</PageTitle>
 
 
-<h1>Hello</h1>
+
+<MudImage Src="@GetImageUrl(_movie.BackdropPath)"></MudImage>
+
 @code {
-    [Parameter]
-    public int id { get; set; }
-    [Parameter]
-    public string slug { get; set; }
+	[Parameter]
+	public int Id { get; set; }
+	[Parameter]
+	public string Slug { get; set; }
+
+	private MovieDetails _movie = new();
+
+	protected override async Task OnInitializedAsync()
+	{
+		_movie = await TMDB.GetMovieDetailsAsync(Id);
+	}
+
+	private string GetImageUrl(string backdropPath)
+	{
+		return string.IsNullOrWhiteSpace(backdropPath)
+		? ""
+		: $"https://image.tmdb.org/t/p/original{backdropPath}";
+	}
+
 }
