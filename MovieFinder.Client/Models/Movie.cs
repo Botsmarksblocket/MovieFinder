@@ -4,7 +4,6 @@ namespace MovieFinder.Client.Models
 {
     public class Movie
     {
-
         public int Id { get; set; }
 
         [JsonPropertyName("title")]

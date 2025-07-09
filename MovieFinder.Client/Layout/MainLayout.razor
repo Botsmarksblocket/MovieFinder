@@ -2,6 +2,7 @@
 @using Models
 @using Services
 @using Slugify
+@inject NavigationManager NavigationManager
 @inject ITMDBService TMDB
 <MudThemeProvider Theme="@MovieTheme" IsDarkMode="true" />
 <MudPopoverProvider />
@@ -12,17 +13,20 @@
 	<MudAppBar Fixed="true" Style="background-color: #2d4659;" Elevation="0">
 		<div style="width: 76%; margin: 0 auto;">
 			<MudGrid Justify="Justify.Center" Spacing="2">
-				<MudItem xs="3" md="1" Class="mt-2">
-					<MudImage Width="60"
-							  Src="/Images/tmdb.svg"></MudImage>
+				<MudItem xs="3" md="2" Class="d-flex align-items-center mt-2">
+					<NavLink Href="/">
+						<MudImage Width="60"
+								  Src="/Images/tmdb.svg">
+						</MudImage>
+					</NavLink>
 				</MudItem>
 
-				<MudItem xs="9" md="11" Class="mt-1">
+				<MudItem xs="9" md="10" Class="d-flex align-items-center">
 					<MudAutocomplete T="Movie"
 									 FullWidth="true"
 									 Label="Search movie"
 									 Value="_selectedMovie"
-									 ValueChanged="OnMovieSelected"
+									 ValueChanged="NavigateToMoviePage"
 									 SearchFunc="@SearchMovie"
 									 Variant="Variant.Filled"
 									 ShowProgressIndicator="true"
@@ -32,24 +36,22 @@
 									 Margin="Margin.Dense"
 									 Clearable="true"
 									 Dense="true"
-									 MaxHeight="400"
+									 MaxHeight="300"
 									 CoerceText="false"
-									 RelativeWidth="DropdownWidth.Relative"
-									 PopoverClass="full-width-dropdown">
+									 RelativeWidth="DropdownWidth.Adaptive"
+									 PopoverClass="wide-popover-mobile">
 						<ItemTemplate>
-							<NavLink href="@GenerateUrl(context.Id, context.Title)">
-								<MudStack Row="true">
-									<MudImage Style="width: 47px; height: 71px; margin-right: 10px;"
-											  Src="@GetImageUrl(context.PosterPath)"
-											  Alt="Movie Poster"
-											  FallbackSrc="/Images/notfound.png" />
+							<MudStack Row="true">
+								<MudImage Style="width: 47px; height: 71px; margin-right: 10px;"
+										  Src="@GetImageUrl(context.PosterPath)"
+										  Alt="Movie Poster"
+										  FallbackSrc="/Images/notfound.png" />
 
-									<MudStack Justify="Justify.Center" Spacing="0">
-										<h4>@context.Title</h4>
-										<h5>@context.ReleaseDate</h5>
-									</MudStack>
+								<MudStack Justify="Justify.Center" Spacing="0">
+									<h4>@context.Title</h4>
+									<h5>@context.ReleaseDate</h5>
 								</MudStack>
-							</NavLink>
+							</MudStack>
 						</ItemTemplate>
 					</MudAutocomplete>
 				</MudItem>
@@ -64,6 +66,12 @@
 
 @code {
 	private SlugHelper slugHelper = new();
+	private Movie? _selectedMovie;
+
+	private void NavigateToMoviePage(Movie selectedMovie)
+	{
+		NavigationManager.NavigateTo(GenerateUrl(selectedMovie.Id, selectedMovie.Title));
+	}
 
 	//Generates a valid url for a specific movie using the Slugify library
 	private string GenerateUrl(int id, string movieTitle)
@@ -71,16 +79,9 @@
 		return $"/movie/{id}/{slugHelper.GenerateSlug(movieTitle)}";
 	}
 
-	private async Task OnMovieSelected(Movie selected)
-	{
-		_selectedMovie = null;
-	}
-
-	private Movie _selectedMovie;
-
 	private async Task<IEnumerable<Movie>> SearchMovie(string movieName, CancellationToken token)
 	{
-		return await TMDB.GetMovieAsync(movieName);
+		return await TMDB.GetSearchedMoviesAsync(movieName);
 	}
 
 	private string GetImageUrl(string posterPath)
