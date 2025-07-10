@@ -1,6 +1,16 @@
 ﻿/***********/
-/*MOVIEPAGE*/
+/*MOVIE PAGE*/
 /***********/
+
+.responsive-width {
+    width: 75%;
+}
+
+@media (max-width: 768px) {
+    .responsive-width {
+        width: 100% !important; 
+    }
+}
 
 .backdrop-image {
     background-size: cover;
@@ -8,12 +18,8 @@
     min-height: 100vh;
 }
 
-
-
-
-
 /***********/
-/*HOMEPAGE*/
+/*HOME PAGE*/
 /*********/
 .movie-poster-container {
     position: relative;
@@ -69,7 +75,9 @@
     min-width: 105%;
 }
 
-.movie-poster-container:hover .not-found h3 {
+/* When hovering over a movie card without a poster, hide h1/h3 text to reveal the description underneath */
+.movie-poster-container:hover .not-found > h3,
+.movie-poster-container:hover .not-found > h1 {
     display: none;
 }
 
