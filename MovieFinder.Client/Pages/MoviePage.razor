@@ -8,18 +8,17 @@
 <MudPaper MaxWidth="MaxWidth.ExtraExtraLarge" Class="d-flex justify-center backdrop-image"
 		  Style=@($"background-image: url('{GetBackdropUrl(_movie.BackdropPath)}');") Elevation="0">
 	<MudPaper Style="min-height: 100vh;"
-			  Class="mt-3 frosted-glass responsive-width">
-		<MudGrid>
-			<MudItem xs="12" md="4">
-				<div class="d-flex justify-xs-center justify-sm-start ma-8 rounded ">
-					<MudImage Class="center-xs movie-poster rounded" Src="@GetPosterUrl(_movie.PosterPath)"
-							  Alt="Movie Poster"
-							  Style="max-width: 294px;"
+			  Class="mt-3 frosted-glass container-width">
+		<MudGrid Spacing="0">
+			<MudItem xs="12" md="5" lg="3">
+				<div class="d-flex flex-wrap justify-xs-center justify-sm-start mt-4 mx-4 rounded">
+					<MudImage Class="center-xs movie-page-poster rounded" Src="@GetPosterUrl(_movie.PosterPath)"
+							  Alt="Movie Poster"							  
 							  FallbackSrc="/Images/notfound.png" />
 				</div>
 			</MudItem>
-			<MudItem xs="12" md="8">
-				<div class="d-flex justify-xs-center justify-sm-start ma-8">
+			<MudItem xs="12" md="7" lg="9">
+				<div class="d-flex justify-xs-center justify-sm-start mt-4">
 					<MudStack Class="center-xs">
 						<h1>Howdy</h1>
 						<h2>Dowdy</h2>
