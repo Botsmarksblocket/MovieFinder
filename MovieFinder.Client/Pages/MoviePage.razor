@@ -5,13 +5,28 @@
 
 <PageTitle>@_movie.Title</PageTitle>
 
-<MudPaper Class="d-flex justify-center backdrop-image"
-Style=@($"background-image: url('{GetImageUrl(_movie.BackdropPath)}');") Elevation="0">
-	<MudPaper Style="min-height: 100vh; opacity: 0.7;"
-	Elevation="16"
-	Class="mt-3 responsive-width">
+<div class="d-flex justify-center backdrop-image dark-text-page"
+	 style=@($"background-image: url('{GetBackdropUrl(_movie.BackdropPath)}');")>
+	<MudPaper Style="min-height: 100vh;"
+			  Class="mt-3 mb-1 frosted-glass container-width">
+		<MudGrid Spacing="0">
+			<MudItem xs="12" md="5" lg="3">
+				<div class="mt-6 mx-8 rounded center-xs">
+					<MudImage Class="movie-page-poster rounded" Src="@GetPosterUrl(_movie.PosterPath)"
+							  Alt="Movie Poster"
+							  FallbackSrc="/Images/notfound.png" />
+				</div>
+			</MudItem>
+			<MudItem xs="12" md="7" lg="9">
+				<MudStack Class="center-xs mt-6 mx-2">
+					<h1>@_movie.Title</h1>
+					<h2>@_movie.Tagline</h2>
+					<h3>@_movie.Description</h3>
+				</MudStack>
+			</MudItem>
+		</MudGrid>
 	</MudPaper>
-</MudPaper>
+</div>
 
 @code {
 	[Parameter]
@@ -26,11 +41,17 @@ Style=@($"background-image: url('{GetImageUrl(_movie.BackdropPath)}');") Elevati
 		_movie = await TMDB.GetMovieDetailsAsync(Id);
 	}
 
-	private string GetImageUrl(string backdropPath)
+	private string GetPosterUrl(string posterPath)
+	{
+		return string.IsNullOrWhiteSpace(posterPath)
+		? ""
+		: $"https://image.tmdb.org/t/p/w780{posterPath}";
+	}
+
+	private string GetBackdropUrl(string backdropPath)
 	{
 		return string.IsNullOrWhiteSpace(backdropPath)
 		? ""
 		: $"https://image.tmdb.org/t/p/original{backdropPath}";
 	}
-
 }

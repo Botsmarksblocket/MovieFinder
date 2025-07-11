@@ -1,0 +1,11 @@
+﻿.dark-text-page {
+    color: #000;
+}
+    .dark-text-page h1,
+    .dark-text-page h2,
+    .dark-text-page h3,
+    .dark-text-page p,
+    .dark-text-page span,
+    .dark-text-page div {
+        color: #000 !important;
+    }
