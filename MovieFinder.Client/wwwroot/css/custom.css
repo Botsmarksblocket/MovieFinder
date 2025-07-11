@@ -11,22 +11,33 @@
     border: 1px solid rgba(148, 134, 180, 0.71);
 }
 
-.responsive-width {
-    width: 75%;
-    background-color: red;
-}
-
-@media (max-width: 768px) {
-    .responsive-width {
-        width: 100% !important; 
-    }
-}
-
 .backdrop-image {
     background-size: cover;
     background-position: center;
     min-height: 100vh;
 }
+
+.center-xs {
+    margin: 0;
+}
+
+.responsive-width {
+    width: 75%;
+}
+
+@media (max-width: 959px) {
+    .center-xs {
+        margin: 0 auto; 
+    }
+}
+
+@media (max-width: 959px) {
+    .responsive-width {
+        width: 100% !important;
+    }
+}
+
+
 
 /***********/
 /*HOME PAGE*/

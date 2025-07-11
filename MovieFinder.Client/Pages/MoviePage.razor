@@ -10,28 +10,17 @@
 	<MudPaper Style="min-height: 100vh;"
 			  Class="mt-3 frosted-glass responsive-width">
 		<MudGrid>
-			<MudItem xs="12" md="5">
-				<div class="ma-8 rounded d-flex justify-xs-center justify-md-start">
-					@* If the poster cannot be found *@
-					@if (GetPosterUrl(_movie.PosterPath) == "")
-					{
-						<div class="not-found rounded flex-container" style="height:100%;">
-							<h1>@_movie.Title</h1>
-							<h3 style="color:#3b82f6">(Poster not found)</h3>
-						</div>
-					}
-					else
-					{
-						<MudImage Class="movie-poster rounded"
-								  Src="@GetPosterUrl(_movie.PosterPath)"
-								  Alt="Movie Poster">
-						</MudImage>
-					}
+			<MudItem xs="12" md="4">
+				<div class="d-flex justify-xs-center justify-sm-start ma-8 rounded ">
+					<MudImage Class="center-xs movie-poster rounded" Src="@GetPosterUrl(_movie.PosterPath)"
+							  Alt="Movie Poster"
+							  Style="max-width: 294px;"
+							  FallbackSrc="/Images/notfound.png" />
 				</div>
 			</MudItem>
-			<MudItem xs="12" md="7">
-				<div class="d-flex justify-xs-center justify-md-start">
-					<MudStack>
+			<MudItem xs="12" md="8">
+				<div class="d-flex justify-xs-center justify-sm-start ma-8">
+					<MudStack Class="center-xs">
 						<h1>Howdy</h1>
 						<h2>Dowdy</h2>
 						<h3>Doo</h3>
