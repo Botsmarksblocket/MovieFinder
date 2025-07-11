@@ -5,11 +5,40 @@
 
 <PageTitle>@_movie.Title</PageTitle>
 
-<MudPaper Class="d-flex justify-center backdrop-image"
-Style=@($"background-image: url('{GetImageUrl(_movie.BackdropPath)}');") Elevation="0">
-	<MudPaper Style="min-height: 100vh; opacity: 0.7;"
-	Elevation="16"
-	Class="mt-3 responsive-width">
+<MudPaper MaxWidth="MaxWidth.ExtraExtraLarge" Class="d-flex justify-center backdrop-image"
+		  Style=@($"background-image: url('{GetBackdropUrl(_movie.BackdropPath)}');") Elevation="0">
+	<MudPaper Style="min-height: 100vh;"
+			  Class="mt-3 frosted-glass responsive-width">
+		<MudGrid>
+			<MudItem xs="12" md="5">
+				<div class="ma-8 rounded d-flex justify-xs-center justify-md-start">
+					@* If the poster cannot be found *@
+					@if (GetPosterUrl(_movie.PosterPath) == "")
+					{
+						<div class="not-found rounded flex-container" style="height:100%;">
+							<h1>@_movie.Title</h1>
+							<h3 style="color:#3b82f6">(Poster not found)</h3>
+						</div>
+					}
+					else
+					{
+						<MudImage Class="movie-poster rounded"
+								  Src="@GetPosterUrl(_movie.PosterPath)"
+								  Alt="Movie Poster">
+						</MudImage>
+					}
+				</div>
+			</MudItem>
+			<MudItem xs="12" md="7">
+				<div class="d-flex justify-xs-center justify-md-start">
+					<MudStack>
+						<h1>Howdy</h1>
+						<h2>Dowdy</h2>
+						<h3>Doo</h3>
+					</MudStack>
+				</div>
+			</MudItem>
+		</MudGrid>
 	</MudPaper>
 </MudPaper>
 
@@ -26,11 +55,17 @@ Style=@($"background-image: url('{GetImageUrl(_movie.BackdropPath)}');") Elevati
 		_movie = await TMDB.GetMovieDetailsAsync(Id);
 	}
 
-	private string GetImageUrl(string backdropPath)
+	private string GetPosterUrl(string posterPath)
+	{
+		return string.IsNullOrWhiteSpace(posterPath)
+		? ""
+		: $"https://image.tmdb.org/t/p/w780{posterPath}";
+	}
+
+	private string GetBackdropUrl(string backdropPath)
 	{
 		return string.IsNullOrWhiteSpace(backdropPath)
 		? ""
 		: $"https://image.tmdb.org/t/p/original{backdropPath}";
 	}
-
 }

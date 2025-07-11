@@ -16,7 +16,6 @@
 		StartIcon="@Icons.Material.Filled.ArrowCircleUp" />
 </MudScrollToTop>
 
-
 <MudPaper Class="d-flex justify-center" Elevation="0">
 	<MudPaper Width="75%" Style="min-height: 100vh;" Elevation="0" Class="mt-6">
 		<MudGrid>
@@ -102,7 +101,7 @@
 							</div>
 
 							@* If the poster cannot be found *@
-							@if (GetImageUrl(movie.PosterPath) == "")
+							@if (GetPosterUrl(movie.PosterPath) == "")
 							{
 								<div class="not-found flex-container">
 									<h1>@movie.Title</h1>
@@ -112,7 +111,7 @@
 							else
 							{
 								<MudImage Class="movie-poster"
-										  Src="@GetImageUrl(movie.PosterPath)"
+										  Src="@GetPosterUrl(movie.PosterPath)"
 										  Alt="Movie Poster">
 								</MudImage>
 							}
@@ -273,7 +272,7 @@
 		}
 	}
 
-	private string GetImageUrl(string posterPath)
+	private string GetPosterUrl(string posterPath)
 	{
 		return string.IsNullOrWhiteSpace(posterPath)
 		? ""
