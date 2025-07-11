@@ -5,30 +5,28 @@
 
 <PageTitle>@_movie.Title</PageTitle>
 
-<MudPaper MaxWidth="MaxWidth.ExtraExtraLarge" Class="d-flex justify-center backdrop-image"
-		  Style=@($"background-image: url('{GetBackdropUrl(_movie.BackdropPath)}');") Elevation="0">
+<div class="d-flex justify-center backdrop-image"
+	 style=@($"background-image: url('{GetBackdropUrl(_movie.BackdropPath)}');")>
 	<MudPaper Style="min-height: 100vh;"
-			  Class="mt-3 frosted-glass container-width">
+			  Class="mt-3 mb-1 frosted-glass container-width">
 		<MudGrid Spacing="0">
 			<MudItem xs="12" md="5" lg="3">
-				<div class="d-flex flex-wrap justify-xs-center justify-sm-start mt-4 mx-4 rounded">
-					<MudImage Class="center-xs movie-page-poster rounded" Src="@GetPosterUrl(_movie.PosterPath)"
-							  Alt="Movie Poster"							  
+				<div class="mt-6 mx-8 rounded center-xs">
+					<MudImage Class="movie-page-poster rounded" Src="@GetPosterUrl(_movie.PosterPath)"
+							  Alt="Movie Poster"
 							  FallbackSrc="/Images/notfound.png" />
 				</div>
 			</MudItem>
 			<MudItem xs="12" md="7" lg="9">
-				<div class="d-flex justify-xs-center justify-sm-start mt-4">
-					<MudStack Class="center-xs">
-						<h1>Howdy</h1>
-						<h2>Dowdy</h2>
-						<h3>Doo</h3>
-					</MudStack>
-				</div>
+				<MudStack Class="center-xs mt-6 mx-2">
+					<h1>@_movie.Title</h1>
+					<h2>@_movie.Tagline</h2>
+					<h3>@_movie.Description</h3>
+				</MudStack>
 			</MudItem>
 		</MudGrid>
 	</MudPaper>
-</MudPaper>
+</div>
 
 @code {
 	[Parameter]

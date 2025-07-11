@@ -11,6 +11,9 @@ namespace MovieFinder.Client.Models
         public string PosterPath { get; set; }
         [JsonPropertyName("title")]
         public string Title { get; set; }
-
+        [JsonPropertyName("tagline")]
+        public string Tagline { get; set; }
+        [JsonPropertyName("overview")]
+        public string Description { get; set; }
     }
 }
