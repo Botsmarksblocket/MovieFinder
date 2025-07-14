@@ -58,7 +58,10 @@
 					}
 				</MudStack>
 				<MudStack Row="true"
-						  Wrap="Wrap.Wrap">
+						  Wrap="Wrap.Wrap"
+						  Style="color: rgba(0,0,0,85);"
+						  Justify="Justify.FlexStart"
+						  Spacing="16">
 					<MudStack Row="false">
 						<MudText Typo="Typo.h5">Release date</MudText>
 						<MudText Typo="Typo.h5">@_movie.ReleaseDate</MudText>
@@ -77,10 +80,46 @@
 						else
 						{
 
-							<MudText Typo="Typo.h5">$ @_movie.Budget.ToString("##,##0")</MudText>
+							<MudText Typo="Typo.h5">$ @_movie.Budget.ToString("##,##")</MudText>
 						}
 					</MudStack>
+				</MudStack>
 
+				<MudStack Row="true"
+						  Wrap="Wrap.Wrap"
+						  Style="color: rgba(0,0,0,85);">
+					<MudStack Row="false">
+						<MudStack>
+							<MudText Typo="Typo.h5">Vote average</MudText>
+							<MudText Typo="Typo.h5">@_movie.Rating.ToString("0.#") / 10</MudText>
+
+						</MudStack>
+
+
+
+
+
+
+
+
+
+	@* 					<MudStack>
+							@foreach(var language in _movie.Languages)
+							{
+								<MudText Typo="Typo.h5">@language.Name</MudText>
+							}
+
+							@if (_movie.Revenue == 0)
+							{
+								<MudText Typo="Typo.h5">Unknown</MudText>
+							}
+							else
+							{
+
+								<MudText Typo="Typo.h5">$ @_movie.Budget.ToString("##,##")</MudText>
+							}
+						</MudStack> *@
+					</MudStack>
 				</MudStack>
 			</MudItem>
 		</MudGrid>
@@ -96,7 +135,8 @@
 	private MovieDetail _movie = new MovieDetail
 	{
 		Genres = new List<Genre>(),
-		ProductionCompanies = new List<ProductionCompany>()
+		ProductionCompanies = new List<ProductionCompany>(),
+		Languages = new List<AvailableLanguage>()
 	};
 
 	protected override async Task OnParametersSetAsync()
