@@ -5,7 +5,7 @@
 
 <PageTitle>@_movie.Title</PageTitle>
 
-<div class="d-flex justify-center backdrop-image dark-text-page"
+<div class="d-flex justify-center backdrop-image"
 	 style=@($"background-image: url('{GetBackdropUrl(_movie.BackdropPath)}');")>
 	<MudPaper Style="min-height: 100vh;"
 			  Class="mt-2 mb-1 frosted-glass container-width">
@@ -17,12 +17,94 @@
 							  FallbackSrc="/Images/notfound.png" />
 				</div>
 			</MudItem>
-			<MudItem xs="12" md="7" lg="9">
-				<MudStack Class="center-xs mt-6 mx-2">
-					<h1>@_movie.Title</h1>
-					<h2>@_movie.Tagline</h2>
-					<h3>@_movie.Description</h3>
+			<MudItem Class="center-xs" xs="12" md="7" lg="9">
+				<MudStack Class="center-xs mt-6 mx-2" Style="color: rgba(0,0,0,85);">
+					<MudText Typo="Typo.h4">@(_movie.Title?.ToUpper())</MudText>
+					<MudText Typo="Typo.h6">@_movie.Tagline</MudText>
+					<MudText Typo="Typo.body1">@_movie.Description</MudText>
 				</MudStack>
+				<MudStack Row="true"
+						  Wrap="Wrap.Wrap">
+					@foreach (var genre in _movie.Genres)
+					{
+						<MudChip Class="my-2 mx-2" T="string" Style=@($"background-color: {GetRandomColor()}CC;")>@genre.Name</MudChip>
+					}
+				</MudStack>
+
+				<MudStack AlignItems="AlignItems.Center"
+						  Row="true"
+						  Wrap="Wrap.Wrap"
+						  Class="mx-2">
+					@foreach (var company in _movie.ProductionCompanies)
+					{
+						<MudTooltip Arrow="true"
+									Text="@company.Name">
+							@if (GetLogoUrl(company.LogoPath) == "")
+							{
+								<MudChip Label="true" T="string" Style="background-color: #2b2b2b">
+									@company.Name
+								</MudChip>
+							}
+							else
+							{
+								<MudImage Style="color: rgba(0,0,0,85)"
+										  ObjectFit="ObjectFit.Contain"
+										  Width="110"
+										  Class="rounded"
+										  Height="60"
+										  Src="@GetLogoUrl(company.LogoPath)">
+								</MudImage>
+							}
+						</MudTooltip>
+					}
+				</MudStack>
+
+				<MudStack Row=" true"
+						  Style="color: rgba(0,0,0,85);"
+						  Justify="Justify.FlexStart"
+						  Spacing="16">
+					<MudStack Row="false">
+						<MudText Class="small-font-xs" Typo="Typo.h5">Release date</MudText>
+						<MudText Class="small-font-xs" Typo="Typo.h5">@_movie.ReleaseDate</MudText>
+					</MudStack>
+					<MudStack Row="false">
+						<MudText Class="small-font-xs" Typo="Typo.h5">Runtime</MudText>
+						<MudText Class="small-font-xs" Typo="Typo.h5">@_movie.Runtime minutes</MudText>
+					</MudStack>
+					<MudStack Row="false">
+						<MudText Class="small-font-xs" Typo="Typo.h5">Budget</MudText>
+
+						@if (_movie.Budget == 0)
+						{
+							<MudText Class="small-font-xs" Typo="Typo.h5">Unknown</MudText>
+						}
+						else
+						{
+
+							<MudText Class="small-font-xs" Typo="Typo.h5">$ @_movie.Budget.ToString("##,##")</MudText>
+						}
+					</MudStack>
+				</MudStack>
+
+				<MudStack Row="true"
+						  Wrap="Wrap.Wrap"
+						  Style="color: rgba(0,0,0,85);">
+					<MudStack Row="false">
+						<MudStack>
+							<MudText Typo="Typo.h5">Vote average</MudText>
+							<MudText Typo="Typo.h5">@_movie.Rating.ToString("0.#") / 10</MudText>
+						</MudStack>
+
+						<MudStack>
+							@foreach(var language in _movie.Languages)
+							{
+								allLanguages.Add(language.Language);
+							} 
+							<MudText Typo="Typo.h5">@String.Join(", ", allLanguages)</MudText>
+						</MudStack>
+					</MudStack>
+				</MudStack>
+
 			</MudItem>
 		</MudGrid>
 	</MudPaper>
@@ -34,18 +116,32 @@
 	[Parameter]
 	public string Slug { get; set; }
 
-	private MovieDetails _movie = new();
+	private List<string> allLanguages = new List<string>();
+
+	private MovieDetail _movie = new MovieDetail
+	{
+		Genres = new List<Genre>(),
+		ProductionCompanies = new List<ProductionCompany>(),
+		Languages = new List<AvailableLanguage>()
+	};
 
 	protected override async Task OnParametersSetAsync()
 	{
 		_movie = await TMDB.GetMovieDetailsAsync(Id);
 	}
 
+	private string GetLogoUrl(string logoPath)
+	{
+		return string.IsNullOrWhiteSpace(logoPath)
+		? ""
+		: $"https://image.tmdb.org/t/p/original/{logoPath}";
+	}
+
 	private string GetPosterUrl(string posterPath)
 	{
 		return string.IsNullOrWhiteSpace(posterPath)
 		? ""
-		: $"https://image.tmdb.org/t/p/w780{posterPath}";
+		: $"https://image.tmdb.org/t/p/original{posterPath}";
 	}
 
 	private string GetBackdropUrl(string backdropPath)
@@ -53,5 +149,19 @@
 		return string.IsNullOrWhiteSpace(backdropPath)
 		? ""
 		: $"https://image.tmdb.org/t/p/original{backdropPath}";
+	}
+
+	private Random _random = new Random();
+
+	private readonly string[] colors = {
+		"#B22222", "#228B22", "#1E90FF", "#8B008B", "#A0522D",
+		"#8B0000", "#2F4F4F", "#556B2F", "#483D8B", "#5F9EA0",
+		"#9932CC", "#800000", "#6A5ACD", "#2E8B57","#3CB371",
+		"#7B68EE", "#DC143C"
+	};
+
+	private string GetRandomColor()
+	{
+		return colors[_random.Next(colors.Count())];
 	}
 }

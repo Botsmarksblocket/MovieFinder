@@ -1,6 +1,6 @@
 ﻿namespace MovieFinder.Client.Models
 {
-    public class FilterParameters
+    public class FilterParameter
     {
         public List<int> GenreIds { get; set; }
         public double MinimumRating { get; set; } = 0;

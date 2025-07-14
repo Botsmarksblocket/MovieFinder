@@ -11,10 +11,10 @@ namespace MovieFinder.Client.Services
 
     public interface ITMDBService
     {
-        Task<MovieDetails> GetMovieDetailsAsync(int movieId);
+        Task<MovieDetail> GetMovieDetailsAsync(int movieId);
         Task<List<Genre>> GetGenresAsync();
         Task<List<Movie>> GetSearchedMoviesAsync(string searchWord);
-        Task<SearchResult> GetFilteredMoviesAsync(FilterParameters parameters);
+        Task<SearchResult> GetFilteredMoviesAsync(FilterParameter parameters);
     }
     public class TMDBService : ITMDBService
     {
@@ -28,7 +28,7 @@ namespace MovieFinder.Client.Services
         }
 
         //Returns details about a specific movie
-        public async Task <MovieDetails> GetMovieDetailsAsync(int movieId)
+        public async Task <MovieDetail> GetMovieDetailsAsync(int movieId)
         {
             var baseUrl = $"https://api.themoviedb.org/3/movie/{movieId}";
 
@@ -38,8 +38,7 @@ namespace MovieFinder.Client.Services
             };
 
             var url = QueryHelpers.AddQueryString(baseUrl, queryParameters);
-            var response = await _httpClient.GetFromJsonAsync<MovieDetails>(url);
-
+            var response = await _httpClient.GetFromJsonAsync<MovieDetail>(url);
             return response;
         }
 
@@ -69,7 +68,7 @@ namespace MovieFinder.Client.Services
         }
 
         //Retrieves list of movies from TMDB based on provided filter parameters.
-        public async Task<SearchResult> GetFilteredMoviesAsync(FilterParameters parameter)
+        public async Task<SearchResult> GetFilteredMoviesAsync(FilterParameter parameter)
         {
             var baseUrl = $"https://api.themoviedb.org/3/discover/movie";
 
