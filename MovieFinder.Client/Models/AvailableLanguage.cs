@@ -5,6 +5,6 @@ namespace MovieFinder.Client.Models
     public class AvailableLanguage
     {
         [JsonPropertyName("name")]
-        public string Name { get; set; }
+        public string Language { get; set; }
     }
 }
