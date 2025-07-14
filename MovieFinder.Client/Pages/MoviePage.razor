@@ -5,7 +5,7 @@
 
 <PageTitle>@_movie.Title</PageTitle>
 
-<div class="d-flex justify-center backdrop-image dark-text-page"
+<div class="d-flex justify-center backdrop-image"
 	 style=@($"background-image: url('{GetBackdropUrl(_movie.BackdropPath)}');")>
 	<MudPaper Style="min-height: 100vh;"
 			  Class="mt-2 mb-1 frosted-glass container-width">
@@ -18,10 +18,10 @@
 				</div>
 			</MudItem>
 			<MudItem xs="12" md="7" lg="9">
-				<MudStack Class="center-xs mt-6 mx-2">
-					<h1>@(_movie.Title?.ToUpper())</h1>
-					<h2>@_movie.Tagline</h2>
-					<h3>@_movie.Description</h3>
+				<MudStack Class="center-xs mt-6 mx-2" Style="color: rgba(0,0,0,85);">
+					<MudText Typo="Typo.h4">@(_movie.Title?.ToUpper())</MudText>
+					<MudText Typo="Typo.h6">@_movie.Tagline</MudText>
+					<MudText Typo="Typo.body1">@_movie.Description</MudText>
 				</MudStack>
 				<MudStack Row="true">
 					@foreach (var genre in _movie.Genres)
@@ -30,14 +30,13 @@
 					}
 				</MudStack>
 
-				<MudStack	
-					AlignItems="AlignItems.Center"
-					Row="true"
-					Wrap="Wrap.Wrap"
-					Class="mx-2">
+				<MudStack AlignItems="AlignItems.Center"
+						  Row="true"
+						  Wrap="Wrap.Wrap"
+						  Class="mx-2">
 					@foreach (var company in _movie.ProductionCompanies)
 					{
-						<MudTooltip Color="Color.Primary"
+						<MudTooltip Arrow="true"
 									Text="@company.Name">
 							@if (GetLogoUrl(company.LogoPath) == "")
 							{
@@ -57,6 +56,31 @@
 							}
 						</MudTooltip>
 					}
+				</MudStack>
+				<MudStack Row="true"
+						  Wrap="Wrap.Wrap">
+					<MudStack Row="false">
+						<MudText Typo="Typo.h5">Release date</MudText>
+						<MudText Typo="Typo.h5">@_movie.ReleaseDate</MudText>
+					</MudStack>
+					<MudStack Row="false">
+						<MudText Typo="Typo.h5">Runtime</MudText>
+						<MudText Typo="Typo.h5">@_movie.Runtime minutes</MudText>
+					</MudStack>
+					<MudStack Row="false">
+						<MudText Typo="Typo.h5">Budget</MudText>
+
+						@if (_movie.Budget == 0)
+						{
+							<MudText Typo="Typo.h5">Unknown</MudText>
+						}
+						else
+						{
+
+							<MudText Typo="Typo.h5">$ @_movie.Budget.ToString("##,##0")</MudText>
+						}
+					</MudStack>
+
 				</MudStack>
 			</MudItem>
 		</MudGrid>

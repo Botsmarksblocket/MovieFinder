@@ -15,6 +15,12 @@ namespace MovieFinder.Client.Models
         public string Tagline { get; set; }
         [JsonPropertyName("overview")]
         public string Description { get; set; }
+        [JsonPropertyName("release_date")]
+        public string ReleaseDate { get; set; }
+        [JsonPropertyName("runtime")]
+        public int Runtime { get;set; }
+        [JsonPropertyName("budget")]
+        public int Budget { get; set; }
         [JsonPropertyName("genres")]
         public List<Genre> Genres { get; set; }
         [JsonPropertyName("production_companies")]
