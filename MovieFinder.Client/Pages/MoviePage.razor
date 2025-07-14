@@ -19,9 +19,15 @@
 			</MudItem>
 			<MudItem xs="12" md="7" lg="9">
 				<MudStack Class="center-xs mt-6 mx-2">
-					<h1>@_movie.Title</h1>
+					<h1>@(_movie.Title?.ToUpper())</h1>
 					<h2>@_movie.Tagline</h2>
 					<h3>@_movie.Description</h3>
+				</MudStack>
+				<MudStack Row="true">
+					@foreach (var genre in _movie.Genres)
+					{
+						<MudChip Class="my-2 mx-2" T="string" Style=@($"background-color: {GetRandomColor()};")>@genre.Name</MudChip>
+					}
 				</MudStack>
 			</MudItem>
 		</MudGrid>
@@ -34,7 +40,10 @@
 	[Parameter]
 	public string Slug { get; set; }
 
-	private MovieDetails _movie = new();
+	private MovieDetails _movie = new MovieDetails
+	{
+		Genres = new List<Genre>()
+	};
 
 	protected override async Task OnParametersSetAsync()
 	{
@@ -53,5 +62,19 @@
 		return string.IsNullOrWhiteSpace(backdropPath)
 		? ""
 		: $"https://image.tmdb.org/t/p/original{backdropPath}";
+	}
+
+	private Random _random = new Random();
+
+	private readonly string[] colors = {
+		"#B22222", "#228B22", "#1E90FF", "#8B008B", "#A0522D",
+		"#8B0000", "#2F4F4F", "#556B2F", "#483D8B", "#5F9EA0",
+		"#9932CC", "#800000", "#6A5ACD", "#2E8B57","#3CB371",
+		"#7B68EE", "#DC143C"
+	};
+
+	private string GetRandomColor()
+	{
+		return colors[_random.Next(colors.Count())];
 	}
 }
