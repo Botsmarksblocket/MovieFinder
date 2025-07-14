@@ -2,7 +2,7 @@
 
 namespace MovieFinder.Client.Models
 {
-    public class MovieDetails
+    public class MovieDetail
     {
         public int Id { get; set; }
         [JsonPropertyName("backdrop_path")]
@@ -17,5 +17,7 @@ namespace MovieFinder.Client.Models
         public string Description { get; set; }
         [JsonPropertyName("genres")]
         public List<Genre> Genres { get; set; }
+        [JsonPropertyName("production_companies")]
+        public List<ProductionCompany> ProductionCompanies { get; set; }
     }
 }

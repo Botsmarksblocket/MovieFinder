@@ -29,6 +29,35 @@
 						<MudChip Class="my-2 mx-2" T="string" Style=@($"background-color: {GetRandomColor()};")>@genre.Name</MudChip>
 					}
 				</MudStack>
+
+				<MudStack	
+					AlignItems="AlignItems.Center"
+					Row="true"
+					Wrap="Wrap.Wrap"
+					Class="mx-2">
+					@foreach (var company in _movie.ProductionCompanies)
+					{
+						<MudTooltip Color="Color.Primary"
+									Text="@company.Name">
+							@if (GetLogoUrl(company.LogoPath) == "")
+							{
+								<MudChip Label="true" T="string" Style="background-color: #2b2b2b">
+									@company.Name
+								</MudChip>
+							}
+							else
+							{
+								<MudImage Style="color: rgba(0,0,0,85)"
+										  ObjectFit="ObjectFit.Contain"
+										  Width="110"
+										  Class="rounded"
+										  Height="60"
+										  Src="@GetLogoUrl(company.LogoPath)">
+								</MudImage>
+							}
+						</MudTooltip>
+					}
+				</MudStack>
 			</MudItem>
 		</MudGrid>
 	</MudPaper>
@@ -40,14 +69,22 @@
 	[Parameter]
 	public string Slug { get; set; }
 
-	private MovieDetails _movie = new MovieDetails
+	private MovieDetail _movie = new MovieDetail
 	{
-		Genres = new List<Genre>()
+		Genres = new List<Genre>(),
+		ProductionCompanies = new List<ProductionCompany>()
 	};
 
 	protected override async Task OnParametersSetAsync()
 	{
 		_movie = await TMDB.GetMovieDetailsAsync(Id);
+	}
+
+	private string GetLogoUrl(string logoPath)
+	{
+		return string.IsNullOrWhiteSpace(logoPath)
+		? ""
+		: $"https://image.tmdb.org/t/p/original/{logoPath}";
 	}
 
 	private string GetPosterUrl(string posterPath)
