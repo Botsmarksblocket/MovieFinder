@@ -1,5 +1,6 @@
 ﻿@using Services
 @using Models
+@using MudBlazor.Services
 @inject ITMDBService TMDB
 @page "/movie/{id:int}/{slug}"
 
@@ -8,33 +9,33 @@
 <div class="d-flex justify-center backdrop-image"
 	 style=@($"background-image: url('{GetBackdropUrl(_movie.BackdropPath)}');")>
 	<MudPaper Style="min-height: 100vh;"
-			  Class="mt-2 mb-1 frosted-glass container-width">
+			  Class="mt-8 mb-1 frosted-glass container-width">
 		<MudGrid Spacing="0">
 			<MudItem xs="12" md="5" lg="3">
-				<div class="mt-6 mx-8 rounded center-xs">
+				<div class="mt-6 mx-8 center-xs">
 					<MudImage Class="movie-page-poster rounded" Src="@GetPosterUrl(_movie.PosterPath)"
 							  Alt="Movie Poster"
 							  FallbackSrc="/Images/notfound.png" />
 				</div>
 			</MudItem>
 			<MudItem Class="center-xs" xs="12" md="7" lg="9">
-				<MudStack Class="center-xs mt-6 mx-2" Style="color: rgba(0,0,0,85);">
+				<MudStack Class="center-xs mt-6 mx-2" Style="color: rgba(0,0,0,0.85);">
 					<MudText Typo="Typo.h4">@(_movie.Title?.ToUpper())</MudText>
-					<MudText Typo="Typo.h6">@_movie.Tagline</MudText>
-					<MudText Typo="Typo.body1">@_movie.Description</MudText>
+					<MudText Typo="Typo.h5">@_movie.Tagline</MudText>
+					<MudText Class="description-width-xs"Typo="Typo.body1">@_movie.Description</MudText>
 				</MudStack>
 				<MudStack Row="true"
 						  Wrap="Wrap.Wrap">
 					@foreach (var genre in _movie.Genres)
 					{
-						<MudChip Class="my-2 mx-2" T="string" Style=@($"background-color: {GetRandomColor()}CC;")>@genre.Name</MudChip>
+						<MudChip Class="my-2 mx-2 border-double" T="string" Style=@($"background-color: {GetRandomColor()}CC;")>@genre.Name</MudChip>
 					}
 				</MudStack>
 
 				<MudStack AlignItems="AlignItems.Center"
 						  Row="true"
 						  Wrap="Wrap.Wrap"
-						  Class="mx-2">
+						  Class="mx-2 justify-xs-center justify-md-start">
 					@foreach (var company in _movie.ProductionCompanies)
 					{
 						<MudTooltip Arrow="true"
@@ -47,11 +48,11 @@
 							}
 							else
 							{
-								<MudImage Style="color: rgba(0,0,0,85)"
+								<MudImage Style="color: rgba(0,0,0,65)"
 										  ObjectFit="ObjectFit.Contain"
-										  Width="110"
-										  Class="rounded"
+										  Width="100"
 										  Height="60"
+										  Class="mt-2 border-double"
 										  Src="@GetLogoUrl(company.LogoPath)">
 								</MudImage>
 							}
@@ -59,52 +60,65 @@
 					}
 				</MudStack>
 
-				<MudStack Row=" true"
-						  Style="color: rgba(0,0,0,85);"
-						  Justify="Justify.FlexStart"
-						  Spacing="16">
-					<MudStack Row="false">
-						<MudText Class="small-font-xs" Typo="Typo.h5">Release date</MudText>
-						<MudText Class="small-font-xs" Typo="Typo.h5">@_movie.ReleaseDate</MudText>
-					</MudStack>
-					<MudStack Row="false">
-						<MudText Class="small-font-xs" Typo="Typo.h5">Runtime</MudText>
-						<MudText Class="small-font-xs" Typo="Typo.h5">@_movie.Runtime minutes</MudText>
-					</MudStack>
-					<MudStack Row="false">
-						<MudText Class="small-font-xs" Typo="Typo.h5">Budget</MudText>
+				<div class="color-wrapper small-font-xs">
+					<MudStack Spacing="6"
+							  Row="true"
+							  Class="justify-md-space-between justify-xs-space-around mt-4 ">
+						<MudStack Row="false" Spacing="0" Class="flex-equal">
+							<MudText Typo="Typo.h5"><b>Release date</b></MudText>
+							<MudText Typo="Typo.h5">@_movie.ReleaseDate</MudText>
+						</MudStack>
 
-						@if (_movie.Budget == 0)
-						{
-							<MudText Class="small-font-xs" Typo="Typo.h5">Unknown</MudText>
-						}
-						else
-						{
+						<MudStack Row="false" Spacing="0" Class="flex-equal">
+							<MudText Typo="Typo.h5"><b>Revenue</b></MudText>
 
-							<MudText Class="small-font-xs" Typo="Typo.h5">$ @_movie.Budget.ToString("##,##")</MudText>
-						}
+							@if (_movie.Revenue == 0)
+							{
+								<MudText Typo="Typo.h5">Unknown</MudText>
+							}
+							else
+							{
+								<MudText Typo="Typo.h5">$@_movie.Revenue.ToString("##,##")</MudText>
+							}
+						</MudStack>
+
+						<MudStack Row="false" Spacing="0" Class="flex-equal">
+							<MudText Typo="Typo.h5"><b>Budget</b></MudText>
+
+							@if (_movie.Budget == 0)
+							{
+								<MudText Typo="Typo.h5">Unknown</MudText>
+							}
+							else
+							{
+								<MudText Typo="Typo.h5">$@_movie.Budget.ToString("##,##")</MudText>
+							}
+						</MudStack>
 					</MudStack>
-				</MudStack>
 
-				<MudStack Row="true"
-						  Wrap="Wrap.Wrap"
-						  Style="color: rgba(0,0,0,85);">
-					<MudStack Row="false">
-						<MudStack>
-							<MudText Typo="Typo.h5">Vote average</MudText>
+					<MudStack Spacing="6"
+							  Class="justify-md-space-between justify-xs-space-around mt-8"
+							  Row="true">
+
+						<MudStack Row="false" Spacing="0" Class="flex-equal">
+							<MudText Typo="Typo.h5"><b>Runtime</b></MudText>
+							<MudText Typo="Typo.h5">@_movie.Runtime minutes</MudText>
+						</MudStack>
+
+						<MudStack Row="false" Spacing="0" Class="flex-equal">
+							<MudText Typo="Typo.h5"><b>Vote average</b></MudText>
 							<MudText Typo="Typo.h5">@_movie.Rating.ToString("0.#") / 10</MudText>
 						</MudStack>
 
-						<MudStack>
-							@foreach(var language in _movie.Languages)
-							{
-								allLanguages.Add(language.Language);
-							} 
-							<MudText Typo="Typo.h5">@String.Join(", ", allLanguages)</MudText>
+						<MudStack Row="false" Spacing="0" Class="flex-equal">
+							<MudText Typo="Typo.h5"><b>Languages</b></MudText>
+							<MudText Typo="Typo.h5">
+								@String.Join(", ", _movie.Languages.Select(l => l.Language))
+							</MudText>
 						</MudStack>
-					</MudStack>
-				</MudStack>
 
+					</MudStack>
+				</div>
 			</MudItem>
 		</MudGrid>
 	</MudPaper>
@@ -115,7 +129,6 @@
 	public int Id { get; set; }
 	[Parameter]
 	public string Slug { get; set; }
-
 	private List<string> allLanguages = new List<string>();
 
 	private MovieDetail _movie = new MovieDetail

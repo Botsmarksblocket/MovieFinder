@@ -16,36 +16,36 @@
 				<MudItem xs="3" md="2" Class="d-flex align-items-center mt-2">
 					<NavLink Href="/">
 						<MudImage Width="60"
-						Src="/Images/tmdb.svg">
+								  Src="/Images/tmdb.svg">
 						</MudImage>
 					</NavLink>
 				</MudItem>
 
 				<MudItem xs="9" md="10" Class="d-flex align-items-center">
 					<MudAutocomplete T="Movie"
-					FullWidth="true"
-					Label="Search movie"
-					Value="_selectedMovie"
-					ValueChanged="NavigateToMoviePage"
-					SearchFunc="@SearchMovie"
-					Variant="Variant.Filled"
-					ShowProgressIndicator="true"
-					ToStringFunc="@(m => m?.Title)"
-					ResetValueOnEmptyText="true"
-					DebounceInterval="300"
-					Margin="Margin.Dense"
-					Clearable="true"
-					Dense="true"
-					MaxHeight="300"
-					CoerceText="false"
-					RelativeWidth="DropdownWidth.Adaptive"
-					PopoverClass="wide-popover-mobile">
+									 FullWidth="true"
+									 Label="Search movie"
+									 Value="_selectedMovie"
+									 ValueChanged="NavigateToMoviePage"
+									 SearchFunc="@SearchMovie"
+									 Variant="Variant.Filled"
+									 ShowProgressIndicator="true"
+									 ToStringFunc="@(m => m?.Title)"
+									 ResetValueOnEmptyText="true"
+									 DebounceInterval="300"
+									 Margin="Margin.Dense"
+									 Clearable="true"
+									 Dense="true"
+									 MaxHeight="300"
+									 CoerceText="false"
+									 RelativeWidth="DropdownWidth.Adaptive"
+									 PopoverClass="wide-popover-mobile">
 						<ItemTemplate>
 							<MudStack Row="true">
 								<MudImage Style="width: 47px; height: 71px; margin-right: 10px;"
-								Src="@GetImageUrl(context.PosterPath)"
-								Alt="Movie Poster"
-								FallbackSrc="/Images/notfound.png" />
+										  Src="@GetImageUrl(context.PosterPath)"
+										  Alt="Movie Poster"
+										  FallbackSrc="/Images/notfound.png" />
 
 								<MudStack Justify="Justify.Center" Spacing="0">
 									<h4>@context.Title</h4>
@@ -91,32 +91,32 @@
 		: $"https://image.tmdb.org/t/p/w780{posterPath}";
 	}
 	public static MudTheme MovieTheme = new MudTheme()
+	{
+		PaletteDark = new PaletteDark()
 		{
-			PaletteDark = new PaletteDark()
-			{
-				Black = "#0b0d10",
-				Background = "#10151c",
-				BackgroundGray = "#182027",
-				Surface = "#1e2a33",
-				DrawerBackground = "#141b23",
-				DrawerText = "rgba(255,255,255, 0.65)",
-				DrawerIcon = "rgba(255,255,255, 0.65)",
-				AppbarText = "rgba(255,255,255, 0.78)",
-				TextPrimary = "rgba(255,255,255, 0.90)",
-				TextSecondary = "rgba(255,255,255, 0.60)",
-				ActionDefault = "#38bdf8",
-				ActionDisabled = "rgba(255,255,255, 0.30)",
-				ActionDisabledBackground = "rgba(255,255,255, 0.10)",
-				Divider = "rgba(56, 189, 248, 1)",
-				DividerLight = "rgba(255,255,255, 0.08)",
-				TableLines = "rgba(255,255,255, 0.10)",
-				LinesDefault = "rgba(255,255,255, 0.10)",
-				LinesInputs = "rgba(255,255,255, 0.25)",
-				TextDisabled = "rgba(255,255,255, 0.30)",
-				Error = "#ef4444",
-				Primary = "#3b82f6",
-				PrimaryContrastText = "#ffffff",
-				Secondary = "#14b8a6"
-			}
-		};
+			Black = "#0b0d10",
+			Background = "#10151c",
+			BackgroundGray = "#182027",
+			Surface = "#1e2a33",
+			DrawerBackground = "#141b23",
+			DrawerText = "rgba(255,255,255, 0.65)",
+			DrawerIcon = "rgba(255,255,255, 0.65)",
+			AppbarText = "rgba(255,255,255, 0.78)",
+			TextPrimary = "rgba(255,255,255, 0.90)",
+			TextSecondary = "rgba(255,255,255, 0.60)",
+			ActionDefault = "#38bdf8",
+			ActionDisabled = "rgba(255,255,255, 0.30)",
+			ActionDisabledBackground = "rgba(255,255,255, 0.10)",
+			Divider = "rgba(56, 189, 248, 1)",
+			DividerLight = "rgba(255,255,255, 0.08)",
+			TableLines = "rgba(255,255,255, 0.10)",
+			LinesDefault = "rgba(255,255,255, 0.10)",
+			LinesInputs = "rgba(255,255,255, 0.25)",
+			TextDisabled = "rgba(255,255,255, 0.30)",
+			Error = "#ef4444",
+			Primary = "#3b82f6",
+			PrimaryContrastText = "#ffffff",
+			Secondary = "#14b8a6"
+		}
+	};
 }
