@@ -15,6 +15,7 @@ namespace MovieFinder.Client.Services
         Task<List<Genre>> GetGenresAsync();
         Task<List<Movie>> GetSearchedMoviesAsync(string searchWord);
         Task<SearchResult> GetFilteredMoviesAsync(FilterParameter parameters);
+        Task<Actor> GetActorsAsync(int movieId);
     }
     public class TMDBService : ITMDBService
     {
@@ -100,6 +101,20 @@ namespace MovieFinder.Client.Services
 
             return await _httpClient.GetFromJsonAsync<SearchResult>(url)
                     ?? new SearchResult { Results = new List<Movie>() };
+        }
+
+        public async Task<Actor> GetActorsAsync(int movieId)
+        {
+            var baseUrl = $"https://api.themoviedb.org/3/movie/{movieId}/credits";
+
+            var queryParameters = new Dictionary<string, string>
+            {
+                ["api_key"] = _apiKey,
+            };
+
+            var url = QueryHelpers.AddQueryString(baseUrl, queryParameters);
+            var response = await _httpClient.GetFromJsonAsync<Actor>(url);
+            return response;
         }
     }
 }

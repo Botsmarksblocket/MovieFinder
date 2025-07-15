@@ -22,7 +22,7 @@
 				<MudStack Class="center-xs mt-6 mx-2" Style="color: rgba(0,0,0,0.85);">
 					<MudText Typo="Typo.h4">@(_movie.Title?.ToUpper())</MudText>
 					<MudText Typo="Typo.h5">@_movie.Tagline</MudText>
-					<MudText Class="description-width-xs"Typo="Typo.body1">@_movie.Description</MudText>
+					<MudText Class="description-width-xs" Typo="Typo.body1">@_movie.Description</MudText>
 				</MudStack>
 				<MudStack Row="true"
 						  Wrap="Wrap.Wrap">
@@ -52,7 +52,7 @@
 										  ObjectFit="ObjectFit.Contain"
 										  Width="100"
 										  Height="60"
-										  Class="mt-2 border-double"
+										  Class="mt-2"
 										  Src="@GetLogoUrl(company.LogoPath)">
 								</MudImage>
 							}
@@ -138,9 +138,15 @@
 		Languages = new List<AvailableLanguage>()
 	};
 
+	private Actor _actors = new Actor
+	{
+		MovieCast = new List<Cast>()
+	};
+
 	protected override async Task OnParametersSetAsync()
 	{
 		_movie = await TMDB.GetMovieDetailsAsync(Id);
+		_actors = await TMDB.GetActorsAsync(Id);
 	}
 
 	private string GetLogoUrl(string logoPath)
