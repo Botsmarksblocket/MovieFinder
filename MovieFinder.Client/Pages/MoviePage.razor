@@ -22,7 +22,7 @@
 				<MudStack Class="center-xs mt-6 mx-2" Style="color: rgba(0,0,0,0.85);">
 					<MudText Typo="Typo.h4">@(_movie.Title?.ToUpper())</MudText>
 					<MudText Typo="Typo.h5">@_movie.Tagline</MudText>
-					<MudText Class="description-width-xs"Typo="Typo.body1">@_movie.Description</MudText>
+					<MudText Class="description-width-xs" Typo="Typo.body1">@_movie.Description</MudText>
 				</MudStack>
 				<MudStack Row="true"
 						  Wrap="Wrap.Wrap">
@@ -52,7 +52,7 @@
 										  ObjectFit="ObjectFit.Contain"
 										  Width="100"
 										  Height="60"
-										  Class="mt-2 border-double"
+										  Class="mt-2"
 										  Src="@GetLogoUrl(company.LogoPath)">
 								</MudImage>
 							}
@@ -118,9 +118,25 @@
 						</MudStack>
 
 					</MudStack>
+
 				</div>
+
 			</MudItem>
+
+			@foreach (var actor in _actors.MovieCast)
+			{
+				<MudItem xs="2">
+					<MudCard Elevation="0" Class="d-flex flex-column color-wrapper" Style="border:1px solid red; background-color: rgba(1,1,0,0.4)">
+						<MudCardMedia Class="actor-portrait d-flex justify-content-center align-items-center"
+									  Image="@GetActorPosterUrl(actor.ProfilePicture)" />
+						<MudCardContent>
+							<MudText>@actor.Name</MudText>
+						</MudCardContent>
+					</MudCard>
+				</MudItem>
+			}
 		</MudGrid>
+
 	</MudPaper>
 </div>
 
@@ -138,9 +154,15 @@
 		Languages = new List<AvailableLanguage>()
 	};
 
+	private Actor _actors = new Actor
+	{
+		MovieCast = new List<Cast>()
+	};
+
 	protected override async Task OnParametersSetAsync()
 	{
 		_movie = await TMDB.GetMovieDetailsAsync(Id);
+		_actors = await TMDB.GetActorsAsync(Id);
 	}
 
 	private string GetLogoUrl(string logoPath)
@@ -162,6 +184,13 @@
 		return string.IsNullOrWhiteSpace(backdropPath)
 		? ""
 		: $"https://image.tmdb.org/t/p/original{backdropPath}";
+	}
+
+	private string GetActorPosterUrl(string posterPath)
+	{
+		return string.IsNullOrWhiteSpace(posterPath)
+		? ""
+		: $"https://image.tmdb.org/t/p/original{posterPath}";
 	}
 
 	private Random _random = new Random();
