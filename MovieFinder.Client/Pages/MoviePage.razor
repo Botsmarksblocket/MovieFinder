@@ -9,10 +9,10 @@
 <div class="d-flex justify-center backdrop-image"
 	 style=@($"background-image: url('{GetBackdropUrl(_movie.BackdropPath)}');")>
 	<MudPaper Style="min-height: 100vh;"
-			  Class="mt-2 mb-1 frosted-glass container-width">
+			  Class="mt-8 mb-1 frosted-glass container-width">
 		<MudGrid Spacing="0">
 			<MudItem xs="12" md="5" lg="3">
-				<div class="mt-6 mx-8 rounded center-xs">
+				<div class="mt-6 mx-8 center-xs">
 					<MudImage Class="movie-page-poster rounded" Src="@GetPosterUrl(_movie.PosterPath)"
 							  Alt="Movie Poster"
 							  FallbackSrc="/Images/notfound.png" />
@@ -22,7 +22,7 @@
 				<MudStack Class="center-xs mt-6 mx-2" Style="color: rgba(0,0,0,0.85);">
 					<MudText Typo="Typo.h4">@(_movie.Title?.ToUpper())</MudText>
 					<MudText Typo="Typo.h5">@_movie.Tagline</MudText>
-					<MudText Typo="Typo.body1">@_movie.Description</MudText>
+					<MudText Class="description-width-xs"Typo="Typo.body1">@_movie.Description</MudText>
 				</MudStack>
 				<MudStack Row="true"
 						  Wrap="Wrap.Wrap">
@@ -50,9 +50,9 @@
 							{
 								<MudImage Style="color: rgba(0,0,0,65)"
 										  ObjectFit="ObjectFit.Contain"
-										  Width="90"
-										  Height="70"
-										  Class="rounded mt-2"
+										  Width="100"
+										  Height="60"
+										  Class="mt-2 border-double"
 										  Src="@GetLogoUrl(company.LogoPath)">
 								</MudImage>
 							}

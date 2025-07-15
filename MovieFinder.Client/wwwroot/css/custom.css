@@ -36,6 +36,9 @@
     .small-font-xs * {
         font-size: 17px !important;
     }
+    .description-width-xs {
+        max-width: 346px;
+    }
 }
 
 @media (max-width: 959px) {
