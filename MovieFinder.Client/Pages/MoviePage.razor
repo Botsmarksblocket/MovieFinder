@@ -1,7 +1,6 @@
 ﻿@using Services
 @using Models
 @using MudBlazor.Services
-@inject IBrowserViewportService BrowserViewportService
 @inject ITMDBService TMDB
 @page "/movie/{id:int}/{slug}"
 
@@ -36,7 +35,7 @@
 				<MudStack AlignItems="AlignItems.Center"
 						  Row="true"
 						  Wrap="Wrap.Wrap"
-						  Class="mx-2">
+						  Class="mx-2 justify-xs-center justify-md-start">
 					@foreach (var company in _movie.ProductionCompanies)
 					{
 						<MudTooltip Arrow="true"
@@ -61,15 +60,17 @@
 					}
 				</MudStack>
 
-				<div class="color-wrapper small-font-xs ">
-					<MudStack Row=" true"
-							  Justify="Justify.SpaceEvenly">
-						<MudStack Row="false" Spacing="0">
-							<MudText Typo="Typo.h5">Release date</MudText>
+				<div class="color-wrapper small-font-xs">
+					<MudStack 
+							  Spacing="6"
+							  Row="true"
+							  Class="justify-md-space-between justify-xs-space-around mt-4">
+						<MudStack Row="false" Spacing="0" Style="width: 30%;">
+							<MudText Typo="Typo.h5">Released</MudText>
 							<MudText Typo="Typo.h5">@_movie.ReleaseDate</MudText>
 						</MudStack>
 
-						<MudStack Row="false" Spacing="0">
+						<MudStack Row="false" Spacing="0" Style="width: 30%;">
 							<MudText Typo="Typo.h5">Revenue</MudText>
 
 							@if (_movie.Revenue == 0)
@@ -78,12 +79,11 @@
 							}
 							else
 							{
-
-								<MudText Typo="Typo.h5">$ @_movie.Revenue.ToString("##,##")</MudText>
+								<MudText Typo="Typo.h5">$@_movie.Revenue.ToString("##,##")</MudText>
 							}
 						</MudStack>
 
-						<MudStack Row="false" Spacing="0">
+						<MudStack Row="false" Spacing="0" Style="width: 30%;">
 							<MudText Typo="Typo.h5">Budget</MudText>
 
 							@if (_movie.Budget == 0)
@@ -92,26 +92,26 @@
 							}
 							else
 							{
-
-								<MudText Typo="Typo.h5">$ @_movie.Budget.ToString("##,##")</MudText>
+								<MudText Typo="Typo.h5">$@_movie.Budget.ToString("##,##")</MudText>
 							}
 						</MudStack>
 					</MudStack>
 
-					<MudStack Row="true"
-							  Wrap="Wrap.Wrap">
+					<MudStack Spacing="6"
+							  Class="justify-md-space-between justify-xs-space-around mt-4"
+							  Row="true">
 
-						<MudStack Row="false" Spacing="0">
+						<MudStack Row="false" Spacing="0" Style="width: 30%;">
 							<MudText Typo="Typo.h5">Runtime</MudText>
 							<MudText Typo="Typo.h5">@_movie.Runtime minutes</MudText>
 						</MudStack>
 
-						<MudStack Row="false" Spacing="0">
+						<MudStack Row="false" Spacing="0" Style="width: 30%;" >
 							<MudText Typo="Typo.h5">Vote average</MudText>
 							<MudText Typo="Typo.h5">@_movie.Rating.ToString("0.#") / 10</MudText>
 						</MudStack>
 
-						<MudStack Row="false" Spacing="0">
+						<MudStack Row="false" Spacing="0" Style="width: 30%;">
 							<MudText Typo="Typo.h5">Languages</MudText>
 							@foreach (var language in _movie.Languages)
 							{
@@ -132,8 +132,8 @@
 	public int Id { get; set; }
 	[Parameter]
 	public string Slug { get; set; }
-
 	private List<string> allLanguages = new List<string>();
+
 
 	private MovieDetail _movie = new MovieDetail
 	{
