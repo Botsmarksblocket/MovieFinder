@@ -1,5 +1,7 @@
 ﻿@using Services
 @using Models
+@using MudBlazor.Services
+@inject IBrowserViewportService BrowserViewportService
 @inject ITMDBService TMDB
 @page "/movie/{id:int}/{slug}"
 
@@ -18,9 +20,9 @@
 				</div>
 			</MudItem>
 			<MudItem Class="center-xs" xs="12" md="7" lg="9">
-				<MudStack Class="center-xs mt-6 mx-2" Style="color: rgba(0,0,0,85);">
+				<MudStack Class="center-xs mt-6 mx-2" Style="color: rgba(0,0,0,0.85);">
 					<MudText Typo="Typo.h4">@(_movie.Title?.ToUpper())</MudText>
-					<MudText Typo="Typo.h6">@_movie.Tagline</MudText>
+					<MudText Typo="Typo.h5">@_movie.Tagline</MudText>
 					<MudText Typo="Typo.body1">@_movie.Description</MudText>
 				</MudStack>
 				<MudStack Row="true"
@@ -47,11 +49,11 @@
 							}
 							else
 							{
-								<MudImage Style="color: rgba(0,0,0,85)"
+								<MudImage Style="color: rgba(0,0,0,65)"
 										  ObjectFit="ObjectFit.Contain"
-										  Width="110"
-										  Class="rounded"
-										  Height="60"
+										  Width="90"
+										  Height="70"
+										  Class="rounded mt-2"
 										  Src="@GetLogoUrl(company.LogoPath)">
 								</MudImage>
 							}
@@ -59,52 +61,67 @@
 					}
 				</MudStack>
 
-				<MudStack Row=" true"
-						  Style="color: rgba(0,0,0,85);"
-						  Justify="Justify.FlexStart"
-						  Spacing="16">
-					<MudStack Row="false">
-						<MudText Class="small-font-xs" Typo="Typo.h5">Release date</MudText>
-						<MudText Class="small-font-xs" Typo="Typo.h5">@_movie.ReleaseDate</MudText>
-					</MudStack>
-					<MudStack Row="false">
-						<MudText Class="small-font-xs" Typo="Typo.h5">Runtime</MudText>
-						<MudText Class="small-font-xs" Typo="Typo.h5">@_movie.Runtime minutes</MudText>
-					</MudStack>
-					<MudStack Row="false">
-						<MudText Class="small-font-xs" Typo="Typo.h5">Budget</MudText>
+				<div class="color-wrapper small-font-xs ">
+					<MudStack Row=" true"
+							  Justify="Justify.SpaceEvenly">
+						<MudStack Row="false" Spacing="0">
+							<MudText Typo="Typo.h5">Release date</MudText>
+							<MudText Typo="Typo.h5">@_movie.ReleaseDate</MudText>
+						</MudStack>
 
-						@if (_movie.Budget == 0)
-						{
-							<MudText Class="small-font-xs" Typo="Typo.h5">Unknown</MudText>
-						}
-						else
-						{
+						<MudStack Row="false" Spacing="0">
+							<MudText Typo="Typo.h5">Revenue</MudText>
 
-							<MudText Class="small-font-xs" Typo="Typo.h5">$ @_movie.Budget.ToString("##,##")</MudText>
-						}
+							@if (_movie.Revenue == 0)
+							{
+								<MudText Typo="Typo.h5">Unknown</MudText>
+							}
+							else
+							{
+
+								<MudText Typo="Typo.h5">$ @_movie.Revenue.ToString("##,##")</MudText>
+							}
+						</MudStack>
+
+						<MudStack Row="false" Spacing="0">
+							<MudText Typo="Typo.h5">Budget</MudText>
+
+							@if (_movie.Budget == 0)
+							{
+								<MudText Typo="Typo.h5">Unknown</MudText>
+							}
+							else
+							{
+
+								<MudText Typo="Typo.h5">$ @_movie.Budget.ToString("##,##")</MudText>
+							}
+						</MudStack>
 					</MudStack>
-				</MudStack>
 
-				<MudStack Row="true"
-						  Wrap="Wrap.Wrap"
-						  Style="color: rgba(0,0,0,85);">
-					<MudStack Row="false">
-						<MudStack>
+					<MudStack Row="true"
+							  Wrap="Wrap.Wrap">
+
+						<MudStack Row="false" Spacing="0">
+							<MudText Typo="Typo.h5">Runtime</MudText>
+							<MudText Typo="Typo.h5">@_movie.Runtime minutes</MudText>
+						</MudStack>
+
+						<MudStack Row="false" Spacing="0">
 							<MudText Typo="Typo.h5">Vote average</MudText>
 							<MudText Typo="Typo.h5">@_movie.Rating.ToString("0.#") / 10</MudText>
 						</MudStack>
 
-						<MudStack>
-							@foreach(var language in _movie.Languages)
+						<MudStack Row="false" Spacing="0">
+							<MudText Typo="Typo.h5">Languages</MudText>
+							@foreach (var language in _movie.Languages)
 							{
 								allLanguages.Add(language.Language);
-							} 
+							}
 							<MudText Typo="Typo.h5">@String.Join(", ", allLanguages)</MudText>
 						</MudStack>
-					</MudStack>
-				</MudStack>
 
+					</MudStack>
+				</div>
 			</MudItem>
 		</MudGrid>
 	</MudPaper>

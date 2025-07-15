@@ -2,6 +2,10 @@
 /*MOVIE PAGE*/
 /***********/
 
+.color-wrapper * {
+    color:rgba(0,0,0,0.75);
+}
+
 .frosted-glass {
     background: rgba(255, 255, 255, 0.9) !important;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4) !important;
@@ -15,7 +19,7 @@
     min-height: 100vh;
 }
 
-.center-xs {
+.center-xs * {
     text-align: left;
 }
 
@@ -24,8 +28,8 @@
 }
 
 @media (max-width: 1280px) {
-    .small-font-xs {
-        font-size: 18px !important;
+    .small-font-xs * {
+        font-size: 17px !important;
     }
 }
 
@@ -37,9 +41,9 @@
             justify-content: space-around;
         }
 
-        .small-font-xs {
-            font-size: 14px !important;
-        }
+/*        .small-font-xs {
+            font-size: 16px !important;
+        }*/
     }
 
     @media (max-width: 959px) {
