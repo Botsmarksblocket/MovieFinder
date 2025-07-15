@@ -2,6 +2,14 @@
 /*MOVIE PAGE*/
 /***********/
 
+.actor-portrait {
+    border-radius: 50% !important;
+    height: 100px !important;
+    width: 100px !important;
+    object-fit: contain !important;
+    border:1px solid black;
+}
+
 .flex-equal {
     flex: 1 1 0;
     min-width: 0;
