@@ -4,8 +4,19 @@
 @inject ITMDBService TMDB
 @page "/actor/{id:int}/{slug}"
 
-<PageTitle>Actor page</PageTitle>
+<PageTitle>@_actor.Name</PageTitle>
+<MudPaper Class="d-flex justify-center" Elevation="0">
+	<MudPaper Width="75%" Style="min-height: 100vh; background-color:white;" Elevation="0" Class="mt-6">
+		<MudGrid Spacing="0">
+			<MudItem xs="12" Class="ma-4">
+				<MudImage Objectfit="ObjectFit.Cover" Class="actor-portrait actor-portrait-actorpage"
+						  Src="@GetActorPosterUrl(_actor.ProfilePicture)"
+						  FallbackSrc="Images/noprofile.png" />
+			</MudItem>
+		</MudGrid>
 
+	</MudPaper>
+</MudPaper>
 @code {
 	[Parameter]
 	public int Id { get; set; }
@@ -13,6 +24,12 @@
 	public string Slug { get; set; }
 	private ActorDetail _actor = new ActorDetail();
 
+	private string GetActorPosterUrl(string posterPath)
+	{
+		return string.IsNullOrWhiteSpace(posterPath)
+		? ""
+		: $"https://image.tmdb.org/t/p/original{posterPath}";
+	}
 
 	protected override async Task OnParametersSetAsync()
 	{

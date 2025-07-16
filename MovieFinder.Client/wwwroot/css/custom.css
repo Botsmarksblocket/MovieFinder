@@ -1,19 +1,36 @@
-﻿/***********/
+﻿/***************/
+/*SEVERAL PAGES*/
+/***************/
+
+.actor-portrait {
+    border-radius: 50% !important;
+    border: 2px solid #a89d9d !important;
+    padding: 2px !important;
+    box-shadow: 0 0 8px 4px rgba(0, 0, 0, 0.2) !important;
+}
+
+/***********/
+/*ACTOR PAGE*/
+/***********/
+
+.actor-portrait-actorpage {
+    height: 200px !important;
+    width: 200px !important;
+}
+
+/***********/
 /*MOVIE PAGE*/
 /***********/
-.actor-portrait:hover {
+
+.actor-portrait-moviepage:hover {
     transform: scale(1.11);
     transition: all 0.3s;
     cursor: pointer;
 }
 
-.actor-portrait {
-    border-radius: 50% !important;
+.actor-portrait-moviepage {
     height: 100px !important;
     width: 100px !important;
-    border: 2px solid #a89d9d !important;
-    padding: 2px !important;
-    box-shadow: 0 0 8px 4px rgba(0, 0, 0, 0.2) !important;
 }
 
 .center-portrait {
@@ -36,7 +53,7 @@
     color: rgba(0,0,0,0.65);
 }
 
-.frosted-glass {
+.inner-container-background {
     background: rgba(255, 255, 255, 0.9) !important;
     box-shadow: 0 0 16px 8px rgba(0, 0, 0, 0.75) !important;
     border: 1px solid rgba(0, 0, 0, 0.15) !important;
