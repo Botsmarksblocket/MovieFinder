@@ -124,22 +124,24 @@
 
 			</MudItem>
 
-
 			@for (int i = 0; i < 6 && i < _actors.MovieCast.Count; i++)
 			{
 				var actor = _actors.MovieCast[i];
 				<MudItem xs="4" md="2" Class="mt-6 d-flex justify-center-portrait">
 					<NavLink href="@GenerateActorUrl(actor.Id, actor.Name)">
-
 						<MudCard Elevation="0"
 								 Class="color-wrapper center-portrait"
 								 Style="background-color: rgba(0,0,0,0);">
 							<MudImage Objectfit="ObjectFit.Cover" Class="actor-portrait"
-									  Src="@GetActorPosterUrl(actor.ProfilePicture)" />
+									  Src="@GetActorPosterUrl(actor.ProfilePicture)"
+									  FallbackSrc="Images/noprofile.png" />
 							<div class="small-font-xs-portrait">
 								<MudCardContent>
 									<MudText Typo="Typo.body1"><b>@actor.Name</b></MudText>
-									<MudText Typo="Typo.body2">as @actor.Character</MudText>
+									@if (!string.IsNullOrEmpty(actor.Character))
+									{
+										<MudText Typo="Typo.body2">as @actor.Character</MudText>
+									}
 								</MudCardContent>
 							</div>
 						</MudCard>
