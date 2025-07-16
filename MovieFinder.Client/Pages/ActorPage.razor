@@ -36,6 +36,10 @@
 									<MudText>Unknown</MudText>
 									break;
 							}
+							@if (!string.IsNullOrEmpty(_actor.Birthday))
+							{
+								
+							}
 						</MudStack>
 					</MudStack>
 				</MudItem>
@@ -62,6 +66,19 @@
 	{
 		_actor = await TMDB.GetActorDetailsAsync(Id);
 	}
+
+	public static int GetAge(DateTime birthDate)
+	{
+		DateTime n = DateTime.Now;
+
+		int age = n.Year - birthDate.Year;
+
+		if (n.Month < birthDate.Month || (n.Month == birthDate.Month && n.Day < birthDate.Day))
+			age--;
+
+		return age;
+	}
+
 
 	public enum Gender
 	{
