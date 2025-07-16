@@ -20,5 +20,8 @@ namespace MovieFinder.Client.Models
 
         [JsonPropertyName("profile_path")]
         public string ProfilePicture { get; set; }
+
+        [JsonPropertyName("gender")]
+        public int Gender { get; set; }
     }
 }
