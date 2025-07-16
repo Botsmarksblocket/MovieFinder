@@ -1,0 +1,21 @@
+﻿@using Services
+@using Models
+@using Slugify
+@inject ITMDBService TMDB
+@page "/actor/{id:int}/{slug}"
+
+<PageTitle>Actor page</PageTitle>
+
+@code {
+	[Parameter]
+	public int Id { get; set; }
+	[Parameter]
+	public string Slug { get; set; }
+	private ActorDetail _actor = new ActorDetail();
+
+
+	protected override async Task OnParametersSetAsync()
+	{
+		_actor = await TMDB.GetActorDetailsAsync(Id);
+	}
+}

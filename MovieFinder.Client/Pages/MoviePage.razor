@@ -1,6 +1,7 @@
 ﻿@using Services
 @using Models
 @using MudBlazor.Services
+@using Slugify
 @inject ITMDBService TMDB
 @page "/movie/{id:int}/{slug}"
 
@@ -123,25 +124,29 @@
 
 			</MudItem>
 
+
 			@for (int i = 0; i < 6 && i < _actors.MovieCast.Count; i++)
 			{
 				var actor = _actors.MovieCast[i];
 				<MudItem xs="4" md="2" Class="mt-6 d-flex justify-center-portrait">
-					<MudCard Elevation="0"
-							 Class="color-wrapper center-portrait"
-							 Style="background-color: rgba(0,0,0,0);">
-						<MudImage Objectfit="ObjectFit.Cover" Class="actor-portrait"
+					<NavLink href="@GenerateActorUrl(actor.Id, actor.Name)">
+
+						<MudCard Elevation="0"
+								 Class="color-wrapper center-portrait"
+								 Style="background-color: rgba(0,0,0,0);">
+							<MudImage Objectfit="ObjectFit.Cover" Class="actor-portrait"
 									  Src="@GetActorPosterUrl(actor.ProfilePicture)" />
-						<div class="small-font-xs-portrait">
-							<MudCardContent>
-								<MudText Typo="Typo.body1"><b>@actor.Name</b></MudText>
-								<MudText Typo="Typo.body2">as @actor.Character</MudText>
-							</MudCardContent>
-						</div>
-					</MudCard>
+							<div class="small-font-xs-portrait">
+								<MudCardContent>
+									<MudText Typo="Typo.body1"><b>@actor.Name</b></MudText>
+									<MudText Typo="Typo.body2">as @actor.Character</MudText>
+								</MudCardContent>
+							</div>
+						</MudCard>
+					</NavLink>
 				</MudItem>
 			}
-			</MudGrid>
+		</MudGrid>
 	</MudPaper>
 </div>
 
@@ -150,6 +155,8 @@
 	public int Id { get; set; }
 	[Parameter]
 	public string Slug { get; set; }
+	private SlugHelper _slugHelper = new();
+
 	private List<string> allLanguages = new List<string>();
 
 	private MovieDetail _movie = new MovieDetail
@@ -167,7 +174,7 @@
 	protected override async Task OnParametersSetAsync()
 	{
 		_movie = await TMDB.GetMovieDetailsAsync(Id);
-		_actors = await TMDB.GetActorsAsync(Id);
+		_actors = await TMDB.GetActorsForMovieAsync(Id);
 	}
 
 	private string GetLogoUrl(string logoPath)
@@ -198,6 +205,11 @@
 		: $"https://image.tmdb.org/t/p/original{posterPath}";
 	}
 
+	//Generates a valid url for a specific movie using the Slugify library
+	private string GenerateActorUrl(int id, string actorName)
+	{
+		return $"/actor/{id}/{_slugHelper.GenerateSlug(actorName)}";
+	}
 	private Random _random = new Random();
 
 	private readonly string[] colors = {
