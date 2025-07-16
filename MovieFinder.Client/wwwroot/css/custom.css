@@ -26,6 +26,11 @@
     align-items: center !important;
 }
 
+.justify-center-portrait {
+    display: flex !important;
+    justify-content: center !important;
+}
+
 .flex-equal {
     flex: 1 1 0;
     min-width: 0;
@@ -60,8 +65,11 @@
     .small-font-xs * {
         font-size: 17px !important;
     }
-    .description-width-xs {
-        max-width: 346px;
+    .small-font-xs-portrait * {
+        font-size: 14px !important;
+    }
+    .text-width-xs {
+        max-width: 346px !important;
     }
 }
 

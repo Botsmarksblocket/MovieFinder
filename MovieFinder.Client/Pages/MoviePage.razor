@@ -21,8 +21,8 @@
 			<MudItem Class="center-xs" xs="12" md="7" lg="9">
 				<MudStack Class="center-xs mt-6 mx-2" Style="color: rgba(0,0,0,0.85);">
 					<MudText Typo="Typo.h4">@(_movie.Title?.ToUpper())</MudText>
-					<MudText Typo="Typo.h5">@_movie.Tagline</MudText>
-					<MudText Class="description-width-xs" Typo="Typo.body1">@_movie.Description</MudText>
+					<MudText Class="text-width-xs" Typo="Typo.h5">@_movie.Tagline</MudText>
+					<MudText Class="text-width-xs" Typo="Typo.body1">@_movie.Description</MudText>
 				</MudStack>
 				<MudStack Row="true"
 						  Wrap="Wrap.Wrap">
@@ -125,22 +125,27 @@
 
 			@foreach (var actor in _actors.MovieCast)
 			{
-				<MudItem xs="4" md="2" Class="mt-4">
+				<MudItem xs="4" sm="3" lg="2" Class="mt-4 d-flex justify-center-portrait">
 					<MudCard Elevation="0"
 							 Class="color-wrapper center-portrait"
 							 Style=" background-color: rgba(0,0,0,0);">
 						<MudCardMedia Class="actor-portrait"
-										  Image="@GetActorPosterUrl(actor.ProfilePicture)" />
-
+									  Image="@GetActorPosterUrl(actor.ProfilePicture)" />
+						<div class="small-font-xs-portrait">
 							<MudCardContent Class="text-center">
-								<MudText><b>@actor.Name</b></MudText>
-								<MudText>as @actor.Character</MudText>
+								<MudText Typo="Typo.body1"><b>@actor.Name</b></MudText>
+								<MudText Typo="Typo.body2">as @actor.Character</MudText>
 							</MudCardContent>
+						</div>
+
 					</MudCard>
 				</MudItem>
 			}
-		</MudGrid>
 
+		</MudGrid>
+		<div class="d-flex flex-column align-center">
+			<MudPagination Variant="Variant.Filled" Count="4" />
+		</div>
 	</MudPaper>
 </div>
 
