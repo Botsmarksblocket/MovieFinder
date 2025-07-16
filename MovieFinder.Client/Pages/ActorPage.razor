@@ -19,9 +19,23 @@
 				</MudItem>
 				<MudItem xs="12" md="9">
 					<MudStack Class="center-xs mt-4">
-						<MudText Typo="Typo.body1"><b>@_actor.Name</b></MudText>
+						<MudText Typo="Typo.h4"><b>@_actor.Name</b></MudText>
 						<MudStack Row="true">
-
+							@switch (_actor.Gender)
+							{
+								case (int)Gender.Female:
+									<MudIcon Style="color:red;" Icon="@Icons.Material.Filled.Female" Title="Female" />
+									break;
+								case (int)Gender.Male:
+									<MudIcon Icon="@Icons.Material.Filled.Male" Title="Male" />
+									break;
+								case (int)Gender.NonBinary:
+									<MudText>Non-binary</MudText>
+									break;
+								default:
+									<MudText>Unknown</MudText>
+									break;
+							}
 						</MudStack>
 					</MudStack>
 				</MudItem>
@@ -47,5 +61,13 @@
 	protected override async Task OnParametersSetAsync()
 	{
 		_actor = await TMDB.GetActorDetailsAsync(Id);
+	}
+
+	public enum Gender
+	{
+		Unknown = 0,
+		Female = 1,
+		Male = 2,
+		NonBinary = 3
 	}
 }
