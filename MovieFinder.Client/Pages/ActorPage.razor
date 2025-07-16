@@ -5,18 +5,31 @@
 @page "/actor/{id:int}/{slug}"
 
 <PageTitle>@_actor.Name</PageTitle>
-<MudPaper Class="d-flex justify-center" Elevation="0">
-	<MudPaper Width="75%" Style="min-height: 100vh; background-color:white;" Elevation="0" Class="mt-6">
-		<MudGrid Spacing="0">
-			<MudItem xs="12" Class="ma-4">
-				<MudImage Objectfit="ObjectFit.Cover" Class="actor-portrait actor-portrait-actorpage"
-						  Src="@GetActorPosterUrl(_actor.ProfilePicture)"
-						  FallbackSrc="Images/noprofile.png" />
-			</MudItem>
-		</MudGrid>
+<div class="color-wrapper">
+	<MudPaper Class="d-flex justify-center" Elevation="0">
+		<MudPaper Width="75%" Style="min-height: 100vh; background-color:white;" Elevation="0" Class="mt-6">
+			<MudGrid Class="mt-4" Justify="Justify.Center">
+				<MudItem xs="12" md="3">
+					<div class="center-xs d-flex justify-center">
+						<MudImage Objectfit="ObjectFit.Cover"
+								  Class="actor-portrait actor-portrait-actorpage "
+								  Src="@GetActorPosterUrl(_actor.ProfilePicture)"
+								  FallbackSrc="Images/noprofile.png" />
+					</div>
+				</MudItem>
+				<MudItem xs="12" md="9">
+					<MudStack Class="center-xs mt-4">
+						<MudText Typo="Typo.body1"><b>@_actor.Name</b></MudText>
+						<MudStack Row="true">
 
+						</MudStack>
+					</MudStack>
+				</MudItem>
+			</MudGrid>
+
+		</MudPaper>
 	</MudPaper>
-</MudPaper>
+</div>
 @code {
 	[Parameter]
 	public int Id { get; set; }
