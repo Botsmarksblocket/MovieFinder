@@ -125,13 +125,17 @@
 
 			@foreach (var actor in _actors.MovieCast)
 			{
-				<MudItem xs="2">
-					<MudCard Elevation="0" Class="d-flex flex-column color-wrapper" Style="border:1px solid red; background-color: rgba(1,1,0,0.4)">
-						<MudCardMedia Class="actor-portrait d-flex justify-content-center align-items-center"
-									  Image="@GetActorPosterUrl(actor.ProfilePicture)" />
-						<MudCardContent>
-							<MudText>@actor.Name</MudText>
-						</MudCardContent>
+				<MudItem xs="4" md="2" Class="mt-4">
+					<MudCard Elevation="0"
+							 Class="color-wrapper center-portrait"
+							 Style=" background-color: rgba(0,0,0,0);">
+						<MudCardMedia Class="actor-portrait"
+										  Image="@GetActorPosterUrl(actor.ProfilePicture)" />
+
+							<MudCardContent Class="text-center">
+								<MudText><b>@actor.Name</b></MudText>
+								<MudText>as @actor.Character</MudText>
+							</MudCardContent>
 					</MudCard>
 				</MudItem>
 			}

@@ -7,7 +7,13 @@
     height: 100px !important;
     width: 100px !important;
     object-fit: contain !important;
-    border:1px solid black;
+    outline: 2px solid #a89d9d !important;
+}
+
+.center-portrait {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
 }
 
 .flex-equal {
