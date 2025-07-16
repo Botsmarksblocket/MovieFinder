@@ -2,6 +2,16 @@
 /*MOVIE PAGE*/
 /***********/
 
+.actor-portrait:hover {
+    transform: scale(1.11);
+    transition: transform 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+.actor-portrait:not(:hover) {
+    transition: transform 0.3s ease-in-out;
+}
+
 .actor-portrait {
     border-radius: 50% !important;
     height: 100px !important;
