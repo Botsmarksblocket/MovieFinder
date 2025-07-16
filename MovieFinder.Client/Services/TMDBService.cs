@@ -15,7 +15,9 @@ namespace MovieFinder.Client.Services
         Task<List<Genre>> GetGenresAsync();
         Task<List<Movie>> GetSearchedMoviesAsync(string searchWord);
         Task<SearchResult> GetFilteredMoviesAsync(FilterParameter parameters);
-        Task<Actor> GetActorsAsync(int movieId);
+        Task<Actor> GetActorsForMovieAsync(int movieId);
+        Task<ActorDetail> GetActorDetailsAsync(int actorId);
+
     }
     public class TMDBService : ITMDBService
     {
@@ -103,7 +105,8 @@ namespace MovieFinder.Client.Services
                     ?? new SearchResult { Results = new List<Movie>() };
         }
 
-        public async Task<Actor> GetActorsAsync(int movieId)
+        //Get list of all actors in a movie
+        public async Task<Actor> GetActorsForMovieAsync(int movieId)
         {
             var baseUrl = $"https://api.themoviedb.org/3/movie/{movieId}/credits";
 
@@ -114,6 +117,21 @@ namespace MovieFinder.Client.Services
 
             var url = QueryHelpers.AddQueryString(baseUrl, queryParameters);
             var response = await _httpClient.GetFromJsonAsync<Actor>(url);
+            return response;
+        }
+
+        //Get details about a specific actor
+        public async Task<ActorDetail> GetActorDetailsAsync(int actorId)
+        {
+            var baseUrl = $"https://api.themoviedb.org/3/person/{actorId}";
+
+            var queryParameters = new Dictionary<string, string>
+            {
+                ["api_key"] = _apiKey,
+            };
+
+            var url = QueryHelpers.AddQueryString(baseUrl, queryParameters);
+            var response = await _httpClient.GetFromJsonAsync<ActorDetail>(url);
             return response;
         }
     }

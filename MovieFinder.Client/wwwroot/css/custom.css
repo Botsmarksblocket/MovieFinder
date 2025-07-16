@@ -1,13 +1,47 @@
-﻿/***********/
-/*MOVIE PAGE*/
-/***********/
+﻿/***************/
+/*SEVERAL PAGES*/
+/***************/
 
 .actor-portrait {
     border-radius: 50% !important;
+    border: 2px solid #a89d9d !important;
+    padding: 2px !important;
+    box-shadow: 0 0 8px 4px rgba(0, 0, 0, 0.2) !important;
+}
+
+/***********/
+/*ACTOR PAGE*/
+/***********/
+
+.actor-portrait-actorpage {
+    height: 200px !important;
+    width: 200px !important;
+}
+
+/***********/
+/*MOVIE PAGE*/
+/***********/
+
+.actor-portrait-moviepage:hover {
+    transform: scale(1.11);
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+.actor-portrait-moviepage {
     height: 100px !important;
     width: 100px !important;
-    object-fit: contain !important;
-    border:1px solid black;
+}
+
+.center-portrait {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+}
+
+.justify-center-portrait {
+    display: flex !important;
+    justify-content: center !important;
 }
 
 .flex-equal {
@@ -19,9 +53,9 @@
     color: rgba(0,0,0,0.65);
 }
 
-.frosted-glass {
+.inner-container-background {
     background: rgba(255, 255, 255, 0.9) !important;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4) !important;
+    box-shadow: 0 0 16px 8px rgba(0, 0, 0, 0.75) !important;
     border: 1px solid rgba(0, 0, 0, 0.15) !important;
     border-radius: 16px !important;
 }
@@ -37,15 +71,18 @@
 }
 
 .container-width {
-    width: 70%;
+    width: 1170px;
 }
 
 @media (max-width: 1280px) {
     .small-font-xs * {
         font-size: 17px !important;
     }
-    .description-width-xs {
-        max-width: 346px;
+    .small-font-xs-portrait * {
+        font-size: 14px !important;
+    }
+    .text-width-xs {
+        max-width: 346px !important;
     }
 }
 
@@ -68,10 +105,10 @@
     display: block;
     width: 100%;
     max-width: 380px;
-    min-width: 200px;
     height: auto;
     object-fit: cover;
     image-rendering: auto;
+    box-shadow: 0 0 8px 4px rgba(0, 0, 0, 0.2) !important;
 }
 
 

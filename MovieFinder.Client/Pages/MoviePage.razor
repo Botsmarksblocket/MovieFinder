@@ -1,6 +1,7 @@
 ﻿@using Services
 @using Models
 @using MudBlazor.Services
+@using Slugify
 @inject ITMDBService TMDB
 @page "/movie/{id:int}/{slug}"
 
@@ -9,20 +10,20 @@
 <div class="d-flex justify-center backdrop-image"
 	 style=@($"background-image: url('{GetBackdropUrl(_movie.BackdropPath)}');")>
 	<MudPaper Style="min-height: 100vh;"
-			  Class="mt-8 mb-1 frosted-glass container-width">
+			  Class="mt-8 mb-1 inner-container-background container-width">
 		<MudGrid Spacing="0">
-			<MudItem xs="12" md="5" lg="3">
+			<MudItem xs="12" md="5" lg="4">
 				<div class="mt-6 mx-8 center-xs">
 					<MudImage Class="movie-page-poster rounded" Src="@GetPosterUrl(_movie.PosterPath)"
 							  Alt="Movie Poster"
 							  FallbackSrc="/Images/notfound.png" />
 				</div>
 			</MudItem>
-			<MudItem Class="center-xs" xs="12" md="7" lg="9">
+			<MudItem  xs="12" md="7" lg="8">
 				<MudStack Class="center-xs mt-6 mx-2" Style="color: rgba(0,0,0,0.85);">
 					<MudText Typo="Typo.h4">@(_movie.Title?.ToUpper())</MudText>
-					<MudText Typo="Typo.h5">@_movie.Tagline</MudText>
-					<MudText Class="description-width-xs" Typo="Typo.body1">@_movie.Description</MudText>
+					<MudText Class="text-width-xs" Typo="Typo.h5">@_movie.Tagline</MudText>
+					<MudText Class="text-width-xs" Typo="Typo.body1">@_movie.Description</MudText>
 				</MudStack>
 				<MudStack Row="true"
 						  Wrap="Wrap.Wrap">
@@ -123,20 +124,31 @@
 
 			</MudItem>
 
-			@foreach (var actor in _actors.MovieCast)
+			@for (int i = 0; i < 6 && i < _actors.MovieCast.Count; i++)
 			{
-				<MudItem xs="2">
-					<MudCard Elevation="0" Class="d-flex flex-column color-wrapper" Style="border:1px solid red; background-color: rgba(1,1,0,0.4)">
-						<MudCardMedia Class="actor-portrait d-flex justify-content-center align-items-center"
-									  Image="@GetActorPosterUrl(actor.ProfilePicture)" />
-						<MudCardContent>
-							<MudText>@actor.Name</MudText>
-						</MudCardContent>
-					</MudCard>
+				var actor = _actors.MovieCast[i];
+				<MudItem xs="4" md="2" Class="mt-6 d-flex justify-center-portrait">
+					<NavLink href="@GenerateActorUrl(actor.Id, actor.Name)">
+						<MudCard Elevation="0"
+								 Class="color-wrapper center-portrait"
+								 Style="background-color: rgba(0,0,0,0);">
+							<MudImage Objectfit="ObjectFit.Cover" Class="actor-portrait actor-portrait-moviepage"
+									  Src="@GetActorPosterUrl(actor.ProfilePicture)"
+									  FallbackSrc="Images/noprofile.png" />
+							<div class="small-font-xs-portrait">
+								<MudCardContent>
+									<MudText Typo="Typo.body1"><b>@actor.Name</b></MudText>
+									@if (!string.IsNullOrEmpty(actor.Character))
+									{
+										<MudText Typo="Typo.body2">as @actor.Character</MudText>
+									}
+								</MudCardContent>
+							</div>
+						</MudCard>
+					</NavLink>
 				</MudItem>
 			}
 		</MudGrid>
-
 	</MudPaper>
 </div>
 
@@ -145,6 +157,8 @@
 	public int Id { get; set; }
 	[Parameter]
 	public string Slug { get; set; }
+	private SlugHelper _slugHelper = new();
+
 	private List<string> allLanguages = new List<string>();
 
 	private MovieDetail _movie = new MovieDetail
@@ -162,7 +176,7 @@
 	protected override async Task OnParametersSetAsync()
 	{
 		_movie = await TMDB.GetMovieDetailsAsync(Id);
-		_actors = await TMDB.GetActorsAsync(Id);
+		_actors = await TMDB.GetActorsForMovieAsync(Id);
 	}
 
 	private string GetLogoUrl(string logoPath)
@@ -193,6 +207,11 @@
 		: $"https://image.tmdb.org/t/p/original{posterPath}";
 	}
 
+	//Generates a valid url for a specific movie using the Slugify library
+	private string GenerateActorUrl(int id, string actorName)
+	{
+		return $"/actor/{id}/{_slugHelper.GenerateSlug(actorName)}";
+	}
 	private Random _random = new Random();
 
 	private readonly string[] colors = {
