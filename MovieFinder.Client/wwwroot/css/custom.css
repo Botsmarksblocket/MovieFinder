@@ -1,23 +1,19 @@
 ﻿/***********/
 /*MOVIE PAGE*/
 /***********/
-
 .actor-portrait:hover {
     transform: scale(1.11);
-    transition: transform 0.3s ease-in-out;
+    transition: all 0.3s;
     cursor: pointer;
-}
-
-.actor-portrait:not(:hover) {
-    transition: transform 0.3s ease-in-out;
 }
 
 .actor-portrait {
     border-radius: 50% !important;
     height: 100px !important;
     width: 100px !important;
-    object-fit: contain !important;
-    outline: 2px solid #a89d9d !important;
+    border: 2px solid #a89d9d !important;
+    padding: 2px !important;
+    box-shadow: 0 0 8px 4px rgba(0, 0, 0, 0.2) !important;
 }
 
 .center-portrait {
@@ -42,7 +38,7 @@
 
 .frosted-glass {
     background: rgba(255, 255, 255, 0.9) !important;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4) !important;
+    box-shadow: 0 0 16px 8px rgba(0, 0, 0, 0.75) !important;
     border: 1px solid rgba(0, 0, 0, 0.15) !important;
     border-radius: 16px !important;
 }
@@ -58,7 +54,7 @@
 }
 
 .container-width {
-    width: 70%;
+    width: 1170px;
 }
 
 @media (max-width: 1280px) {
@@ -92,10 +88,10 @@
     display: block;
     width: 100%;
     max-width: 380px;
-    min-width: 200px;
     height: auto;
     object-fit: cover;
     image-rendering: auto;
+    box-shadow: 0 0 8px 4px rgba(0, 0, 0, 0.2) !important;
 }
 
 

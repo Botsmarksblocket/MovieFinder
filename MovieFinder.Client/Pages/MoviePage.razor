@@ -11,14 +11,14 @@
 	<MudPaper Style="min-height: 100vh;"
 			  Class="mt-8 mb-1 frosted-glass container-width">
 		<MudGrid Spacing="0">
-			<MudItem xs="12" md="5" lg="3">
+			<MudItem xs="12" md="5" lg="4">
 				<div class="mt-6 mx-8 center-xs">
 					<MudImage Class="movie-page-poster rounded" Src="@GetPosterUrl(_movie.PosterPath)"
 							  Alt="Movie Poster"
 							  FallbackSrc="/Images/notfound.png" />
 				</div>
 			</MudItem>
-			<MudItem Class="center-xs" xs="12" md="7" lg="9">
+			<MudItem Class="center-xs" xs="12" md="7" lg="8">
 				<MudStack Class="center-xs mt-6 mx-2" Style="color: rgba(0,0,0,0.85);">
 					<MudText Typo="Typo.h4">@(_movie.Title?.ToUpper())</MudText>
 					<MudText Class="text-width-xs" Typo="Typo.h5">@_movie.Tagline</MudText>
@@ -123,29 +123,25 @@
 
 			</MudItem>
 
-			@foreach (var actor in _actors.MovieCast)
+			@for (int i = 0; i < 6 && i < _actors.MovieCast.Count; i++)
 			{
-				<MudItem xs="4" sm="3" lg="2" Class="mt-4 d-flex justify-center-portrait">
+				var actor = _actors.MovieCast[i];
+				<MudItem xs="4" md="2" Class="mt-6 d-flex justify-center-portrait">
 					<MudCard Elevation="0"
 							 Class="color-wrapper center-portrait"
-							 Style=" background-color: rgba(0,0,0,0);">
-						<MudCardMedia Class="actor-portrait"
-									  Image="@GetActorPosterUrl(actor.ProfilePicture)" />
+							 Style="background-color: rgba(0,0,0,0);">
+						<MudImage Objectfit="ObjectFit.Cover" Class="actor-portrait"
+									  Src="@GetActorPosterUrl(actor.ProfilePicture)" />
 						<div class="small-font-xs-portrait">
-							<MudCardContent Class="text-center">
+							<MudCardContent>
 								<MudText Typo="Typo.body1"><b>@actor.Name</b></MudText>
 								<MudText Typo="Typo.body2">as @actor.Character</MudText>
 							</MudCardContent>
 						</div>
-
 					</MudCard>
 				</MudItem>
 			}
-
-		</MudGrid>
-		<div class="d-flex flex-column align-center">
-			<MudPagination Variant="Variant.Filled" Count="4" />
-		</div>
+			</MudGrid>
 	</MudPaper>
 </div>
 
