@@ -18,9 +18,9 @@
 					</div>
 				</MudItem>
 				<MudItem xs="12" md="9">
-					<MudStack Class="center-xs mt-4">
+					<MudStack Class="center-xs mt-4 small-font-xs">
 						<MudText Typo="Typo.h4"><b>@_actor.Name</b></MudText>
-						<MudStack Row="true">
+						<MudStack Class="center-xs" Row="true" Wrap="Wrap.Wrap">
 							@switch (_actor.Gender)
 							{
 								case (int)Gender.Female:
@@ -32,15 +32,18 @@
 								case (int)Gender.NonBinary:
 									<MudText>Non-binary</MudText>
 									break;
-								default:
-									<MudText>Unknown</MudText>
-									break;
 							}
+
 							@if (!string.IsNullOrEmpty(_actor.Birthday))
 							{
-								<MudText>@GetAge(_actor.Birthday)</MudText>
+								<MudText Typo="Typo.h6">@GetAge(_actor.Birthday) years</MudText>
 							}
+							<MudText Typo="Typo.h6">@_actor.Department</MudText>
+							<MudText Typo="Typo.h6">Born in: @_actor.PlaceOfBirth</MudText>
 						</MudStack>
+@* 						<MudStack>
+							<MudText>@_actor.Biography</MudText>
+						</MudStack> *@
 					</MudStack>
 				</MudItem>
 			</MudGrid>

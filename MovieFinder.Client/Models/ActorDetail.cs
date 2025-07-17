@@ -23,5 +23,7 @@ namespace MovieFinder.Client.Models
 
         [JsonPropertyName("gender")]
         public int Gender { get; set; }
+        [JsonPropertyName("known_for_department")]
+        public string Department { get; set; }
     }
 }
