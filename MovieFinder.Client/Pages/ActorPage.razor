@@ -19,29 +19,35 @@
 				</MudItem>
 				<MudItem xs="12" md="9">
 					<MudStack Class="center-xs mx-3">
-						<MudText Typo="Typo.h4"><b>@_actor.Name</b></MudText>
+						<MudText Typo="Typo.h4">
+							<b>
+								@_actor.Name
+									@switch (_actor.Gender)
+									{
+										case (int)Gender.Female:
+											<MudIcon Style="color:red;" Size="Size.Large" Icon="@Icons.Material.Filled.Female" Title="Female" />
+											break;
+										case (int)Gender.Male:
+											<MudIcon Icon="@Icons.Material.Filled.Male" Title="Male" />
+											break;
+										case (int)Gender.NonBinary:
+											break;
+									}
+							</b>
+						</MudText>
 						<MudStack Class="center-xs small-font-xs width-xs" Row="true" Wrap="Wrap.Wrap">
-							<div class="mt-1">
-								@switch (_actor.Gender)
-								{
-									case (int)Gender.Female:
-										<MudIcon Style="color:red;" Icon="@Icons.Material.Filled.Female" Title="Female" />
-										break;
-									case (int)Gender.Male:
-										<MudIcon Icon="@Icons.Material.Filled.Male" Title="Male" />
-										break;
-									case (int)Gender.NonBinary:
-										<MudText>Non-binary</MudText>
-										break;
-								}
-							</div>
+							@if (!string.IsNullOrEmpty(_actor.PlaceOfBirth))
+							{
+								<MudText Typo="Typo.h6">Born in @_actor.PlaceOfBirth.</MudText>
+							}
 
 							@if (!string.IsNullOrEmpty(_actor.Birthday))
 							{
-								<MudText Typo="Typo.h6">@GetAge(_actor.Birthday) years</MudText>
+								<MudText Typo="Typo.h6">@GetAge(_actor.Birthday) years old.</MudText>
 							}
-							<MudText Typo="Typo.h6">@_actor.Department</MudText>
-							<MudText Typo="Typo.h6">Born in: @_actor.PlaceOfBirth</MudText>
+
+	
+
 						</MudStack>
 
 						@if (string.IsNullOrEmpty(_actor.Biography))
@@ -64,7 +70,6 @@
 								</div>
 							</MudStack>
 						}
-
 					</MudStack>
 				</MudItem>
 			</MudGrid>

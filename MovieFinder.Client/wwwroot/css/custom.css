@@ -59,7 +59,7 @@
 .actor-portrait-moviepage {
     height: 100px !important;
     width: 100px !important;
-    border: 2px solid #a89d9d !important;
+    border: 2px solid #29537659 !important;
     padding: 2px !important;
 }
 
@@ -84,7 +84,7 @@
 }
 
 .inner-container-background {
-    background: rgba(255, 255, 255, 0.9) !important;
+    background: rgba(255, 255, 255, 0.88) !important;
     box-shadow: 0 0 16px 8px rgba(0, 0, 0, 0.75) !important;
     border: 1px solid rgba(0, 0, 0, 0.15) !important;
     border-radius: 16px !important;
@@ -178,7 +178,7 @@
     align-items: center;
     text-align: center;
     transform: translateY(100%);
-    transition: transform 0.4s ease-in-out;
+    transition: transform 0.3s ease-in-out;
     min-width: 105%;
 }
 
