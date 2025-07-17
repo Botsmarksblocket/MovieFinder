@@ -22,17 +22,17 @@
 						<MudText Typo="Typo.h4">
 							<b>
 								@_actor.Name
-									@switch (_actor.Gender)
-									{
-										case (int)Gender.Female:
-											<MudIcon Style="color:red;" Size="Size.Large" Icon="@Icons.Material.Filled.Female" Title="Female" />
-											break;
-										case (int)Gender.Male:
-											<MudIcon Icon="@Icons.Material.Filled.Male" Title="Male" />
-											break;
-										case (int)Gender.NonBinary:
-											break;
-									}
+								@switch (_actor.Gender)
+								{
+									case (int)Gender.Female:
+										<MudIcon Style="color:red;" Size="Size.Large" Icon="@Icons.Material.Filled.Female" Title="Female" />
+										break;
+									case (int)Gender.Male:
+										<MudIcon Icon="@Icons.Material.Filled.Male" Title="Male" />
+										break;
+									case (int)Gender.NonBinary:
+										break;
+								}
 							</b>
 						</MudText>
 						<MudStack Class="center-xs small-font-xs width-xs" Row="true" Wrap="Wrap.Wrap">
@@ -45,8 +45,6 @@
 							{
 								<MudText Typo="Typo.h6">@GetAge(_actor.Birthday) years old.</MudText>
 							}
-
-	
 
 						</MudStack>
 
@@ -72,8 +70,16 @@
 						}
 					</MudStack>
 				</MudItem>
-			</MudGrid>
 
+				<div class="">
+					<MudTabs Style="width:70%" Class="d-flex justify-center flex-grow-1 center-xs mt-8" Centered="true" Color="Color.Info">
+						<MudTabPanel Text="One"></MudTabPanel>
+						<MudTabPanel Text="Two" />
+						<MudTabPanel Text="Three" />
+					</MudTabs>
+				</div>
+
+			</MudGrid>
 		</MudPaper>
 	</MudPaper>
 </div>
