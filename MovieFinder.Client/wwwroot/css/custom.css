@@ -4,9 +4,22 @@
 
 .actor-portrait {
     border-radius: 50% !important;
-    border: 2px solid #a89d9d !important;
-    padding: 2px !important;
     box-shadow: 0 0 8px 4px rgba(0, 0, 0, 0.2) !important;
+}
+
+@media (max-width: 959px) {
+    .center-xs {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-evenly;
+    }
+    .width-xs {
+        max-width: 352px !important;
+    }
+    .small-font-xs-description * {
+        font-size: 14px !important;
+    }
 }
 
 /***********/
@@ -16,6 +29,11 @@
 .actor-portrait-actorpage {
     height: 200px !important;
     width: 200px !important;
+    border: 2px solid white !important;
+}
+
+.portrait-offset-up {
+    margin-top: -100px;
 }
 
 .dot > *::after {
@@ -41,6 +59,8 @@
 .actor-portrait-moviepage {
     height: 100px !important;
     width: 100px !important;
+    border: 2px solid #a89d9d !important;
+    padding: 2px !important;
 }
 
 .center-portrait {
@@ -91,24 +111,7 @@
     .small-font-xs-portrait * {
         font-size: 14px !important;
     }
-    .width-xs {
-        max-width: 346px !important;
-    }
-}
 
-@media (max-width: 959px) {
-    .center-xs {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: space-evenly;
-    }
-}
-
-@media (max-width: 959px) {
-    .container-width {
-        width: 100% !important;
-    }
 }
 
 .movie-page-poster {

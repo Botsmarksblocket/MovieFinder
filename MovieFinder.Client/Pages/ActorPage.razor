@@ -7,32 +7,34 @@
 <PageTitle>@_actor.Name</PageTitle>
 <div class="color-wrapper">
 	<MudPaper Class="d-flex justify-center" Elevation="0">
-		<MudPaper Width="75%" Style="min-height: 100vh; background-color:white;" Elevation="0" Class="mt-6">
+		<MudPaper Width="75%" Style="min-height: 100vh; background-color:white;" Elevation="0" Class="mt-20">
 			<MudGrid Class="mt-4" Justify="Justify.Center">
 				<MudItem xs="12" md="3">
 					<div class="center-xs d-flex justify-center">
 						<MudImage Objectfit="ObjectFit.Cover"
-								  Class="actor-portrait actor-portrait-actorpage "
+								  Class="actor-portrait actor-portrait-actorpage portrait-offset-up"
 								  Src="@GetActorPosterUrl(_actor.ProfilePicture)"
 								  FallbackSrc="Images/noprofile.png" />
 					</div>
 				</MudItem>
 				<MudItem xs="12" md="9">
-					<MudStack Class="center-xs mt-4 small-font-xs">
+					<MudStack Class="center-xs mx-3">
 						<MudText Typo="Typo.h4"><b>@_actor.Name</b></MudText>
-						<MudStack Class="center-xs" Row="true" Wrap="Wrap.Wrap">
-							@switch (_actor.Gender)
-							{
-								case (int)Gender.Female:
-									<MudIcon Style="color:red;" Icon="@Icons.Material.Filled.Female" Title="Female" />
-									break;
-								case (int)Gender.Male:
-									<MudIcon Icon="@Icons.Material.Filled.Male" Title="Male" />
-									break;
-								case (int)Gender.NonBinary:
-									<MudText>Non-binary</MudText>
-									break;
-							}
+						<MudStack Class="center-xs small-font-xs width-xs" Row="true" Wrap="Wrap.Wrap">
+							<div class="mt-1">
+								@switch (_actor.Gender)
+								{
+									case (int)Gender.Female:
+										<MudIcon Style="color:red;" Icon="@Icons.Material.Filled.Female" Title="Female" />
+										break;
+									case (int)Gender.Male:
+										<MudIcon Icon="@Icons.Material.Filled.Male" Title="Male" />
+										break;
+									case (int)Gender.NonBinary:
+										<MudText>Non-binary</MudText>
+										break;
+								}
+							</div>
 
 							@if (!string.IsNullOrEmpty(_actor.Birthday))
 							{
@@ -41,9 +43,28 @@
 							<MudText Typo="Typo.h6">@_actor.Department</MudText>
 							<MudText Typo="Typo.h6">Born in: @_actor.PlaceOfBirth</MudText>
 						</MudStack>
-@* 						<MudStack>
-							<MudText>@_actor.Biography</MudText>
-						</MudStack> *@
+
+						@if (string.IsNullOrEmpty(_actor.Biography))
+						{
+							<MudText Typo="Typo.h6">No actor description available</MudText>
+						}
+						else
+						{
+							<MudStack Class="center-xs width-xs">
+								<div class="small-font-xs-description">
+									<MudText Typo="Typo.body1">
+										@Biography
+										@if (_actor.Biography.Length > 300)
+										{
+											<MudText Color="Color.Primary" Class="ml-1 cursor-pointer d-inline" @onclick="@(() => showFullBiography = !showFullBiography)">
+												@ToggleText
+											</MudText>
+										}
+									</MudText>
+								</div>
+							</MudStack>
+						}
+
 					</MudStack>
 				</MudItem>
 			</MudGrid>
@@ -52,11 +73,41 @@
 	</MudPaper>
 </div>
 @code {
+
 	[Parameter]
 	public int Id { get; set; }
 	[Parameter]
 	public string Slug { get; set; }
 	private ActorDetail _actor = new ActorDetail();
+
+	private bool showFullBiography = false;
+
+	private string Biography
+	{
+		get
+		{
+			int previewLimit = 300;
+
+			if (string.IsNullOrEmpty(_actor.Biography))
+			{
+				return "";
+			}
+
+			if (showFullBiography || _actor.Biography.Length <= previewLimit)
+			{
+				return _actor.Biography;
+			}
+			else
+			{
+				return _actor.Biography.Substring(0, previewLimit) + "...";
+			}
+
+		}
+	}
+
+	private string ToggleText => showFullBiography ? "Show less" : "Show more";
+
+
 
 	private string GetActorPosterUrl(string posterPath)
 	{
