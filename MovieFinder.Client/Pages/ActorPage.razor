@@ -16,7 +16,7 @@
 					<div class="center-xs d-flex justify-center">
 						<MudImage Objectfit="ObjectFit.Cover"
 								  Class="actor-portrait actor-portrait-actorpage portrait-offset-up"
-								  Src="@GetActorPosterUrl(_actor.ProfilePicture)"
+								  Src="@GetImageUrl("original",_actor.ProfilePicture)"
 								  FallbackSrc="Images/noprofile.png" />
 					</div>
 				</MudItem>
@@ -101,7 +101,7 @@
 			@foreach (var actor in _actor.Images.Profiles)
 			{
 
-				<MudImage Src="@GetActorImagesUrl(actor.FilePath)" Alt="Actor Image" />
+				<MudImage Src="@GetImageUrl("w780", actor.FilePath)" Alt="Actor Image" />
 			}
 
 		</MudPaper>
@@ -113,13 +113,6 @@
 	public int Id { get; set; }
 	[Parameter]
 	public string Slug { get; set; }
-
-	// private MovieDetail _movie = new MovieDetail
-	// {
-	// 	Genres = new List<Genre>(),
-	// 	ProductionCompanies = new List<ProductionCompany>(),
-	// 	Languages = new List<AvailableLanguage>()
-	// };
 
 	private ActorDetail _actor = new ActorDetail()
 	{
@@ -160,18 +153,11 @@
 
 	private string ToggleText => showFullBiography ? "Show less" : "Show more";
 
-	private string GetActorImagesUrl(string imagePath)
+	private string GetImageUrl(string fileSize, string imagePath)
 	{
 		return string.IsNullOrWhiteSpace(imagePath)
 		? ""
-		: $"https://image.tmdb.org/t/p/w780{imagePath}";
-	}
-
-	private string GetActorPosterUrl(string posterPath)
-	{
-		return string.IsNullOrWhiteSpace(posterPath)
-		? ""
-		: $"https://image.tmdb.org/t/p/original{posterPath}";
+		: $"https://image.tmdb.org/t/p/{fileSize}{imagePath}";
 	}
 
 	protected override async Task OnParametersSetAsync()
