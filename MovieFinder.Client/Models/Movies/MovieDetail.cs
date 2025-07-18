@@ -1,4 +1,5 @@
 ﻿using MovieFinder.Client.Models.Actors;
+using MovieFinder.Client.Models.Shared;
 using System.Text.Json.Serialization;
 
 namespace MovieFinder.Client.Models.Movies

@@ -1,4 +1,4 @@
-﻿namespace MovieFinder.Client.Models
+﻿namespace MovieFinder.Client.Models.Shared
 {
     public class FilterParameter
     {

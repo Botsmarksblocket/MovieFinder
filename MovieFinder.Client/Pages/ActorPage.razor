@@ -98,6 +98,12 @@
 				</MudPaper>
 			</div>
 
+			@foreach (var actor in _actor.Images.Profiles)
+			{
+
+				<MudImage Src="@GetActorImagesUrl(actor.FilePath)" Alt="Actor Image" />
+			}
+
 		</MudPaper>
 	</MudPaper>
 </div>
@@ -107,7 +113,25 @@
 	public int Id { get; set; }
 	[Parameter]
 	public string Slug { get; set; }
-	private ActorDetail _actor = new ActorDetail();
+
+	// private MovieDetail _movie = new MovieDetail
+	// {
+	// 	Genres = new List<Genre>(),
+	// 	ProductionCompanies = new List<ProductionCompany>(),
+	// 	Languages = new List<AvailableLanguage>()
+	// };
+
+	private ActorDetail _actor = new ActorDetail()
+	{
+		MovieCredits = new MovieCredits
+		{
+			Cast = new List<MovieCreditItem>(),
+		},
+		Images = new ActorImages
+		{
+			Profiles = new List<ActorImage>()
+		}
+	};
 
 	private bool showFullBiography = false;
 
@@ -135,6 +159,13 @@
 	}
 
 	private string ToggleText => showFullBiography ? "Show less" : "Show more";
+
+	private string GetActorImagesUrl(string imagePath)
+	{
+		return string.IsNullOrWhiteSpace(imagePath)
+		? ""
+		: $"https://image.tmdb.org/t/p/w780{imagePath}";
+	}
 
 	private string GetActorPosterUrl(string posterPath)
 	{

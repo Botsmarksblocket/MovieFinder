@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace MovieFinder.Client.Models
+namespace MovieFinder.Client.Models.Actors
 {
     public class Cast
     {
