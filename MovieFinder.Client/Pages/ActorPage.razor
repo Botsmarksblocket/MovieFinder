@@ -75,11 +75,15 @@
 				</MudItem>
 			</MudGrid>
 
+
+			<MudDivider DividerType="DividerType.Middle" Class="mt-2 mb-n8"></MudDivider>
+
 			<div class="d-flex justify-center mt-8 mr-2 ml-2">
-				<MudPaper Class="width-xs" Style="width: 100%; height: 600px; background-color:beige;" Elevation="0">
+				<MudPaper Class="width-xs" Style="width: 100%; height: 100%; background-color:beige;" Elevation="0">
 					<MudStack>
 						<MudStack>
 							<MudToggleGroup T="string"
+								Outlined="false"
 											SelectionMode="SelectionMode.SingleSelection"
 											Color="Color.Primary"
 											FixedContent
@@ -87,23 +91,20 @@
 								<MudToggleItem Value="@("Photos")" Text="Photos" />
 								<MudToggleItem Value="@("ActedIn")" Text="Acted in" />
 							</MudToggleGroup>
-
-							<MudPagination>
-
-							</MudPagination>
 						</MudStack>
 					</MudStack>
 
 
+					<MudGrid Spacing="2">
+						@foreach (var actor in _actor.Images.Profiles)
+						{
+							<MudItem xs="6" md="2">
+								<MudImage Class="actor-container" Src="@GetImageUrl("w780", actor.FilePath)" Alt="Actor Image" />
+							</MudItem>
+						}
+					</MudGrid>
 				</MudPaper>
 			</div>
-
-			@foreach (var actor in _actor.Images.Profiles)
-			{
-
-				<MudImage Src="@GetImageUrl("w780", actor.FilePath)" Alt="Actor Image" />
-			}
-
 		</MudPaper>
 	</MudPaper>
 </div>
