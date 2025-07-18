@@ -1,6 +1,9 @@
 ﻿@using Services
 @using Models
 @using Slugify
+@using MovieFinder.Client.Models.Movies
+@using MovieFinder.Client.Models.Actors
+@using MovieFinder.Client.Models.Shared
 @inject ITMDBService TMDB
 @page "/actor/{id:int}/{slug}"
 
@@ -13,7 +16,7 @@
 					<div class="center-xs d-flex justify-center">
 						<MudImage Objectfit="ObjectFit.Cover"
 								  Class="actor-portrait actor-portrait-actorpage portrait-offset-up"
-								  Src="@GetActorPosterUrl(_actor.ProfilePicture)"
+								  Src="@GetImageUrl("original",_actor.ProfilePicture)"
 								  FallbackSrc="Images/noprofile.png" />
 					</div>
 				</MudItem>
@@ -70,16 +73,38 @@
 						}
 					</MudStack>
 				</MudItem>
-
-				<div class="">
-					<MudTabs Style="width:70%" Class="d-flex justify-center flex-grow-1 center-xs mt-8" Centered="true" Color="Color.Info">
-						<MudTabPanel Text="One"></MudTabPanel>
-						<MudTabPanel Text="Two" />
-						<MudTabPanel Text="Three" />
-					</MudTabs>
-				</div>
-
 			</MudGrid>
+
+
+			<MudDivider DividerType="DividerType.Middle" Class="mt-2 mb-n8"></MudDivider>
+
+			<div class="d-flex justify-center mt-8 mr-2 ml-2">
+				<MudPaper Class="width-xs" Style="width: 100%; height: 100%; background-color:beige;" Elevation="0">
+					<MudStack>
+						<MudStack>
+							<MudToggleGroup T="string"
+								Outlined="false"
+											SelectionMode="SelectionMode.SingleSelection"
+											Color="Color.Primary"
+											FixedContent
+											Style="display: flex; justify-content: start; background-color:white;">
+								<MudToggleItem Value="@("Photos")" Text="Photos" />
+								<MudToggleItem Value="@("ActedIn")" Text="Acted in" />
+							</MudToggleGroup>
+						</MudStack>
+					</MudStack>
+
+
+					<MudGrid Spacing="2">
+						@foreach (var actor in _actor.Images.Profiles)
+						{
+							<MudItem xs="6" md="2">
+								<MudImage Class="actor-container" Src="@GetImageUrl("w780", actor.FilePath)" Alt="Actor Image" />
+							</MudItem>
+						}
+					</MudGrid>
+				</MudPaper>
+			</div>
 		</MudPaper>
 	</MudPaper>
 </div>
@@ -89,7 +114,18 @@
 	public int Id { get; set; }
 	[Parameter]
 	public string Slug { get; set; }
-	private ActorDetail _actor = new ActorDetail();
+
+	private ActorDetail _actor = new ActorDetail()
+	{
+		MovieCredits = new MovieCredits
+		{
+			Cast = new List<MovieCreditItem>(),
+		},
+		Images = new ActorImages
+		{
+			Profiles = new List<ActorImage>()
+		}
+	};
 
 	private bool showFullBiography = false;
 
@@ -118,13 +154,11 @@
 
 	private string ToggleText => showFullBiography ? "Show less" : "Show more";
 
-
-
-	private string GetActorPosterUrl(string posterPath)
+	private string GetImageUrl(string fileSize, string imagePath)
 	{
-		return string.IsNullOrWhiteSpace(posterPath)
+		return string.IsNullOrWhiteSpace(imagePath)
 		? ""
-		: $"https://image.tmdb.org/t/p/original{posterPath}";
+		: $"https://image.tmdb.org/t/p/{fileSize}{imagePath}";
 	}
 
 	protected override async Task OnParametersSetAsync()
@@ -144,7 +178,6 @@
 		}
 		return age;
 	}
-
 
 	public enum Gender
 	{

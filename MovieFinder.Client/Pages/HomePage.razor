@@ -1,5 +1,7 @@
 ﻿@using Services
 @using Models
+@using MovieFinder.Client.Models.Movies 
+@using MovieFinder.Client.Models.Shared
 @using Slugify
 @inject ITMDBService TMDB
 @inject ISnackbar Snackbar
@@ -101,7 +103,7 @@
 							</div>
 
 							@* If the poster cannot be found *@
-							@if (GetPosterUrl(movie.PosterPath) == "")
+							@if (GetImageUrl("w780", movie.PosterPath) == "")
 							{
 								<div class="not-found flex-container small-font-xs">
 									<MudText Typo="Typo.h5">@movie.Title</MudText>
@@ -111,7 +113,7 @@
 							else
 							{
 								<MudImage Class="movie-poster"
-										  Src="@GetPosterUrl(movie.PosterPath)"
+										  Src="@GetImageUrl("w780", movie.PosterPath)"
 										  Alt="Movie Poster">
 								</MudImage>
 							}
@@ -272,11 +274,11 @@
 		}
 	}
 
-	private string GetPosterUrl(string posterPath)
+	private string GetImageUrl(string fileSize, string imagePath)
 	{
-		return string.IsNullOrWhiteSpace(posterPath)
+		return string.IsNullOrWhiteSpace(imagePath)
 		? ""
-		: $"https://image.tmdb.org/t/p/w780{posterPath}";
+		: $"https://image.tmdb.org/t/p/{fileSize}{imagePath}";
 	}
 
 	//Generates a valid url for a specific movie using the Slugify library

@@ -1,6 +1,7 @@
-﻿using System.Text.Json.Serialization;
+﻿using MovieFinder.Client.Models.Movies;
+using System.Text.Json.Serialization;
 
-namespace MovieFinder.Client.Models
+namespace MovieFinder.Client.Models.Actors
 {
     public class ActorDetail
     {
@@ -25,5 +26,11 @@ namespace MovieFinder.Client.Models
         public int Gender { get; set; }
         [JsonPropertyName("known_for_department")]
         public string Department { get; set; }
+
+        [JsonPropertyName("movie_credits")] 
+        public MovieCredits MovieCredits { get;set; }
+        [JsonPropertyName("images")]
+        public ActorImages Images { get; set; }
+
     }
 }
