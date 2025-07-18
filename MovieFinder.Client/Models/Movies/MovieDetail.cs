@@ -1,7 +1,9 @@
-﻿using System.Text.Json.Serialization;
+﻿using MovieFinder.Client.Models.Actors;
+using System.Text.Json.Serialization;
 
-namespace MovieFinder.Client.Models
+namespace MovieFinder.Client.Models.Movies
 {
+    //Contains more properties than the Movie-class. This class is used for the MoviePage
     public class MovieDetail
     {
         public int Id { get; set; }
@@ -26,11 +28,6 @@ namespace MovieFinder.Client.Models
         [JsonPropertyName("overview")]
         public string Description { get; set; }
 
-
-        [JsonPropertyName("release_date")]
-        public string ReleaseDate { get; set; }
-
-
         [JsonPropertyName("runtime")]
         public int Runtime { get;set; }
 
@@ -53,5 +50,18 @@ namespace MovieFinder.Client.Models
 
         [JsonPropertyName("production_companies")]
         public List<ProductionCompany> ProductionCompanies { get; set; }
+
+        [JsonPropertyName("movie_credits")]
+        public MovieCredits MovieCredits { get; set; }
+
+        [JsonPropertyName("images")]
+        public ActorImages Images { get; set; }
+
+        [JsonPropertyName("release_date")]
+        public string ReleaseDateRaw { get; set; }
+
+        [JsonIgnore]
+        public string ReleaseDate =>
+        DateTime.TryParse(ReleaseDateRaw, out var date) ? date.Year.ToString() : "Unknown";
     }
 }

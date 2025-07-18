@@ -1,6 +1,9 @@
 ﻿@using Services
 @using Models
 @using Slugify
+@using MovieFinder.Client.Models.Movies
+@using MovieFinder.Client.Models.Actors
+@using MovieFinder.Client.Models.Shared
 @inject ITMDBService TMDB
 @page "/actor/{id:int}/{slug}"
 
@@ -84,6 +87,10 @@
 								<MudToggleItem Value="@("Photos")" Text="Photos" />
 								<MudToggleItem Value="@("ActedIn")" Text="Acted in" />
 							</MudToggleGroup>
+
+							<MudPagination>
+
+							</MudPagination>
 						</MudStack>
 					</MudStack>
 
@@ -129,8 +136,6 @@
 
 	private string ToggleText => showFullBiography ? "Show less" : "Show more";
 
-
-
 	private string GetActorPosterUrl(string posterPath)
 	{
 		return string.IsNullOrWhiteSpace(posterPath)
@@ -155,7 +160,6 @@
 		}
 		return age;
 	}
-
 
 	public enum Gender
 	{

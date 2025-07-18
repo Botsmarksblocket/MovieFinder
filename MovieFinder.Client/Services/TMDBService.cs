@@ -2,7 +2,9 @@
 using System.Net.Http.Json;
 using System.Web;
 using Microsoft.AspNetCore.WebUtilities;
-using MovieFinder.Client.Models;
+using MovieFinder.Client.Models.Actors;
+using MovieFinder.Client.Models.Movies;
+using MovieFinder.Client.Models.Shared;
 using static System.Net.WebRequestMethods;
 
 namespace MovieFinder.Client.Services
@@ -128,6 +130,7 @@ namespace MovieFinder.Client.Services
             var queryParameters = new Dictionary<string, string>
             {
                 ["api_key"] = _apiKey,
+                ["append_to_response"] = "movie_credits,images"
             };
 
             var url = QueryHelpers.AddQueryString(baseUrl, queryParameters);

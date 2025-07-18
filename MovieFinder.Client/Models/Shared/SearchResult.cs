@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using MovieFinder.Client.Models.Movies;
+using System.Text.Json.Serialization;
 
 namespace MovieFinder.Client.Models
 {
