@@ -1,6 +1,6 @@
 ﻿@using Models
-@using MovieFinder.Client.Models.Movies
 @using MovieFinder.Client.Models.Actors
+@using MovieFinder.Client.Models.Movies
 @using MovieFinder.Client.Models.Shared
 @using MudBlazor.Services
 @using Services
@@ -11,13 +11,13 @@
 <PageTitle>@_movie.Title</PageTitle>
 
 <div class="d-flex justify-center backdrop-image"
-	 style=@($"background-image: url('{GetImageUrl("original", _movie.BackdropPath)}');")>
+	 style=@($"background-image: url('{GetBackdropUrl(_movie.BackdropPath)}');")>
 	<MudPaper Style="min-height: 100vh;"
 			  Class="mt-8 mb-1 inner-container-background container-width">
 		<MudGrid Spacing="0">
 			<MudItem xs="12" md="5" lg="4">
 				<div class="mt-6 mx-8 center-xs">
-					<MudImage Class="movie-page-poster rounded" Src="@GetImageUrl("original", _movie.PosterPath)"
+					<MudImage Class="movie-page-poster rounded" Src="@GetPosterUrl(_movie.PosterPath)"
 							  Alt="Movie Poster"
 							  FallbackSrc="/Images/notfound.png" />
 				</div>
@@ -44,7 +44,7 @@
 					{
 						<MudTooltip Arrow="true"
 									Text="@company.Name">
-							@if (GetImageUrl("original", company.LogoPath) == "")
+							@if (GetLogoUrl(company.LogoPath) == "")
 							{
 								<MudChip Label="true" T="string" Style="background-color: #2b2b2b">
 									@company.Name
@@ -57,7 +57,7 @@
 										  Width="100"
 										  Height="60"
 										  Class="mt-2"
-										  Src="@GetImageUrl("original", company.LogoPath)">
+										  Src="@GetLogoUrl(company.LogoPath)">
 								</MudImage>
 							}
 						</MudTooltip>
@@ -136,7 +136,7 @@
 								 Class="color-wrapper center-portrait"
 								 Style="background-color: rgba(0,0,0,0);">
 							<MudImage Objectfit="ObjectFit.Cover" Class="actor-portrait actor-portrait-moviepage"
-									  Src="@GetImageUrl("original", actor.ProfilePicture)"
+									  Src="@GetActorPosterUrl(actor.ProfilePicture)"
 									  FallbackSrc="Images/noprofile.png" />
 							<div class="small-font-xs-portrait">
 								<MudCardContent>
@@ -182,11 +182,32 @@
 		_actors = await TMDB.GetActorsForMovieAsync(Id);
 	}
 
-	private string GetImageUrl(string fileSize, string imagePath)
+	private string GetLogoUrl(string logoPath)
 	{
-		return string.IsNullOrWhiteSpace(imagePath)
+		return string.IsNullOrWhiteSpace(logoPath)
 		? ""
-		: $"https://image.tmdb.org/t/p/{fileSize}{imagePath}";
+		: $"https://image.tmdb.org/t/p/original/{logoPath}";
+	}
+
+	private string GetPosterUrl(string posterPath)
+	{
+		return string.IsNullOrWhiteSpace(posterPath)
+		? ""
+		: $"https://image.tmdb.org/t/p/original{posterPath}";
+	}
+
+	private string GetBackdropUrl(string backdropPath)
+	{
+		return string.IsNullOrWhiteSpace(backdropPath)
+		? ""
+		: $"https://image.tmdb.org/t/p/original{backdropPath}";
+	}
+
+	private string GetActorPosterUrl(string posterPath)
+	{
+		return string.IsNullOrWhiteSpace(posterPath)
+		? ""
+		: $"https://image.tmdb.org/t/p/original{posterPath}";
 	}
 
 	//Generates a valid url for a specific movie using the Slugify library
