@@ -82,64 +82,55 @@
 				<MudPaper Class="width-lg width-xs" Style="height: 100%; background-color:beige;" Elevation="0">
 					<MudStack>
 						<MudStack>
-							<MudToggleGroup T="string"
-								Outlined="false"
+							<MudToggleGroup 
+								@bind-Value="_activeTab"
+								T="string"
+											Outlined="false"
 											SelectionMode="SelectionMode.SingleSelection"
 											Color="Color.Primary"
 											FixedContent
 											Style="display: flex; justify-content: start; background-color:white;">
-								<MudToggleItem Value="@("Photos")" Text="Photos" />
+								<MudToggleItem Value="@("ActorPhotos")" Text="Photos" />
 								<MudToggleItem Value="@("ActedIn")" Text="Acted in" />
 							</MudToggleGroup>
 						</MudStack>
 					</MudStack>
 
+					@if (_activeTab == "ActorPhotos")
+					{
+						
 					<MudGrid Spacing="6">
-						@foreach (var actor in GetCurrentPageImages())
+							@foreach (var actor in ReturnImages(_actor.Images.Profiles))
 						{
 							<MudItem xs="4" md="3" lg="2" Class="center-xs">
 								<MudImage Class="actor-container" Src="@GetImageUrl("w780", actor.FilePath)" Alt="Actor Image" />
 							</MudItem>
 						}
 					</MudGrid>
+					}
+
+					else if (_activeTab == "ActedIn")
+					{
+						<MudGrid Spacing="6">
+							@foreach (var movie in ReturnImages(_actor.MovieCredits.Cast))
+							{
+								<MudItem xs="6" md="3" lg="2" Class="center-xs">
+									<MudImage Class="actor-container" Src="@GetImageUrl("w780", movie.PosterPath)" Alt="Actor Image" />
+								</MudItem>
+							}
+						</MudGrid>
+					}
 
 					<div class="d-flex justify-center mt-8">
-					
-					<MudPagination @bind-Selected="@_selected" Count="@CalculateTotalPages()"/>					
-
+						<MudPagination @bind-Selected="@_selected" Count="@CalculateTotalPages()" />
 					</div>
+
 				</MudPaper>
 			</div>
 		</MudPaper>
 	</MudPaper>
 </div>
 @code {
-
-	// Returns the actor images for the current page
-	private IEnumerable<ActorImage> GetCurrentPageImages()
-	{
-		int pageSize = 12;
-		return _actor.Images.Profiles
-			.Skip((_selected - 1) * pageSize)
-			.Take(pageSize)
-			.ToList();
-	}
-
-	private int _selected = 1;
-	private int _pageCount;
-
-	public int CalculateTotalPages()
-	{
-		int totalImages = _actor.Images.Profiles.Count();
-		double rawPageCount = totalImages / 12.0;
-		int totalPages = (int)Math.Ceiling(rawPageCount);
-
-		_pageCount = totalPages;
-
-		return _pageCount;
-	}
-
-
 	[Parameter]
 	public int Id { get; set; }
 	[Parameter]
@@ -149,13 +140,56 @@
 	{
 		MovieCredits = new MovieCredits
 		{
-			Cast = new List<MovieCreditItem>(),
+			Cast = new List<Movie>(),
 		},
 		Images = new ActorImages
 		{
 			Profiles = new List<ActorImage>()
 		}
 	};
+
+	protected override async Task OnParametersSetAsync()
+	{
+		_actor = await TMDB.GetActorDetailsAsync(Id);
+		_pageCount = CalculateTotalPages();
+	}
+
+	private int _selected = 1;
+	private int _pageCount;
+	private string _activeTab = "ActorPhotos";
+
+	// Returns a paginated subset of the provided images.
+	// Generic so it works for any collection type
+	private IEnumerable<T> ReturnImages<T>(IEnumerable<T>images)
+	{
+		int pageSize = 12;
+
+		return images
+			.Skip((_selected - 1) * pageSize)
+			.Take(pageSize)
+			.ToList();
+	}
+
+	//Calculates total number of pages based on the active tab
+	public int CalculateTotalPages()
+	{
+		int totalImages = 0;
+
+		if (_activeTab == "ActorPhotos")
+		{
+			totalImages = _actor.Images.Profiles.Count();
+		}
+		else if (_activeTab == "ActedIn")
+		{
+			totalImages = _actor.MovieCredits.Cast.Count();
+		}
+		double rawPageCount = totalImages / 12.0;
+		int totalPages = (int)Math.Ceiling(rawPageCount);
+
+		_pageCount = totalPages;
+
+		return _pageCount;
+	}
 
 	private bool showFullBiography = false;
 
@@ -189,11 +223,6 @@
 		return string.IsNullOrWhiteSpace(imagePath)
 		? ""
 		: $"https://image.tmdb.org/t/p/{fileSize}{imagePath}";
-	}
-
-	protected override async Task OnParametersSetAsync()
-	{
-		_actor = await TMDB.GetActorDetailsAsync(Id);
 	}
 
 	private int GetAge(string unconvertedBirthDate)
