@@ -9,8 +9,8 @@
 
 <PageTitle>@_actor.Name</PageTitle>
 <div class="color-wrapper">
-	<MudPaper Class="d-flex justify-center" Elevation="0">
-		<MudPaper Width="75%" Style="min-height: 100vh; background-color:white;" Elevation="0" Class="mt-20">
+	<MudPaper Class="d-flex justify-center" Style="min-height: 100vh;" Elevation="0">
+		<MudPaper Width="75%" Style="background-color:white;" Elevation="0" Class="mt-20 mb-4">
 			<MudGrid Class="mt-4" Justify="Justify.Center">
 				<MudItem xs="12" md="3">
 					<div class="center-xs d-flex justify-center">
@@ -75,16 +75,12 @@
 				</MudItem>
 			</MudGrid>
 
-
-			<MudDivider DividerType="DividerType.Middle" Class="mt-2 mb-n8"></MudDivider>
-
 			<div class="d-flex justify-center mt-8 mx-4">
-				<MudPaper Class="width-lg width-xs" Style="height: 100%; background-color:beige;" Elevation="0">
+				<MudPaper Class="width-lg width-xs" Style="height: 100%; background-color:white;" Elevation="0">
 					<MudStack>
 						<MudStack>
-							<MudToggleGroup 
-								@bind-Value="_activeTab"
-								T="string"
+							<MudToggleGroup @bind-Value="_activeTab"
+											T="string"
 											Outlined="false"
 											SelectionMode="SelectionMode.SingleSelection"
 											Color="Color.Primary"
@@ -95,18 +91,22 @@
 							</MudToggleGroup>
 						</MudStack>
 					</MudStack>
+					<MudDivider DividerType="DividerType.Middle" Class="mt-4"></MudDivider>
+
+					<div class="d-flex justify-center mt-2 mb-2">
+						<MudPagination @bind-Selected="@_selected" Count="@CalculateTotalPages()" />
+					</div>
 
 					@if (_activeTab == "ActorPhotos")
 					{
-						
-					<MudGrid Spacing="6">
+						<MudGrid Spacing="6">
 							@foreach (var actor in ReturnImages(_actor.Images.Profiles))
-						{
-							<MudItem xs="4" md="3" lg="2" Class="center-xs">
-								<MudImage Class="actor-container" Src="@GetImageUrl("w780", actor.FilePath)" Alt="Actor Image" />
-							</MudItem>
-						}
-					</MudGrid>
+							{
+								<MudItem xs="4" md="3" lg="2" Class="center-xs">
+									<MudImage Class="actor-container" Src="@GetImageUrl("w780", actor.FilePath)" Alt="Actor Image" />
+								</MudItem>
+							}
+						</MudGrid>
 					}
 
 					else if (_activeTab == "ActedIn")
@@ -121,9 +121,8 @@
 						</MudGrid>
 					}
 
-					<div class="d-flex justify-center mt-8">
-						<MudPagination @bind-Selected="@_selected" Count="@CalculateTotalPages()" />
-					</div>
+
+
 
 				</MudPaper>
 			</div>
@@ -160,7 +159,7 @@
 
 	// Returns a paginated subset of the provided images.
 	// Generic so it works for any collection type
-	private IEnumerable<T> ReturnImages<T>(IEnumerable<T>images)
+	private IEnumerable<T> ReturnImages<T>(IEnumerable<T> images)
 	{
 		int pageSize = 12;
 
