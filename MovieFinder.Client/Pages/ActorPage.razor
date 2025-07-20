@@ -102,12 +102,35 @@
 							</MudItem>
 						}
 					</MudGrid>
+
+					<div class="d-flex justify-center mt-8">
+
+					
+					<MudPagination Count="1"/>
+					
+					<MudText>@CalculateTotalPages()</MudText>
+
+					</div>
 				</MudPaper>
 			</div>
 		</MudPaper>
 	</MudPaper>
 </div>
 @code {
+	private int _selected = 1;
+	private int _pageCount;
+
+	public int CalculateTotalPages()
+	{
+		int totalImages = _actor.Images.Profiles.Count();
+		double rawPageCount = totalImages / 12.0;
+		int totalPages = (int)Math.Ceiling(rawPageCount);
+
+		_pageCount = totalPages;
+
+		return _pageCount;
+	}
+
 
 	[Parameter]
 	public int Id { get; set; }
