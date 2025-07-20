@@ -95,7 +95,7 @@
 					</MudStack>
 
 					<MudGrid Spacing="6">
-						@foreach (var actor in _actor.Images.Profiles)
+						@foreach (var actor in GetCurrentPageImages())
 						{
 							<MudItem xs="4" md="3" lg="2" Class="center-xs">
 								<MudImage Class="actor-container" Src="@GetImageUrl("w780", actor.FilePath)" Alt="Actor Image" />
@@ -104,11 +104,8 @@
 					</MudGrid>
 
 					<div class="d-flex justify-center mt-8">
-
 					
-					<MudPagination Count="1"/>
-					
-					<MudText>@CalculateTotalPages()</MudText>
+					<MudPagination @bind-Selected="@_selected" Count="@CalculateTotalPages()"/>					
 
 					</div>
 				</MudPaper>
@@ -117,6 +114,17 @@
 	</MudPaper>
 </div>
 @code {
+
+	// Returns the actor images for the current page
+	private IEnumerable<ActorImage> GetCurrentPageImages()
+	{
+		int pageSize = 12;
+		return _actor.Images.Profiles
+			.Skip((_selected - 1) * pageSize)
+			.Take(pageSize)
+			.ToList();
+	}
+
 	private int _selected = 1;
 	private int _pageCount;
 
