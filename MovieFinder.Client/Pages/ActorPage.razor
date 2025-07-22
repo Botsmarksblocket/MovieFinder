@@ -124,8 +124,6 @@
 						</MudGrid>
 					}
 
-					@* _actor.MovieCredits.Cast *@
-
 					else if (_activeTab == "ActedIn")
 					{
 						<MudGrid Spacing="6">
@@ -141,12 +139,13 @@
 	</MudPaper>
 </div>
 @code {
-	private SlugHelper _slugHelper = new();
-
 	[Parameter]
 	public int Id { get; set; }
 	[Parameter]
 	public string Slug { get; set; }
+
+	private SlugHelper _slugHelper = new();
+
 
 	private ActorDetail _actor = new ActorDetail()
 	{
