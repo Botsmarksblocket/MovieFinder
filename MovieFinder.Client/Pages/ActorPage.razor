@@ -131,7 +131,7 @@
 						<MudGrid Spacing="6">
 							@foreach (var movie in ReturnImages(_actor.MovieCredits.Cast))
 							{
-								<MovieComponent Movie="movie"/>
+								<MovieComponent @key="movie.Id" Movie="movie"/>
 							}
 						</MudGrid>
 					}
