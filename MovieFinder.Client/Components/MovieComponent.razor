@@ -1,0 +1,91 @@
+﻿@using Slugify
+@using Models.Movies
+
+<MudItem xs="6" md="4" lg="3" Class="fade-in">
+	<NavLink href="@GenerateMovieUrl(Movie.Id, Movie.Title)">
+		<MudPaper Class="d-flex align-center justify-center mt-3 mb-3 movie-poster-container" Elevation="3">
+			<div class="movie-rating">
+				@if (Movie.Rating != 0)
+				{
+					<h4>
+						@String.Format("{0:.#}", Movie.Rating) / 10 (@Movie.VoteCount votes)
+					</h4>
+				}
+
+				else
+				{
+					<p>Rating not found</p>
+				}
+
+			</div>
+
+			@* If the poster cannot be found *@
+			@if (GetPosterUrl(Movie.PosterPath) == "")
+			{
+				<div class="not-found flex-container small-font-xs">
+					<MudText Typo="Typo.h5">@Movie.Title</MudText>
+					<MudText Typo="Typo.h5" Style="color:#3b82f6">(Poster not found)</MudText>
+				</div>
+			}
+			else
+			{
+				<MudImage Class="movie-poster"
+						  Src="@GetPosterUrl(Movie.PosterPath)"
+						  Alt="Movie Poster">
+				</MudImage>
+			}
+
+			<div class="movie-description">
+				<h3>@Movie.Title</h3>
+				<h3>@Movie.ReleaseDate</h3>
+
+				<MudRating Class="mud-rating-item"
+						   SelectedValue="CalculateRating(Movie.Rating)"
+						   ReadOnly="true" />
+
+				@* Shortens the movie description if it's too long *@
+				@if (Movie.Description.Length > 400)
+				{
+					<h4>@Movie.Description.Substring(0, 400) ...</h4>
+				}
+				else
+				{
+					<h4>@Movie.Description</h4>
+				}
+			</div>
+		</MudPaper>
+	</NavLink>
+</MudItem>
+
+@code {
+	[Parameter]
+	public Movie Movie { get; set; }
+
+	private SlugHelper _slugHelper = new();
+
+	//Generates a valid url for a specific movie using the Slugify library
+	private string GenerateMovieUrl(int id, string movieTitle)
+	{
+		return $"/movie/{id}/{_slugHelper.GenerateSlug(movieTitle)}";
+	}
+
+	private string GetPosterUrl(string posterPath)
+	{
+		return string.IsNullOrWhiteSpace(posterPath)
+		? ""
+		: $"https://image.tmdb.org/t/p/original{posterPath}";
+	}
+
+	// Rounds a movies double rating (0 - 10) to an integer on a (0 - 5 ) scale
+	private int CalculateRating(double rating)
+	{
+		int calculatedRating;
+		if (rating != 0)
+		{
+			rating = rating / 2;
+			calculatedRating = (int)Math.Round(rating);
+			return calculatedRating;
+		}
+		return 0;
+	}
+}

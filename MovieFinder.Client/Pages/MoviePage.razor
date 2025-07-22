@@ -131,24 +131,27 @@
 			{
 				var actor = _actors.MovieCast[i];
 				<MudItem xs="4" md="2" Class="mt-6 d-flex justify-center-portrait">
-					<NavLink href="@GenerateActorUrl(actor.Id, actor.Name)">
-						<MudCard Elevation="0"
-								 Class="color-wrapper center-portrait"
-								 Style="background-color: rgba(0,0,0,0);">
-							<MudImage Objectfit="ObjectFit.Cover" Class="actor-portrait actor-portrait-moviepage"
+					<MudCard Elevation="0"
+							 Class="color-wrapper center-portrait"
+							 Style="background-color: rgba(0,0,0,0);">
+						<NavLink href="@GenerateActorUrl(actor.Id, actor.Name)">
+
+							<MudImage Objectfit="ObjectFit.Cover"
+									  Class="actor-portrait actor-portrait-moviepage"
 									  Src="@GetActorPosterUrl(actor.ProfilePicture)"
 									  FallbackSrc="Images/noprofile.png" />
-							<div class="small-font-xs-portrait">
-								<MudCardContent>
-									<MudText Typo="Typo.body1"><b>@actor.Name</b></MudText>
-									@if (!string.IsNullOrEmpty(actor.Character))
-									{
-										<MudText Typo="Typo.body2">as @actor.Character</MudText>
-									}
-								</MudCardContent>
-							</div>
-						</MudCard>
-					</NavLink>
+						</NavLink>
+
+						<div class="small-font-xs-portrait">
+							<MudCardContent>
+								<MudText Typo="Typo.body1"><b>@actor.Name</b></MudText>
+								@if (!string.IsNullOrEmpty(actor.Character))
+								{
+									<MudText Typo="Typo.body2">as @actor.Character</MudText>
+								}
+							</MudCardContent>
+						</div>
+					</MudCard>
 				</MudItem>
 			}
 		</MudGrid>
