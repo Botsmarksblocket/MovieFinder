@@ -36,12 +36,26 @@
 /*ACTOR PAGE*/
 /***********/
 
-.actor-container {
+.actor-photo-container {
     display: block;
     width: 100%;
     height: auto;
     object-fit: cover;
     image-rendering: auto;
+}
+
+.actor-photo {
+    box-shadow: 0 0 8px 4px rgba(0, 0, 0, 0.2) !important;
+}
+
+.actor-photo:hover {
+    transform: scale(1.03);
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+.actor-photo:not(hover) {
+    transition: all 0.3s;
 }
 
 .actor-portrait-actorpage {
@@ -77,6 +91,11 @@
 .actor-portrait-moviepage {
     height: 100px !important;
     width: 100px !important;
+    border: 2px solid #29537659 !important;
+    padding: 2px !important;
+}
+
+actor-photos-actorpage {
     border: 2px solid #29537659 !important;
     padding: 2px !important;
 }
@@ -151,6 +170,7 @@
     overflow: hidden;
     cursor: pointer;
     aspect-ratio: 2 / 3;
+    box-shadow: 0 0 8px 4px rgba(0, 0, 0, 0.2) !important;
 }
 
 .movie-poster {
@@ -201,9 +221,9 @@
 }
 
 /* When hovering over a movie card without a poster, hide h1/h3 text to reveal the description underneath */
-.movie-poster-container:hover .not-found > h3,
-.movie-poster-container:hover .not-found > h1 {
-    display: none;
+.movie-poster-container:hover .not-found .mud-typography,
+.movie-poster-container:hover .not-found .mud-typography {
+    display: none !important;
 }
 
 .movie-poster-container:hover .movie-description {

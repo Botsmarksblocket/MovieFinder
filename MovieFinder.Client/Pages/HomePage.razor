@@ -2,6 +2,7 @@
 @using Models
 @using MovieFinder.Client.Models.Movies
 @using MovieFinder.Client.Models.Shared
+@using MovieFinder.Client.Components
 @using Slugify
 @inject ITMDBService TMDB
 @inject ISnackbar Snackbar
@@ -13,9 +14,8 @@
 <PageTitle>Movie finder</PageTitle>
 
 <MudScrollToTop>
-	<MudFab
-		Style="background-color: rgb(59, 130, 246)" 
-		StartIcon="@Icons.Material.Filled.ArrowCircleUp" />
+	<MudFab Style="background-color: rgb(59, 130, 246)"
+			StartIcon="@Icons.Material.Filled.ArrowCircleUp" />
 </MudScrollToTop>
 
 <MudPaper Class="d-flex justify-center" Elevation="0">
@@ -84,62 +84,7 @@
 		<MudGrid>
 			@foreach (var movie in _allMovies)
 			{
-				<MudItem xs="6" md="4" lg="3" Class="fade-in">
-					<NavLink href="@GenerateMovieUrl(movie.Id, movie.Title)">
-						<MudPaper Class="d-flex align-center justify-center mt-3 mb-3 movie-poster-container" Elevation="3">
-							<div class="movie-rating">
-								@if (movie.Rating != 0)
-								{
-									<h4>
-										@String.Format("{0:.#}", movie.Rating) / 10 (@movie.VoteCount votes)
-									</h4>
-								}
-
-								else
-								{
-									<p>Rating not found</p>
-								}
-
-							</div>
-
-							@* If the poster cannot be found *@
-							@if (GetPosterUrl(movie.PosterPath) == "")
-							{
-								<div class="not-found flex-container small-font-xs">
-									<MudText Typo="Typo.h5">@movie.Title</MudText>
-									<MudText Typo="Typo.h5" Style="color:#3b82f6">(Poster not found)</MudText>
-								</div>
-							}
-							else
-							{
-								<MudImage Class="movie-poster"
-										  Src="@GetPosterUrl(movie.PosterPath)"
-										  Alt="Movie Poster">
-								</MudImage>
-							}
-
-							<div class="movie-description">
-								<h3>@movie.Title</h3>
-								<h3>@movie.ReleaseDate</h3>
-
-								<MudRating Class="mud-rating-item"
-										   SelectedValue="CalculateRating(movie.Rating)"
-										   ReadOnly="true" />
-
-								@* Shortens the movie description if it's too long *@
-								@if (@movie.Description.Length > 500)
-								{
-									<h4>@movie.Description.Substring(0, 500) ...</h4>
-								}
-								else
-								{
-									<h4>@movie.Description</h4>
-								}
-							</div>
-						</MudPaper>
-					</NavLink>
-
-				</MudItem>
+					<MovieComponent @key=movie.Id Movie="movie" FadeIn="fade-in"/>
 			}
 		</MudGrid>
 	</MudPaper>
@@ -238,19 +183,6 @@
 		await LoadMoviesAsync();
 	}
 
-	// Rounds a movies double rating (0 - 10) to an integer on a (0 - 5 ) scale
-	private int CalculateRating(double rating)
-	{
-		int calculatedRating;
-		if (rating != 0)
-		{
-			rating = rating / 2;
-			calculatedRating = (int)Math.Round(rating);
-			return calculatedRating;
-		}
-		return 0;
-	}
-
 	//Display logic for the multiselection text for genres
 	private string GetMultiSelectionText(List<string> selectedValues)
 	{
@@ -279,11 +211,5 @@
 		return string.IsNullOrWhiteSpace(posterPath)
 		? ""
 		: $"https://image.tmdb.org/t/p/w780{posterPath}";
-	}
-
-	//Generates a valid url for a specific movie using the Slugify library
-	private string GenerateMovieUrl(int id, string movieTitle)
-	{
-		return $"/movie/{id}/{_slugHelper.GenerateSlug(movieTitle)}";
 	}
 }
