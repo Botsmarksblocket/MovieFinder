@@ -3,7 +3,7 @@
 
 <MudItem xs="6" md="4" lg="3" Class="@FadeIn">
 	<NavLink href="@GenerateMovieUrl(Movie.Id, Movie.Title)">
-		<MudPaper Class="d-flex align-center justify-center mt-3 mb-3 movie-poster-container" Elevation="3">
+		<MudPaper Class="d-flex align-center justify-center mt-3 mb-3 movie-poster-container">
 			<div class="movie-rating">
 				@if (Movie.Rating != 0)
 				{
@@ -29,6 +29,7 @@
 			}
 			else
 			{
+
 				<MudImage Class="movie-poster"
 						  Src="@GetPosterUrl(Movie.PosterPath)"
 						  Alt="Movie Poster">

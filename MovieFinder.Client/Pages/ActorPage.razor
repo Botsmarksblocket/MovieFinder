@@ -1,6 +1,8 @@
 ﻿@using Services
 @using Models
 @using Slugify
+@inject IDialogService DialogService
+@using MovieFinder.Client.Dialogs
 @using MovieFinder.Client.Models.Movies
 @using MovieFinder.Client.Models.Actors
 @using MovieFinder.Client.Models.Shared
@@ -9,9 +11,9 @@
 @page "/actor/{id:int}/{slug}"
 
 <PageTitle>@_actor.Name</PageTitle>
-<div class="color-wrapper">
+<div class="">
 	<MudPaper Class="d-flex justify-center" Style="min-height: 100vh;" Elevation="0">
-		<MudPaper Width="75%" Style="background-color:white;" Elevation="0" Class="mt-20 mb-4">
+		<MudPaper Style="background-color:white;" Elevation="0" Class="mt-20 mb-1 container-width">
 			<MudGrid Class="mt-4" Justify="Justify.Center">
 				<MudItem xs="12" md="3">
 					<div class="center-xs d-flex justify-center">
@@ -115,10 +117,12 @@
 						<MudGrid Spacing="6">
 							@foreach (var actor in ReturnImages(_actor.Images.Profiles))
 							{
-								<MudItem xs="4" md="3" lg="2" Class="center-xs">
-									<MudImage Class="actor-container"
+								<MudItem xs="6" md="3" lg="2" Class="center-xs">
+									<MudImage 
+										Class="actor-photo-container actor-photo rounded-lg"
 											  Src="@GetImageUrl("w780", actor.FilePath)"
-											  FallbackSrc="Images/notfound.png" Alt=" Actor image" />
+											  FallbackSrc="Images/notfound.png"
+											  @onclick="() => OpenDialogAsync(actor.FilePath)"/>
 								</MudItem>
 							}
 						</MudGrid>
@@ -129,7 +133,7 @@
 						<MudGrid Spacing="6">
 							@foreach (var movie in ReturnImages(_actor.MovieCredits.Cast))
 							{
-								<MovieComponent @key="movie.Id" Movie="movie"/>
+								<MovieComponent @key="movie.Id" Movie="movie" />
 							}
 						</MudGrid>
 					}
@@ -146,6 +150,15 @@
 
 	private SlugHelper _slugHelper = new();
 
+	private void OpenDialogAsync(string filePath)
+	{
+		var parameters = new DialogParameters
+		{
+			{ "ImageSrc", GetImageUrl("original", filePath) }
+		};
+
+		DialogService.ShowAsync<ImageDialog>("Actor Image", parameters);
+	}
 
 	private ActorDetail _actor = new ActorDetail()
 	{
