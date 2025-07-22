@@ -5,6 +5,7 @@
 @using Slugify
 @inject NavigationManager NavigationManager
 @inject ITMDBService TMDB
+
 <MudThemeProvider Theme="@MovieTheme" IsDarkMode="true" />
 <MudPopoverProvider />
 <MudDialogProvider />
@@ -91,7 +92,7 @@
 		? ""
 		: $"https://image.tmdb.org/t/p/w780{posterPath}";
 	}
-	public static MudTheme MovieTheme = new MudTheme()
+	MudTheme MovieTheme = new MudTheme()
 	{
 		PaletteDark = new PaletteDark()
 		{
@@ -107,17 +108,16 @@
 			TextSecondary = "rgba(255,255,255, 0.60)",
 			ActionDefault = "#38bdf8",
 			ActionDisabled = "rgba(255,255,255, 0.30)",
-			ActionDisabledBackground = "rgba(255,255,255, 0.10)",
-			Divider = "rgba(56, 189, 248, 1)",
-			DividerLight = "rgba(255,255,255, 0.08)",
+			Divider = Colors.BlueGray.Lighten1,
 			TableLines = "rgba(255,255,255, 0.10)",
 			LinesDefault = "rgba(255,255,255, 0.10)",
 			LinesInputs = "rgba(255,255,255, 0.25)",
 			TextDisabled = "rgba(255,255,255, 0.30)",
-			Error = "#ef4444",
-			Primary = "#3b82f6",
-			PrimaryContrastText = "#ffffff",
+			Error = "#3c5082",
+			Primary = Colors.BlueGray.Darken1,
+			PrimaryContrastText = Colors.BlueGray.Darken1,
 			Secondary = "#14b8a6"
+
 		}
 	};
 }
