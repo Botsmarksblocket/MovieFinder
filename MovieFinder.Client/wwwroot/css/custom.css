@@ -245,6 +245,7 @@
 
 .fade-in {
     opacity: 1;
+    animation: fadeInOpacity 1.5s ease-in forwards;
     animation-name: fadeInOpacity;
     animation-timing-function: ease-in;
     animation-duration: 1.5s;

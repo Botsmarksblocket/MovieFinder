@@ -84,7 +84,7 @@
 		<MudGrid>
 			@foreach (var movie in _allMovies)
 			{
-				<MovieComponent @key=movie.Id Movie="movie" />
+					<MovieComponent @key=movie.Id Movie="movie" FadeIn="fade-in"/>
 			}
 		</MudGrid>
 	</MudPaper>
@@ -183,19 +183,6 @@
 		await LoadMoviesAsync();
 	}
 
-	// Rounds a movies double rating (0 - 10) to an integer on a (0 - 5 ) scale
-	private int CalculateRating(double rating)
-	{
-		int calculatedRating;
-		if (rating != 0)
-		{
-			rating = rating / 2;
-			calculatedRating = (int)Math.Round(rating);
-			return calculatedRating;
-		}
-		return 0;
-	}
-
 	//Display logic for the multiselection text for genres
 	private string GetMultiSelectionText(List<string> selectedValues)
 	{
@@ -224,11 +211,5 @@
 		return string.IsNullOrWhiteSpace(posterPath)
 		? ""
 		: $"https://image.tmdb.org/t/p/w780{posterPath}";
-	}
-
-	//Generates a valid url for a specific movie using the Slugify library
-	private string GenerateMovieUrl(int id, string movieTitle)
-	{
-		return $"/movie/{id}/{_slugHelper.GenerateSlug(movieTitle)}";
 	}
 }

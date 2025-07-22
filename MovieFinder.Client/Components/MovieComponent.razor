@@ -1,7 +1,7 @@
 ﻿@using Slugify
 @using Models.Movies
 
-<MudItem xs="6" md="4" lg="3" Class="fade-in">
+<MudItem xs="6" md="4" lg="3" Class="@FadeIn">
 	<NavLink href="@GenerateMovieUrl(Movie.Id, Movie.Title)">
 		<MudPaper Class="d-flex align-center justify-center mt-3 mb-3 movie-poster-container" Elevation="3">
 			<div class="movie-rating">
@@ -60,6 +60,9 @@
 @code {
 	[Parameter]
 	public Movie Movie { get; set; }
+
+	[Parameter]
+	public string FadeIn { get; set; }
 
 	private SlugHelper _slugHelper = new();
 
