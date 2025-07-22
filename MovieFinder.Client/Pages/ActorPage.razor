@@ -78,24 +78,30 @@
 			<div class="d-flex justify-center mt-8 mx-4">
 				<MudPaper Class="width-lg width-xs" Style="height: 100%; background-color:white;" Elevation="0">
 					<MudStack>
-						<MudStack>
-							<MudToggleGroup @bind-Value="_activeTab"
-											T="string"
-											Outlined="false"
+						<MudStack Class="center-xs">
+							<MudToggleGroup T="string"
+											Delimiters="true"											
+											Value="_activeTab"
+											ValueChanged="OnTabChanged"
 											SelectionMode="SelectionMode.SingleSelection"
 											Color="Color.Primary"
 											FixedContent
-											Style="display: flex; justify-content: start; background-color:white;">
+											Outlined="true"
+											Style="display: flex; justify-content: start; max-width:147.4px;">
 								<MudToggleItem Value="@("ActorPhotos")" Text="Photos" />
 								<MudToggleItem Value="@("ActedIn")" Text="Acted in" />
 							</MudToggleGroup>
 						</MudStack>
 					</MudStack>
-					<MudDivider DividerType="DividerType.Middle" Class="mt-4"></MudDivider>
 
-					<div class="d-flex justify-center mt-2 mb-2">
-						<MudPagination @bind-Selected="@_selected" Count="@CalculateTotalPages()" />
-					</div>
+					<MudDivider DividerType="DividerType.Middle" Class="mt-4 mb-2"></MudDivider>
+
+					@if (_pageCount > 1)
+					{
+						<div class="d-flex justify-center mt-2 mb-2">
+							<MudPagination @bind-Selected="@_selected" Count="@CalculateTotalPages()" />
+						</div>
+					}
 
 					@if (_activeTab == "ActorPhotos")
 					{
@@ -103,7 +109,9 @@
 							@foreach (var actor in ReturnImages(_actor.Images.Profiles))
 							{
 								<MudItem xs="4" md="3" lg="2" Class="center-xs">
-									<MudImage Class="actor-container" Src="@GetImageUrl("w780", actor.FilePath)" Alt="Actor Image" />
+									<MudImage Class="actor-container"
+											  Src="@GetImageUrl("w780", actor.FilePath)"
+											  FallbackSrc="Images/notfound.png" Alt=" Actor image" />
 								</MudItem>
 							}
 						</MudGrid>
@@ -115,21 +123,21 @@
 							@foreach (var movie in ReturnImages(_actor.MovieCredits.Cast))
 							{
 								<MudItem xs="6" md="3" lg="2" Class="center-xs">
-									<MudImage Class="actor-container" Src="@GetImageUrl("w780", movie.PosterPath)" Alt="Actor Image" />
+									<MudImage Class="actor-container"
+											  Src="@GetImageUrl("w780", movie.PosterPath)"
+											  FallbackSrc="Images/notfound.png"
+											  Alt="Movie image" />
 								</MudItem>
 							}
 						</MudGrid>
 					}
-
-
-
-
 				</MudPaper>
 			</div>
 		</MudPaper>
 	</MudPaper>
 </div>
 @code {
+
 	[Parameter]
 	public int Id { get; set; }
 	[Parameter]
@@ -156,6 +164,12 @@
 	private int _selected = 1;
 	private int _pageCount;
 	private string _activeTab = "ActorPhotos";
+
+	private void OnTabChanged(string newValue)
+	{
+		_activeTab = newValue;
+		_selected = 1;
+	}
 
 	// Returns a paginated subset of the provided images.
 	// Generic so it works for any collection type
@@ -186,7 +200,6 @@
 		int totalPages = (int)Math.Ceiling(rawPageCount);
 
 		_pageCount = totalPages;
-
 		return _pageCount;
 	}
 
