@@ -53,10 +53,7 @@ namespace MovieFinder.Client.Models.Movies
         public List<ProductionCompany> ProductionCompanies { get; set; }
 
         [JsonPropertyName("movie_credits")]
-        public MovieCredits MovieCredits { get; set; }
-
-        [JsonPropertyName("images")]
-        public ActorImages Images { get; set; }
+        public MovieCredit MovieCredits { get; set; }
 
         [JsonPropertyName("release_date")]
         public string ReleaseDateRaw { get; set; }

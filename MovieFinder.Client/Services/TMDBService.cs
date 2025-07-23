@@ -14,6 +14,7 @@ namespace MovieFinder.Client.Services
     public interface ITMDBService
     {
         Task<MovieDetail> GetMovieDetailsAsync(int movieId);
+        Task<MovieImage> GetMovieImagesAsync(int movieId);
         Task<List<Genre>> GetGenresAsync();
         Task<List<Movie>> GetSearchedMoviesAsync(string searchWord);
         Task<SearchResult> GetFilteredMoviesAsync(FilterParameter parameters);
@@ -40,10 +41,26 @@ namespace MovieFinder.Client.Services
             var queryParameters = new Dictionary<string, string>
             {
                 ["api_key"] = _apiKey,
+                ["append_to_response"] = "images"
             };
 
             var url = QueryHelpers.AddQueryString(baseUrl, queryParameters);
             var response = await _httpClient.GetFromJsonAsync<MovieDetail>(url);
+            return response;
+        }
+
+        //Returns all images from a movie
+        public async Task<MovieImage> GetMovieImagesAsync(int movieId)
+        {
+            var baseUrl = $"https://api.themoviedb.org/3/movie/{movieId}/images";
+
+            var queryParameters = new Dictionary<string, string>
+            {
+                ["api_key"] = _apiKey,
+            };
+
+            var url = QueryHelpers.AddQueryString(baseUrl, queryParameters);
+            var response = await _httpClient.GetFromJsonAsync<MovieImage>(url);
             return response;
         }
 
@@ -55,7 +72,7 @@ namespace MovieFinder.Client.Services
             return response?.Genres ?? new List<Genre>();
         }
 
-        //Retrieves specific movie which user searched for
+        //Retrieves specific movies which user searched for
         public async Task<List<Movie>> GetSearchedMoviesAsync(string searchWord)
         {
             var baseUrl = $"https://api.themoviedb.org/3/search/movie";
