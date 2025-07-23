@@ -115,27 +115,49 @@
 
 				@if (_activeTab == "ActorPhotos")
 				{
-					<MudGrid Spacing="6">
-						@foreach (var actor in ReturnImages(_actor.Images.Profiles))
-						{
-							<MudItem xs="6" md="3" lg="2" Class="center-xs">
-								<MudImage Class="actor-photo-container actor-photo rounded-lg"
-										  Src="@GetImageUrl("w780", actor.FilePath)"
-										  FallbackSrc="Images/notfound.png"
-										  @onclick="() => OpenDialogAsync(actor.FilePath)" />
-							</MudItem>
-						}
-					</MudGrid>
+					@if (!_actor.Images.Profiles.Any())
+					{
+						<div class="d-flex justify-center align-center flex-column">
+							<MudIcon Icon="@Icons.Material.Outlined.SearchOff" Size="Size.Large" Color="Color.Error" Title="Not found" />
+							<MudText>No photos found</MudText>
+						</div>
+					}
+
+					else
+					{
+						<MudGrid Spacing="6">
+							@foreach (var actor in ReturnImages(_actor.Images.Profiles))
+							{
+								<MudItem xs="6" md="3" lg="2" Class="center-xs">
+									<MudImage Class="actor-photo-container actor-photo rounded-lg"
+											  Src="@GetImageUrl("w780", actor.FilePath)"
+											  FallbackSrc="Images/notfound.png"
+											  @onclick="() => OpenDialogAsync(actor.FilePath)" />
+								</MudItem>
+							}
+						</MudGrid>
+					}
 				}
 
 				else if (_activeTab == "ActedIn")
 				{
-					<MudGrid Spacing="6">
-						@foreach (var movie in ReturnImages(_actor.MovieCredits.Cast))
-						{
-							<MovieComponent @key="movie.Id" Movie="movie" />
-						}
-					</MudGrid>
+					@if (!_actor.MovieCredits.Cast.Any())
+					{
+						<div class="d-flex justify-center align-center flex-column">
+							<MudIcon Icon="@Icons.Material.Outlined.SearchOff" Size="Size.Large" Color="Color.Error" Title="Not found" />
+							<MudText>No movies found</MudText>
+						</div>
+					}
+
+					else
+					{
+						<MudGrid Spacing="6">
+							@foreach (var movie in ReturnImages(_actor.MovieCredits.Cast))
+							{
+								<MovieComponent @key="movie.Id" Movie="movie" />
+							}
+						</MudGrid>
+					}
 				}
 			</MudPaper>
 		</div>
