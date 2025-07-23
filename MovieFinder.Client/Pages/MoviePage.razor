@@ -38,7 +38,7 @@
 						  Wrap="Wrap.Wrap">
 					@foreach (var genre in _movie.Genres)
 					{
-						<MudChip Class="my-2 mx-2" T="string" Style=@($"background-color: {GetRandomColor()}CC; color:white;")>@genre.Name</MudChip>
+						<MudChip Class="my-2 mx-2" T="string" Size="Size.Small" Color="Color.Primary">@genre.Name</MudChip>
 					}
 				</MudStack>
 
@@ -189,7 +189,7 @@
 									   MiddleCount="2"
 									   Size="Size.Small"
 									   Count="@CalculateTotalPages()"
-									   Variant="Variant.Outlined" />
+									   Variant="Variant.Text" />
 					</div>
 				}
 
