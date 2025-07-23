@@ -16,7 +16,6 @@
 				{
 					<p>Rating not found</p>
 				}
-
 			</div>
 
 			@* If the poster cannot be found *@
@@ -44,15 +43,17 @@
 						   SelectedValue="CalculateRating(Movie.Rating)"
 						   ReadOnly="true" />
 
-				@* Shortens the movie description if it's too long *@
-				@if (Movie.Description.Length > 400)
-				{
-					<h4>@Movie.Description.Substring(0, 400) ...</h4>
-				}
-				else
-				{
-					<h4>@Movie.Description</h4>
-				}
+				<div style="overflow: auto;">
+					@* Shortens the movie description if it's too long *@
+					@if (Movie.Description.Length > 500)
+					{
+						<h4>@Movie.Description.Substring(0, 500) ...</h4>
+					}
+					else
+					{
+						<h4>@Movie.Description</h4>
+					}
+				</div>
 			</div>
 		</MudPaper>
 	</NavLink>
