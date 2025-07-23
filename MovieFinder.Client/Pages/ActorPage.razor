@@ -81,8 +81,8 @@
 
 		<div class="d-flex justify-center mt-8 mx-4">
 			<MudPaper Class="width-lg width-xs" Style="height: 100%; width: 100%; background-color:white;" Elevation="0">
-				<MudStack>
-					<MudStack Class="center-xs">
+				<MudStack Class="center-xs">
+					<MudStack Style="max-width: 200px">
 						<MudToggleGroup T="string"
 										Delimiters="true"
 										Size=Size.Small
@@ -92,7 +92,7 @@
 										Color="Color.Primary"
 										FixedContent
 										Outlined="true"
-										Style="display: flex; justify-content: start; max-width:130.7px;">
+										Class="max-width-full">
 							<MudToggleItem Value="@("ActorPhotos")" Text="Photos" />
 							<MudToggleItem Value="@("ActedIn")" Text="Acted in" />
 						</MudToggleGroup>

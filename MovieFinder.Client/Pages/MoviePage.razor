@@ -130,15 +130,6 @@
 				</div>
 			</MudItem>
 
-			@* 			@foreach(var image in _movieImages.Posters)
-			{
-				<div class="mt-6 mx-8 center-xs">
-					<MudImage Class="movie-page-poster rounded" Src="@GetImageUrl("w780", image.FilePath)"
-							  Alt="Movie Poster"
-							  FallbackSrc="/Images/notfound.png" />
-				</div>
-			} *@
-
 			@for (int i = 0; i < 6 && i < _actors.MovieCast.Count; i++)
 			{
 				var actor = _actors.MovieCast[i];
@@ -170,8 +161,8 @@
 
 		<div class="d-flex justify-center mt-8 mx-4">
 			<MudPaper Class="width-lg width-xs" Style="height: 100%; width: 100%; background-color: transparent;" Elevation="0">
-				<MudStack>
-					<MudStack Class="center-xs">
+				<MudStack Class="center-xs">
+					<MudStack Style="max-width: 200px;">
 						<MudToggleGroup T="string"
 										Delimiters="true"
 										Size=Size.Small
@@ -180,8 +171,8 @@
 										SelectionMode="SelectionMode.SingleSelection"
 										Color="Color.Primary"
 										FixedContent
-										Outlined="true"
-										Style="display: flex; justify-content: start;">
+										Outlined="true"										
+										Class="mud-width-full">
 							<MudToggleItem Value="@("MoviePhotos")" Text="Posters" />
 							<MudToggleItem Value="@("ActedIn")" Text="Acted in" />
 						</MudToggleGroup>
@@ -258,12 +249,17 @@
 
 	private void OpenDialogAsync(string filePath)
 	{
+		var options = new DialogOptions
+		{
+			BackgroundClass = "dialog-blur"
+		};
+
 		var parameters = new DialogParameters
 		{
 			{ "ImageSrc", GetImageUrl("original", filePath) }
 		};
 
-		DialogService.ShowAsync<ImageDialog>("Movie Image", parameters);
+		DialogService.ShowAsync<ImageDialog>("Movie Image", parameters, options);
 	}
 
 	private int _selected = 1;
