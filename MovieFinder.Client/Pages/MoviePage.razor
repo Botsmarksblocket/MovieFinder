@@ -2,16 +2,22 @@
 @using MovieFinder.Client.Models.Actors
 @using MovieFinder.Client.Models.Movies
 @using MovieFinder.Client.Models.Shared
+@using MovieFinder.Client.Dialogs
 @using MudBlazor.Services
 @using Services
 @using Slugify
+@inject IDialogService DialogService
 @inject ITMDBService TMDB
 @page "/movie/{id:int}/{slug}"
 
 <PageTitle>@_movie.Title</PageTitle>
 
-<div class="d-flex justify-center backdrop-image"
-	 style=@($"background-image: url('{GetImageUrl("original", _movie.BackdropPath)}');")>
+<div class="backdrop-image"
+	 style=@($"background-image: url('{GetImageUrl("original", _movie.BackdropPath)}'); ")>
+</div>
+
+<div class="content-wrapper d-flex justify-center ">
+
 	<MudPaper Style="min-height: 100vh;"
 			  Class="mt-8 mb-1 inner-container-background container-width">
 		<MudGrid Spacing="0">
@@ -124,7 +130,7 @@
 				</div>
 			</MudItem>
 
-@* 			@foreach(var image in _movieImages.Posters)
+			@* 			@foreach(var image in _movieImages.Posters)
 			{
 				<div class="mt-6 mx-8 center-xs">
 					<MudImage Class="movie-page-poster rounded" Src="@GetImageUrl("w780", image.FilePath)"
@@ -161,12 +167,148 @@
 				</MudItem>
 			}
 		</MudGrid>
+
+		<div class="d-flex justify-center mt-8 mx-4">
+			<MudPaper Class="width-lg width-xs" Style="height: 100%; width: 100%; background-color: transparent;" Elevation="0">
+				<MudStack>
+					<MudStack Class="center-xs">
+						<MudToggleGroup T="string"
+										Delimiters="true"
+										Size=Size.Small
+										Value="_activeTab"
+										ValueChanged="OnTabChanged"
+										SelectionMode="SelectionMode.SingleSelection"
+										Color="Color.Primary"
+										FixedContent
+										Outlined="true"
+										Style="display: flex; justify-content: start;">
+							<MudToggleItem Value="@("MoviePhotos")" Text="Posters" />
+							<MudToggleItem Value="@("ActedIn")" Text="Acted in" />
+						</MudToggleGroup>
+					</MudStack>
+				</MudStack>
+
+				<MudDivider DividerType="DividerType.Middle" Class="mt-4 mb-2"></MudDivider>
+
+				@if (_pageCount > 1)
+				{
+					<div class="d-flex justify-center mt-2 mb-2">
+						<MudPagination @bind-Selected="@_selected"
+									   BoundaryCount="1"
+									   MiddleCount="2"
+									   Size="Size.Small"
+									   Count="@CalculateTotalPages()"
+									   Variant="Variant.Outlined" />
+					</div>
+				}
+
+				@if (_activeTab == "MoviePhotos")
+				{
+					@if (!_movieImages.Posters.Any())
+					{
+						<div class="d-flex justify-center align-center flex-column">
+							<MudIcon Icon="@Icons.Material.Outlined.SearchOff" Size="Size.Large" Color="Color.Error" Title="Not found" />
+							<MudText>No photos found</MudText>
+						</div>
+					}
+
+					else
+					{
+						<MudGrid Spacing="6">
+							@foreach (var movie in ReturnImages(_movieImages.Posters))
+							{
+								<MudItem xs="6" md="3" lg="2" Class="center-xs">
+									<MudImage Class="actor-photo-container actor-photo rounded-lg"
+											  Src="@GetImageUrl("w780", movie.FilePath)"
+											  FallbackSrc="Images/notfound.png"
+											  @onclick="() => OpenDialogAsync(movie.FilePath)" />
+								</MudItem>
+							}
+						</MudGrid>
+					}
+				}
+
+				@* 				else if (_activeTab == "ActedIn")
+				{
+					@if (!_actor.MovieCredits.Cast.Any())
+					{
+						<div class="d-flex justify-center align-center flex-column">
+							<MudIcon Icon="@Icons.Material.Outlined.SearchOff" Size="Size.Large" Color="Color.Error" Title="Not found" />
+							<MudText>No movies found</MudText>
+						</div>
+					}
+
+					else
+					{
+						<MudGrid Spacing="6">
+							@foreach (var movie in ReturnImages(_actor.MovieCredits.Cast))
+							{
+								<MovieComponent @key="movie.Id" Movie="movie" />
+							}
+						</MudGrid>
+					}
+				} *@
+			</MudPaper>
+		</div>
 	</MudPaper>
 </div>
 
 
-
 @code {
+
+	private void OpenDialogAsync(string filePath)
+	{
+		var parameters = new DialogParameters
+		{
+			{ "ImageSrc", GetImageUrl("original", filePath) }
+		};
+
+		DialogService.ShowAsync<ImageDialog>("Movie Image", parameters);
+	}
+
+	private int _selected = 1;
+	private int _pageCount;
+	private string _activeTab = "MoviePhotos";
+
+	private void OnTabChanged(string newValue)
+	{
+		_activeTab = newValue;
+		_selected = 1;
+	}
+
+	// Returns a paginated subset of the provided images.
+	// Generic so it works for any collection type
+	private IEnumerable<T> ReturnImages<T>(IEnumerable<T> images)
+	{
+		int pageSize = 12;
+
+		return images
+			.Skip((_selected - 1) * pageSize)
+			.Take(pageSize)
+			.ToList();
+	}
+
+	//Calculates total number of pages based on the active tab
+	public int CalculateTotalPages()
+	{
+		int totalImages = 0;
+
+		if (_activeTab == "MoviePhotos")
+		{
+			totalImages = _movieImages.Posters.Count();
+		}
+		// else if (_activeTab == "ActedIn")
+		// {
+		// 	totalImages = _actor.MovieCredits.Cast.Count();
+		// }
+		double rawPageCount = totalImages / 12.0;
+		int totalPages = (int)Math.Ceiling(rawPageCount);
+
+		_pageCount = totalPages;
+		return _pageCount;
+	}
+
+
 	[Parameter]
 	public int Id { get; set; }
 	[Parameter]
@@ -197,6 +339,7 @@
 		_movie = await TMDB.GetMovieDetailsAsync(Id);
 		_movieImages = await TMDB.GetMovieImagesAsync(Id);
 		_actors = await TMDB.GetActorsForMovieAsync(Id);
+		_pageCount = CalculateTotalPages();
 	}
 
 	private string GetImageUrl(string fileSize, string imagePath)

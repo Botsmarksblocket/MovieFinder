@@ -173,12 +173,14 @@
 
 	private void OpenDialogAsync(string filePath)
 	{
+		var options = new DialogOptions { BackgroundClass = "dialog-blur" };
+
 		var parameters = new DialogParameters
 		{
 			{ "ImageSrc", GetImageUrl("original", filePath) }
 		};
 
-		DialogService.ShowAsync<ImageDialog>("Actor Image", parameters);
+		DialogService.ShowAsync<ImageDialog>("Actor Image", parameters, options);
 	}
 
 	private ActorDetail _actor = new ActorDetail()
