@@ -15,6 +15,7 @@ namespace MovieFinder.Client.Services
     {
         Task<MovieDetail> GetMovieDetailsAsync(int movieId);
         Task<MovieImage> GetMovieImagesAsync(int movieId);
+        Task<MovieVideo> GetMovieVideosAsync(int movieId);
         Task<List<Genre>> GetGenresAsync();
         Task<List<Movie>> GetSearchedMoviesAsync(string searchWord);
         Task<SearchResult> GetFilteredMoviesAsync(FilterParameter parameters);
@@ -41,7 +42,6 @@ namespace MovieFinder.Client.Services
             var queryParameters = new Dictionary<string, string>
             {
                 ["api_key"] = _apiKey,
-                ["append_to_response"] = "images"
             };
 
             var url = QueryHelpers.AddQueryString(baseUrl, queryParameters);
@@ -61,6 +61,21 @@ namespace MovieFinder.Client.Services
 
             var url = QueryHelpers.AddQueryString(baseUrl, queryParameters);
             var response = await _httpClient.GetFromJsonAsync<MovieImage>(url);
+            return response;
+        }
+
+        //Returns all videos from a movie
+        public async Task<MovieVideo> GetMovieVideosAsync(int movieId)
+        {
+            var baseUrl = $"https://api.themoviedb.org/3/movie/{movieId}/videos";
+
+            var queryParameters = new Dictionary<string, string>
+            {
+                ["api_key"] = _apiKey,
+            };
+
+            var url = QueryHelpers.AddQueryString(baseUrl, queryParameters);
+            var response = await _httpClient.GetFromJsonAsync<MovieVideo>(url);
             return response;
         }
 
