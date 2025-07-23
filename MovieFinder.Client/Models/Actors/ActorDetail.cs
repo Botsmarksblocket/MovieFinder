@@ -28,7 +28,7 @@ namespace MovieFinder.Client.Models.Actors
         public string Department { get; set; }
 
         [JsonPropertyName("movie_credits")] 
-        public MovieCredits MovieCredits { get;set; }
+        public MovieCredit MovieCredits { get;set; }
 
         [JsonPropertyName("images")]
         public ActorImages Images { get; set; }

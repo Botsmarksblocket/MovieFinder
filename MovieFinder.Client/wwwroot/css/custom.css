@@ -2,6 +2,16 @@
 /*SEVERAL PAGES*/
 /***************/
 
+.dialog-images {
+    background-color: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+}
+
+.dialog-blur {
+    background-color: rgba(0, 0, 0, 0.8) !important;
+}
+
 .actor-portrait {
     border-radius: 50% !important;
     box-shadow: 0 0 8px 4px rgba(0, 0, 0, 0.2) !important;
@@ -45,7 +55,7 @@
 }
 
 .actor-photo {
-    box-shadow: 0 0 8px 4px rgba(0, 0, 0, 0.2) !important;
+    box-shadow: 0 0 4px 2px rgba(0, 0, 0, 0.2) !important;
 }
 
 .actor-photo:hover {
@@ -81,6 +91,11 @@
 /***********/
 /*MOVIE PAGE*/
 /***********/
+
+.content-wrapper {
+    position: relative;
+    z-index: 1000; /* Ensure content is above */
+}
 
 .actor-portrait-moviepage:hover {
     transform: scale(1.11);
@@ -128,9 +143,14 @@ actor-photos-actorpage {
 }
 
 .backdrop-image {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
     background-size: cover;
     background-position: center;
-    min-height: 100vh;
+    z-index: -1;
 }
 
 .center-xs * {

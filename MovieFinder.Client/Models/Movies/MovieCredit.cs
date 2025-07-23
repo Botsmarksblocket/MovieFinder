@@ -2,7 +2,7 @@
 
 namespace MovieFinder.Client.Models.Movies
 {
-    public class MovieCredits
+    public class MovieCredit
     {
         [JsonPropertyName("cast")]
         public List<Movie> Cast { get; set; }

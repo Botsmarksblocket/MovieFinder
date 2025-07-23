@@ -81,8 +81,8 @@
 
 		<div class="d-flex justify-center mt-8 mx-4">
 			<MudPaper Class="width-lg width-xs" Style="height: 100%; width: 100%; background-color:white;" Elevation="0">
-				<MudStack>
-					<MudStack Class="center-xs">
+				<MudStack Class="center-xs">
+					<MudStack Style="max-width: 200px">
 						<MudToggleGroup T="string"
 										Delimiters="true"
 										Size=Size.Small
@@ -92,7 +92,7 @@
 										Color="Color.Primary"
 										FixedContent
 										Outlined="true"
-										Style="display: flex; justify-content: start; max-width:130.7px;">
+										Style="max-width-full">
 							<MudToggleItem Value="@("ActorPhotos")" Text="Photos" />
 							<MudToggleItem Value="@("ActedIn")" Text="Acted in" />
 						</MudToggleGroup>
@@ -109,7 +109,7 @@
 									   MiddleCount="2"
 									   Size="Size.Small"
 									   Count="@CalculateTotalPages()"
-									   Variant="Variant.Outlined" />
+									   Variant="Variant.Text" />
 					</div>
 				}
 
@@ -173,17 +173,19 @@
 
 	private void OpenDialogAsync(string filePath)
 	{
+		var options = new DialogOptions { BackgroundClass = "dialog-blur" };
+
 		var parameters = new DialogParameters
 		{
 			{ "ImageSrc", GetImageUrl("original", filePath) }
 		};
 
-		DialogService.ShowAsync<ImageDialog>("Actor Image", parameters);
+		DialogService.ShowAsync<ImageDialog>("Actor Image", parameters, options);
 	}
 
 	private ActorDetail _actor = new ActorDetail()
 	{
-		MovieCredits = new MovieCredits
+		MovieCredits = new MovieCredit
 		{
 			Cast = new List<Movie>(),
 		},

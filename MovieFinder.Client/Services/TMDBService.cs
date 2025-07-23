@@ -1,10 +1,11 @@
-﻿using System.Globalization;
-using System.Net.Http.Json;
-using System.Web;
-using Microsoft.AspNetCore.WebUtilities;
+﻿using Microsoft.AspNetCore.WebUtilities;
 using MovieFinder.Client.Models.Actors;
 using MovieFinder.Client.Models.Movies;
 using MovieFinder.Client.Models.Shared;
+using System.Globalization;
+using System.Net.Http.Json;
+using System.Web;
+using static MovieFinder.Client.Models.Movies.MovieVideo;
 using static System.Net.WebRequestMethods;
 
 namespace MovieFinder.Client.Services
@@ -14,6 +15,8 @@ namespace MovieFinder.Client.Services
     public interface ITMDBService
     {
         Task<MovieDetail> GetMovieDetailsAsync(int movieId);
+        Task<MovieImage> GetMovieImagesAsync(int movieId);
+        Task<List<MovieVideoItem>> GetYoutubeTrailersAsync(int movieId);
         Task<List<Genre>> GetGenresAsync();
         Task<List<Movie>> GetSearchedMoviesAsync(string searchWord);
         Task<SearchResult> GetFilteredMoviesAsync(FilterParameter parameters);
@@ -47,6 +50,38 @@ namespace MovieFinder.Client.Services
             return response;
         }
 
+        //Returns all images from a movie
+        public async Task<MovieImage> GetMovieImagesAsync(int movieId)
+        {
+            var baseUrl = $"https://api.themoviedb.org/3/movie/{movieId}/images";
+
+            var queryParameters = new Dictionary<string, string>
+            {
+                ["api_key"] = _apiKey,
+            };
+
+            var url = QueryHelpers.AddQueryString(baseUrl, queryParameters);
+            var response = await _httpClient.GetFromJsonAsync<MovieImage>(url);
+            return response;
+        }
+
+        //Returns all videos from a movie
+        public async Task<List<MovieVideoItem>> GetYoutubeTrailersAsync(int movieId)
+        {
+            var baseUrl = $"https://api.themoviedb.org/3/movie/{movieId}/videos";
+
+            var queryParameters = new Dictionary<string, string>
+            {
+                ["api_key"] = _apiKey,
+            };
+
+            var url = QueryHelpers.AddQueryString(baseUrl, queryParameters);
+            var response = await _httpClient.GetFromJsonAsync<MovieVideo>(url);
+            return response?.Results?
+                .Where(v => v.Site == "YouTube" && v.Type == "Trailer")
+                .ToList() ?? new List<MovieVideoItem>();
+        }
+
         //Retrieves all movie genres
         public async Task<List<Genre>> GetGenresAsync()
         {
@@ -55,7 +90,7 @@ namespace MovieFinder.Client.Services
             return response?.Genres ?? new List<Genre>();
         }
 
-        //Retrieves specific movie which user searched for
+        //Retrieves specific movies which user searched for
         public async Task<List<Movie>> GetSearchedMoviesAsync(string searchWord)
         {
             var baseUrl = $"https://api.themoviedb.org/3/search/movie";

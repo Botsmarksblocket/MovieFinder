@@ -2,22 +2,28 @@
 @using MovieFinder.Client.Models.Actors
 @using MovieFinder.Client.Models.Movies
 @using MovieFinder.Client.Models.Shared
+@using MovieFinder.Client.Dialogs
 @using MudBlazor.Services
 @using Services
 @using Slugify
+@inject IDialogService DialogService
 @inject ITMDBService TMDB
 @page "/movie/{id:int}/{slug}"
 
 <PageTitle>@_movie.Title</PageTitle>
 
-<div class="d-flex justify-center backdrop-image"
-	 style=@($"background-image: url('{GetBackdropUrl(_movie.BackdropPath)}');")>
+<div class="backdrop-image"
+	 style=@($"background-image: url('{GetImageUrl("original", _movie.BackdropPath)}'); ")>
+</div>
+
+<div class="content-wrapper d-flex justify-center ">
+
 	<MudPaper Style="min-height: 100vh;"
 			  Class="mt-8 mb-1 inner-container-background container-width">
 		<MudGrid Spacing="0">
 			<MudItem xs="12" md="5" lg="4">
 				<div class="mt-6 mx-8 center-xs">
-					<MudImage Class="movie-page-poster rounded" Src="@GetPosterUrl(_movie.PosterPath)"
+					<MudImage Class="movie-page-poster rounded" Src="@GetImageUrl("original", _movie.PosterPath)"
 							  Alt="Movie Poster"
 							  FallbackSrc="/Images/notfound.png" />
 				</div>
@@ -32,7 +38,7 @@
 						  Wrap="Wrap.Wrap">
 					@foreach (var genre in _movie.Genres)
 					{
-						<MudChip Class="my-2 mx-2" T="string" Style=@($"background-color: {GetRandomColor()}CC; color:white;" )>@genre.Name</MudChip>
+						<MudChip Class="my-4 mx-2" T="string" Color="Color.Primary">@genre.Name</MudChip>
 					}
 				</MudStack>
 
@@ -44,7 +50,7 @@
 					{
 						<MudTooltip Arrow="true"
 									Text="@company.Name">
-							@if (GetLogoUrl(company.LogoPath) == "")
+							@if (GetImageUrl("original", company.LogoPath) == "")
 							{
 								<MudChip Label="true" T="string" Style="background-color: #2b2b2b">
 									@company.Name
@@ -57,7 +63,7 @@
 										  Width="100"
 										  Height="60"
 										  Class="mt-2"
-										  Src="@GetLogoUrl(company.LogoPath)">
+										  Src="@GetImageUrl("original", company.LogoPath)">
 								</MudImage>
 							}
 						</MudTooltip>
@@ -120,11 +126,8 @@
 								@String.Join(", ", _movie.Languages.Select(l => l.Language))
 							</MudText>
 						</MudStack>
-
 					</MudStack>
-
 				</div>
-
 			</MudItem>
 
 			@for (int i = 0; i < 6 && i < _actors.MovieCast.Count; i++)
@@ -138,7 +141,7 @@
 
 							<MudImage Objectfit="ObjectFit.Cover"
 									  Class="actor-portrait actor-portrait-moviepage"
-									  Src="@GetActorPosterUrl(actor.ProfilePicture)"
+									  Src="@GetImageUrl("original", actor.ProfilePicture)"
 									  FallbackSrc="Images/noprofile.png" />
 						</NavLink>
 
@@ -155,8 +158,95 @@
 				</MudItem>
 			}
 		</MudGrid>
+
+		<div class="d-flex justify-center mt-8 mx-4">
+			<MudPaper Class="width-lg width-xs" Style="height: 100%; width: 100%; background-color: transparent;" Elevation="0">
+				<MudStack Class="center-xs">
+					<MudStack Style="max-width: 200px;">
+						<MudToggleGroup T="string"
+										Delimiters="true"
+										Size=Size.Small
+										Value="_activeTab"
+										ValueChanged="OnTabChanged"
+										SelectionMode="SelectionMode.SingleSelection"
+										Color="Color.Primary"
+										FixedContent
+										Outlined="true"
+										Class="mud-width-full">
+							<MudToggleItem Value="@("MoviePhotos")" Text="Posters" />
+							<MudToggleItem Value="@("MovieVideos")" Text="Videos" />
+						</MudToggleGroup>
+					</MudStack>
+				</MudStack>
+
+				<MudDivider DividerType="DividerType.Middle" Class="mt-4 mb-2"></MudDivider>
+
+				@if (_pageCount > 1)
+				{
+					<div class="d-flex justify-center mt-2 mb-2">
+						<MudPagination @bind-Selected="@_selected"
+									   BoundaryCount="1"
+									   MiddleCount="2"
+									   Size="Size.Small"
+									   Count="@CalculateTotalPages()"
+									   Variant="Variant.Text" />
+					</div>
+				}
+
+				@if (_activeTab == "MoviePhotos")
+				{
+					@if (!_movieImages.Posters.Any())
+					{
+						<div class="d-flex justify-center align-center flex-column">
+							<MudIcon Icon="@Icons.Material.Outlined.SearchOff" Size="Size.Large" Color="Color.Error" Title="Not found" />
+							<MudText>No photos found</MudText>
+						</div>
+					}
+
+					else
+					{
+						<MudGrid Spacing="6">
+							@foreach (var movie in ReturnImages(_movieImages.Posters))
+							{
+								<MudItem xs="6" md="3" lg="2" Class="center-xs">
+									<MudImage Class="actor-photo-container actor-photo rounded-lg"
+											  Src="@GetImageUrl("w780", movie.FilePath)"
+											  FallbackSrc="Images/notfound.png"
+											  @onclick="() => OpenDialogAsync(movie.FilePath)" />
+								</MudItem>
+							}
+						</MudGrid>
+					}
+				}
+
+				else if (_activeTab == "MovieVideos")
+				{
+					@if (!_youtubeTrailers.Any())
+					{
+						<div class="d-flex justify-center align-center flex-column">
+							<MudIcon Icon="@Icons.Material.Outlined.SearchOff" Size="Size.Large" Color="Color.Error" Title="Not found" />
+							<MudText>No movies found</MudText>
+						</div>
+					}
+
+					else
+					{
+						<MudGrid Spacing="6">
+							@foreach (var video in ReturnImages(_youtubeTrailers))
+							{
+								var embedUrl = $"https://www.youtube.com/embed/{video.Key}";
+								<MudItem xs="6" md="3" lg="2" Class="center-xs">
+									<iframe src="@embedUrl"></iframe>
+								</MudItem>
+							}
+						</MudGrid>
+					}
+				}
+			</MudPaper>
+		</div>
 	</MudPaper>
 </div>
+
 
 @code {
 	[Parameter]
@@ -171,9 +261,15 @@
 	{
 		Genres = new List<Genre>(),
 		ProductionCompanies = new List<ProductionCompany>(),
-		Languages = new List<AvailableLanguage>()
+		Languages = new List<AvailableLanguage>(),
 	};
 
+	private MovieImage _movieImages = new MovieImage
+	{
+		Posters = new List<MovieImages>()
+	};
+
+	private List<MovieVideo.MovieVideoItem> _youtubeTrailers = new();
 	private Actor _actors = new Actor
 	{
 		MovieCast = new List<Cast>()
@@ -182,53 +278,80 @@
 	protected override async Task OnParametersSetAsync()
 	{
 		_movie = await TMDB.GetMovieDetailsAsync(Id);
+		_movieImages = await TMDB.GetMovieImagesAsync(Id);
+		_youtubeTrailers = await TMDB.GetYoutubeTrailersAsync(Id);
 		_actors = await TMDB.GetActorsForMovieAsync(Id);
+		_pageCount = CalculateTotalPages();
 	}
 
-	private string GetLogoUrl(string logoPath)
+	private void OpenDialogAsync(string filePath)
 	{
-		return string.IsNullOrWhiteSpace(logoPath)
-		? ""
-		: $"https://image.tmdb.org/t/p/original/{logoPath}";
+		var options = new DialogOptions
+		{
+			BackgroundClass = "dialog-blur"
+		};
+
+		var parameters = new DialogParameters
+		{
+			{ "ImageSrc", GetImageUrl("original", filePath) }
+		};
+
+		DialogService.ShowAsync<ImageDialog>("Movie Image", parameters, options);
 	}
 
-	private string GetPosterUrl(string posterPath)
+	private int _selected = 1;
+	private int _pageCount;
+	private string _activeTab = "MoviePhotos";
+
+	private void OnTabChanged(string newValue)
 	{
-		return string.IsNullOrWhiteSpace(posterPath)
-		? ""
-		: $"https://image.tmdb.org/t/p/original{posterPath}";
+		_activeTab = newValue;
+		_selected = 1;
 	}
 
-	private string GetBackdropUrl(string backdropPath)
+	// Returns a paginated subset of the provided images.
+	// Generic so it works for any collection type
+	private IEnumerable<T> ReturnImages<T>(IEnumerable<T> images)
 	{
-		return string.IsNullOrWhiteSpace(backdropPath)
-		? ""
-		: $"https://image.tmdb.org/t/p/original{backdropPath}";
+		int pageSize = 12;
+
+		return images
+			.Skip((_selected - 1) * pageSize)
+			.Take(pageSize)
+			.ToList();
 	}
 
-	private string GetActorPosterUrl(string posterPath)
+	//Calculates total number of pages based on the active tab
+	public int CalculateTotalPages()
 	{
-		return string.IsNullOrWhiteSpace(posterPath)
+		int totalImages = 0;
+
+		if (_activeTab == "MoviePhotos")
+		{
+			totalImages = _movieImages.Posters.Count();
+		}
+		else if (_activeTab == "MovieVideos")
+		{
+			totalImages = _youtubeTrailers.Count();
+		}
+
+		double rawPageCount = totalImages / 12.0;
+		int totalPages = (int)Math.Ceiling(rawPageCount);
+
+		_pageCount = totalPages;
+		return _pageCount;
+	}
+
+	private string GetImageUrl(string fileSize, string imagePath)
+	{
+		return string.IsNullOrWhiteSpace(imagePath)
 		? ""
-		: $"https://image.tmdb.org/t/p/original{posterPath}";
+		: $"https://image.tmdb.org/t/p/{fileSize}{imagePath}";
 	}
 
 	//Generates a valid url for a specific movie using the Slugify library
 	private string GenerateActorUrl(int id, string actorName)
 	{
 		return $"/actor/{id}/{_slugHelper.GenerateSlug(actorName)}";
-	}
-	private Random _random = new Random();
-
-	private readonly string[] colors = {
-		"#B22222", "#228B22", "#1E90FF", "#8B008B", "#A0522D",
-		"#8B0000", "#2F4F4F", "#556B2F", "#483D8B", "#5F9EA0",
-		"#9932CC", "#800000", "#6A5ACD", "#2E8B57","#3CB371",
-		"#7B68EE", "#DC143C"
-	};
-
-	private string GetRandomColor()
-	{
-		return colors[_random.Next(colors.Count())];
 	}
 }

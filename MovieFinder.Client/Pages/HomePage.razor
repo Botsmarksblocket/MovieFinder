@@ -205,11 +205,4 @@
 			return "No genres selected";
 		}
 	}
-
-	private string GetPosterUrl(string posterPath)
-	{
-		return string.IsNullOrWhiteSpace(posterPath)
-		? ""
-		: $"https://image.tmdb.org/t/p/w780{posterPath}";
-	}
 }
