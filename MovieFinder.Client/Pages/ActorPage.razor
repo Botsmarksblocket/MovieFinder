@@ -30,10 +30,10 @@
 							@switch (_actor.Gender)
 							{
 								case (int)Gender.Female:
-									<MudIcon Style="color:red;" Size="Size.Large" Icon="@Icons.Material.Filled.Female" Title="Female" />
+									<MudIcon Style="color:#ec49a6;" Size="Size.Large" Icon="@Icons.Material.Filled.Female" Title="Female" />
 									break;
 								case (int)Gender.Male:
-									<MudIcon Style="color:blue;" Icon="@Icons.Material.Filled.Male" Title="Male" />
+									<MudIcon Style="color:#02a3fe;" Icon="@Icons.Material.Filled.Male" Title="Male" />
 									break;
 								case (int)Gender.NonBinary:
 									break;
@@ -101,8 +101,8 @@
 
 				<MudDivider DividerType="DividerType.Middle" Class="mt-4 mb-2"></MudDivider>
 
-@* 				@if (_pageCount > 1)
-				{ *@
+				@if (_pageCount > 1)
+				{
 					<div class="d-flex justify-center mt-2 mb-2">
 						<MudPagination @bind-Selected="@_selected"
 									   BoundaryCount="1"
@@ -111,8 +111,8 @@
 									   Count="@CalculateTotalPages()"
 									   Variant="Variant.Outlined" />
 					</div>
-@* 				}
- *@
+				}
+
 				@if (_activeTab == "ActorPhotos")
 				{
 					<MudGrid Spacing="6">

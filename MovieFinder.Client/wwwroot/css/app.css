@@ -1,4 +1,4 @@
-/* Increases the popover-width the width of the screen */
+/* Increases the popover-width of the searchbar*/
 @media (max-width: 960px) {
     .wide-popover-mobile {
         width: 100vw !important;
