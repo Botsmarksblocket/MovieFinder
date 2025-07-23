@@ -174,7 +174,7 @@
 										Outlined="true"
 										Class="mud-width-full">
 							<MudToggleItem Value="@("MoviePhotos")" Text="Posters" />
-							<MudToggleItem Value="@("MovieVideos")" Text="Acted in" />
+							<MudToggleItem Value="@("MovieVideos")" Text="Videos" />
 						</MudToggleGroup>
 					</MudStack>
 				</MudStack>
@@ -221,7 +221,7 @@
 
 				else if (_activeTab == "MovieVideos")
 				{
-					@if (!_movieVideos.Results.Any())
+					@if (!_youtubeTrailers.Any())
 					{
 						<div class="d-flex justify-center align-center flex-column">
 							<MudIcon Icon="@Icons.Material.Outlined.SearchOff" Size="Size.Large" Color="Color.Error" Title="Not found" />
@@ -232,9 +232,12 @@
 					else
 					{
 						<MudGrid Spacing="6">
-							@foreach (var movie in ReturnImages(_movieVideos.Results))
+							@foreach (var video in ReturnImages(_youtubeTrailers))
 							{
-								<MudText>@movie.Key</MudText>
+								var embedUrl = $"https://www.youtube.com/embed/{video.Key}";
+								<MudItem xs="6" md="3" lg="2" Class="center-xs">
+									<iframe src="@embedUrl"></iframe>
+								</MudItem>
 							}
 						</MudGrid>
 					}
@@ -246,6 +249,40 @@
 
 
 @code {
+	[Parameter]
+	public int Id { get; set; }
+	[Parameter]
+	public string Slug { get; set; }
+	private SlugHelper _slugHelper = new();
+
+	private List<string> _allLanguages = new List<string>();
+
+	private MovieDetail _movie = new MovieDetail
+	{
+		Genres = new List<Genre>(),
+		ProductionCompanies = new List<ProductionCompany>(),
+		Languages = new List<AvailableLanguage>(),
+	};
+
+	private MovieImage _movieImages = new MovieImage
+	{
+		Posters = new List<MovieImages>()
+	};
+
+	private List<MovieVideo.MovieVideoItem> _youtubeTrailers = new();
+	private Actor _actors = new Actor
+	{
+		MovieCast = new List<Cast>()
+	};
+
+	protected override async Task OnParametersSetAsync()
+	{
+		_movie = await TMDB.GetMovieDetailsAsync(Id);
+		_movieImages = await TMDB.GetMovieImagesAsync(Id);
+		_youtubeTrailers = await TMDB.GetYoutubeTrailersAsync(Id);
+		_actors = await TMDB.GetActorsForMovieAsync(Id);
+		_pageCount = CalculateTotalPages();
+	}
 
 	private void OpenDialogAsync(string filePath)
 	{
@@ -295,50 +332,14 @@
 		}
 		else if (_activeTab == "MovieVideos")
 		{
-			totalImages = _movieVideos.Results.Count();
+			totalImages = _youtubeTrailers.Count();
 		}
+
 		double rawPageCount = totalImages / 12.0;
 		int totalPages = (int)Math.Ceiling(rawPageCount);
 
 		_pageCount = totalPages;
 		return _pageCount;
-	}
-
-
-	[Parameter]
-	public int Id { get; set; }
-	[Parameter]
-	public string Slug { get; set; }
-	private SlugHelper _slugHelper = new();
-
-	private List<string> _allLanguages = new List<string>();
-
-	private MovieDetail _movie = new MovieDetail
-	{
-		Genres = new List<Genre>(),
-		ProductionCompanies = new List<ProductionCompany>(),
-		Languages = new List<AvailableLanguage>(),
-	};
-
-	private MovieImage _movieImages = new MovieImage
-	{
-		Posters = new List<MovieImages>()
-	};
-
-	private MovieVideo _movieVideos = new MovieVideo();
-
-	private Actor _actors = new Actor
-	{
-		MovieCast = new List<Cast>()
-	};
-
-	protected override async Task OnParametersSetAsync()
-	{
-		_movie = await TMDB.GetMovieDetailsAsync(Id);
-		_movieImages = await TMDB.GetMovieImagesAsync(Id);
-		_movieVideos = await TMDB.GetMovieVideosAsync(Id);
-		_actors = await TMDB.GetActorsForMovieAsync(Id);
-		_pageCount = CalculateTotalPages();
 	}
 
 	private string GetImageUrl(string fileSize, string imagePath)

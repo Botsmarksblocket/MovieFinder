@@ -4,9 +4,9 @@
     {
         public int Id { get; set; }
 
-        public List<MovieVideos> Results { get; set; } = new();
+        public List<MovieVideoItem> Results { get; set; } = new();
 
-        public class MovieVideos
+        public class MovieVideoItem
         {
             public string? Site { get; set; }
             public string? Key { get; set; }
