@@ -50,12 +50,12 @@
 
 .actor-photo:hover {
     transform: scale(1.03);
-    transition: all 0.3s;
+    transition: all 0.25s;
     cursor: pointer;
 }
 
 .actor-photo:not(hover) {
-    transition: all 0.3s;
+    transition: all 0.25s;
 }
 
 .actor-portrait-actorpage {

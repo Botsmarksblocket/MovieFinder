@@ -30,10 +30,10 @@
 							@switch (_actor.Gender)
 							{
 								case (int)Gender.Female:
-									<MudIcon Style="color:red;" Size="Size.Large" Icon="@Icons.Material.Filled.Female" Title="Female" />
+									<MudIcon Style="color:#ec49a6;" Size="Size.Large" Icon="@Icons.Material.Filled.Female" Title="Female" />
 									break;
 								case (int)Gender.Male:
-									<MudIcon Style="color:blue;" Icon="@Icons.Material.Filled.Male" Title="Male" />
+									<MudIcon Style="color:#02a3fe;" Icon="@Icons.Material.Filled.Male" Title="Male" />
 									break;
 								case (int)Gender.NonBinary:
 									break;
@@ -92,7 +92,7 @@
 										Color="Color.Primary"
 										FixedContent
 										Outlined="true"
-										Style="display: flex; justify-content: start; max-width:138.5px;">
+										Style="display: flex; justify-content: start; max-width:130.7px;">
 							<MudToggleItem Value="@("ActorPhotos")" Text="Photos" />
 							<MudToggleItem Value="@("ActedIn")" Text="Acted in" />
 						</MudToggleGroup>
@@ -101,41 +101,63 @@
 
 				<MudDivider DividerType="DividerType.Middle" Class="mt-4 mb-2"></MudDivider>
 
-@* 				@if (_pageCount > 1)
-				{ *@
+				@if (_pageCount > 1)
+				{
 					<div class="d-flex justify-center mt-2 mb-2">
 						<MudPagination @bind-Selected="@_selected"
 									   BoundaryCount="1"
 									   MiddleCount="2"
 									   Size="Size.Small"
 									   Count="@CalculateTotalPages()"
-									   Variant="Variant.Filled" />
+									   Variant="Variant.Outlined" />
 					</div>
-@* 				}
- *@
+				}
+
 				@if (_activeTab == "ActorPhotos")
 				{
-					<MudGrid Spacing="6">
-						@foreach (var actor in ReturnImages(_actor.Images.Profiles))
-						{
-							<MudItem xs="6" md="3" lg="2" Class="center-xs">
-								<MudImage Class="actor-photo-container actor-photo rounded-lg"
-										  Src="@GetImageUrl("w780", actor.FilePath)"
-										  FallbackSrc="Images/notfound.png"
-										  @onclick="() => OpenDialogAsync(actor.FilePath)" />
-							</MudItem>
-						}
-					</MudGrid>
+					@if (!_actor.Images.Profiles.Any())
+					{
+						<div class="d-flex justify-center align-center flex-column">
+							<MudIcon Icon="@Icons.Material.Outlined.SearchOff" Size="Size.Large" Color="Color.Error" Title="Not found" />
+							<MudText>No photos found</MudText>
+						</div>
+					}
+
+					else
+					{
+						<MudGrid Spacing="6">
+							@foreach (var actor in ReturnImages(_actor.Images.Profiles))
+							{
+								<MudItem xs="6" md="3" lg="2" Class="center-xs">
+									<MudImage Class="actor-photo-container actor-photo rounded-lg"
+											  Src="@GetImageUrl("w780", actor.FilePath)"
+											  FallbackSrc="Images/notfound.png"
+											  @onclick="() => OpenDialogAsync(actor.FilePath)" />
+								</MudItem>
+							}
+						</MudGrid>
+					}
 				}
 
 				else if (_activeTab == "ActedIn")
 				{
-					<MudGrid Spacing="6">
-						@foreach (var movie in ReturnImages(_actor.MovieCredits.Cast))
-						{
-							<MovieComponent @key="movie.Id" Movie="movie" />
-						}
-					</MudGrid>
+					@if (!_actor.MovieCredits.Cast.Any())
+					{
+						<div class="d-flex justify-center align-center flex-column">
+							<MudIcon Icon="@Icons.Material.Outlined.SearchOff" Size="Size.Large" Color="Color.Error" Title="Not found" />
+							<MudText>No movies found</MudText>
+						</div>
+					}
+
+					else
+					{
+						<MudGrid Spacing="6">
+							@foreach (var movie in ReturnImages(_actor.MovieCredits.Cast))
+							{
+								<MovieComponent @key="movie.Id" Movie="movie" />
+							}
+						</MudGrid>
+					}
 				}
 			</MudPaper>
 		</div>
