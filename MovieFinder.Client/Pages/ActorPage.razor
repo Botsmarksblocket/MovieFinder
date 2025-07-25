@@ -126,7 +126,7 @@
 					else
 					{
 						<MudGrid Spacing="6">
-							@foreach (var actor in ReturnImages(_actor.Images.Profiles))
+							@foreach (var actor in GetPage(_actor.Images.Profiles))
 							{
 								<MudItem xs="6" md="3" lg="2" Class="center-xs">
 									<MudImage Class="actor-photo-container actor-photo rounded-lg"
@@ -152,7 +152,7 @@
 					else
 					{
 						<MudGrid Spacing="6">
-							@foreach (var movie in ReturnImages(_actor.MovieCredits.Cast))
+							@foreach (var movie in GetPage(_actor.MovieCredits.Cast))
 							{
 								<MovieComponent @key="movie.Id" Movie="movie" />
 							}
@@ -213,11 +213,11 @@
 
 	// Returns a paginated subset of the provided images.
 	// Generic so it works for any collection type
-	private IEnumerable<T> ReturnImages<T>(IEnumerable<T> images)
+	private IEnumerable<T> GetPage<T>(IEnumerable<T> items)
 	{
 		int pageSize = 12;
 
-		return images
+		return items
 			.Skip((_selected - 1) * pageSize)
 			.Take(pageSize)
 			.ToList();
