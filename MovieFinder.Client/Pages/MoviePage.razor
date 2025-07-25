@@ -206,7 +206,7 @@
 					else
 					{
 						<MudGrid Spacing="6">
-							@foreach (var movie in ReturnImages(_movieImages.Posters))
+							@foreach (var movie in GetPage(_movieImages.Posters))
 							{
 								<MudItem xs="6" md="3" lg="2" Class="center-xs">
 									<MudImage Class="actor-photo-container actor-photo rounded-lg"
@@ -232,12 +232,18 @@
 					else
 					{
 						<MudGrid Spacing="6">
-							@foreach (var video in ReturnImages(_youtubeTrailers))
+							@foreach (var video in GetPage(_youtubeTrailers))
 							{
-								var embedUrl = $"https://www.youtube.com/embed/{video.Key}";
-								<MudItem xs="6" md="3" lg="2" Class="center-xs">
-									<iframe src="@embedUrl"></iframe>
-								</MudItem>
+								var embedUrl = TrailerUrl(video.Key);
+
+								if (!string.IsNullOrEmpty(embedUrl))
+								{
+									<MudItem xs="6" md="4" Class="center-xs actor" @onclick="() => OpenVideoDialogAsync(embedUrl)">
+										<iframe frameborder="0" style="border: 0;"
+												src="@embedUrl">
+										</iframe>
+									</MudItem>
+								}
 							}
 						</MudGrid>
 					}
@@ -249,6 +255,19 @@
 
 
 @code {
+	private void OpenVideoDialogAsync(string embedUrl)
+	{
+		var options = new DialogOptions { BackgroundClass = "dialog-blur" };
+
+		var parameters = new DialogParameters
+		{
+			{ "VideoSrc", embedUrl }
+		};
+
+		DialogService.ShowAsync<VideoDialog>("Actor Image", parameters, options);
+	}
+
+
 	[Parameter]
 	public int Id { get; set; }
 	[Parameter]
@@ -309,13 +328,13 @@
 		_selected = 1;
 	}
 
-	// Returns a paginated subset of the provided images.
+	// Returns a paginated subset of the provided collection
 	// Generic so it works for any collection type
-	private IEnumerable<T> ReturnImages<T>(IEnumerable<T> images)
+	private IEnumerable<T> GetPage<T>(IEnumerable<T> items)
 	{
 		int pageSize = 12;
 
-		return images
+		return items
 			.Skip((_selected - 1) * pageSize)
 			.Take(pageSize)
 			.ToList();
@@ -347,6 +366,13 @@
 		return string.IsNullOrWhiteSpace(imagePath)
 		? ""
 		: $"https://image.tmdb.org/t/p/{fileSize}{imagePath}";
+	}
+
+	private string TrailerUrl(string key)
+	{
+		return string.IsNullOrWhiteSpace(key)
+		? ""
+		: $"https://www.youtube.com/embed/{key}";
 	}
 
 	//Generates a valid url for a specific movie using the Slugify library
