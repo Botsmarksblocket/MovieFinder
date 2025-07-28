@@ -129,7 +129,7 @@
 							@foreach (var actor in GetPage(_actor.Images.Profiles))
 							{
 								<MudItem xs="6" md="3" lg="2" Class="center-xs">
-									<MudImage Class="actor-photo-container actor-photo rounded-lg"
+									<MudImage Class="image-container image rounded-lg"
 											  Src="@GetImageUrl("w780", actor.FilePath)"
 											  FallbackSrc="Images/notfound.png"
 											  @onclick="() => OpenDialogAsync(actor.FilePath)" />
