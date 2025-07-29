@@ -2,14 +2,21 @@
 /*SEVERAL PAGES*/
 /***************/
 
-.dialog-images {
+.video-wrapper {
+    aspect-ratio: 16 / 9;
+    width: 100%;
+    display: block;
+    border: 0;
+}
+
+.dialog-container {
     background-color: transparent !important;
     box-shadow: none !important;
     border: none !important;
 }
 
 .dialog-blur {
-    background-color: rgba(0, 0, 0, 0.8) !important;
+    background-color: rgba(0, 0, 0, 0.85) !important;
 }
 
 .actor-portrait {

@@ -30,7 +30,7 @@
 			</MudItem>
 			<MudItem Class="center-xs" xs="12" md="7" lg="8">
 				<MudStack Class="center-xs mt-6 mx-2" Style="color: rgba(0,0,0,0.85);">
-					<MudText Typo="Typo.h4">@(_movie.Title?.ToUpper())</MudText>
+					<MudText Class="center-xs" Typo="Typo.h4">@(_movie.Title?.ToUpper())</MudText>
 					<MudText Class="width-xs" Typo="Typo.h5">@_movie.Tagline</MudText>
 					<MudText Class="width-xs" Typo="Typo.body1">@_movie.Description</MudText>
 				</MudStack>
@@ -255,16 +255,24 @@
 
 
 @code {
+
 	private void OpenVideoDialogAsync(string embedUrl)
 	{
-		var options = new DialogOptions { BackgroundClass = "dialog-blur" };
+		var options = new DialogOptions
+		{
+			BackgroundClass = "dialog-blur",
+			FullScreen = false,
+			BackdropClick = true,
+			MaxWidth = MaxWidth.ExtraExtraLarge,
+			CloseOnEscapeKey = true
+		};
 
 		var parameters = new DialogParameters
 		{
 			{ "VideoSrc", embedUrl }
 		};
 
-		DialogService.ShowAsync<VideoDialog>("Actor Image", parameters, options);
+		DialogService.ShowAsync<VideoDialog>("Trailer", parameters, options);
 	}
 
 
@@ -368,11 +376,12 @@
 		: $"https://image.tmdb.org/t/p/{fileSize}{imagePath}";
 	}
 
+	//Returns a string of the trailer (autplays with sound)
 	private string TrailerUrl(string key)
 	{
 		return string.IsNullOrWhiteSpace(key)
 		? ""
-		: $"https://www.youtube.com/embed/{key}";
+		: $"https://www.youtube.com/embed/{key}?autoplay=1&mute=0";
 	}
 
 	private string ThumbnailUrl(string key)

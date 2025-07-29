@@ -1,5 +1,24 @@
-﻿<h3>VideoDialog</h3>
+﻿<MudDialog Class="dialog-container"
+		   Style="width: 90vw;
+		   max-width: 50vw;
+		   min-width: 360px;
+		   overflow: hidden !important; 
+margin: 0 auto;">
+
+	<TitleContent></TitleContent>
+
+	<DialogContent>
+		<iframe class="video-wrapper" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture;"
+				src="@VideoSrc" allowfullscreen>
+		</iframe>
+	</DialogContent>
+</MudDialog>
+
 
 @code {
+	[CascadingParameter]
+	private IMudDialogInstance MudDialog { get; set; }
 
+	[Parameter]
+	public string VideoSrc { get; set; }
 }
