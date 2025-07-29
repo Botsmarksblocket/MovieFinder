@@ -212,7 +212,7 @@
 									<MudImage Class="image-container image rounded-lg"
 											  Src="@GetImageUrl("w780", movie.FilePath)"
 											  FallbackSrc="Images/notfound.png"
-											  @onclick="() => OpenDialogAsync(movie.FilePath)" />
+											  @onclick="() => OpenImageDialogAsync(movie.FilePath)" />
 								</MudItem>
 							}
 						</MudGrid>
@@ -255,27 +255,6 @@
 
 
 @code {
-
-	private void OpenVideoDialogAsync(string embedUrl)
-	{
-		var options = new DialogOptions
-		{
-			BackgroundClass = "dialog-blur",
-			FullScreen = false,
-			BackdropClick = true,
-			MaxWidth = MaxWidth.ExtraExtraLarge,
-			CloseOnEscapeKey = true
-		};
-
-		var parameters = new DialogParameters
-		{
-			{ "VideoSrc", embedUrl }
-		};
-
-		DialogService.ShowAsync<VideoDialog>("Trailer", parameters, options);
-	}
-
-
 	[Parameter]
 	public int Id { get; set; }
 	[Parameter]
@@ -311,7 +290,7 @@
 		_pageCount = CalculateTotalPages();
 	}
 
-	private void OpenDialogAsync(string filePath)
+	private void OpenImageDialogAsync(string filePath)
 	{
 		var options = new DialogOptions
 		{
@@ -324,6 +303,25 @@
 		};
 
 		DialogService.ShowAsync<ImageDialog>("Movie Image", parameters, options);
+	}
+
+	private void OpenVideoDialogAsync(string embedUrl)
+	{
+		var options = new DialogOptions
+		{
+			BackgroundClass = "dialog-blur",
+			FullScreen = false,
+			BackdropClick = true,
+			MaxWidth = MaxWidth.ExtraExtraLarge,
+			CloseOnEscapeKey = true
+		};
+
+		var parameters = new DialogParameters
+		{
+			{ "VideoSrc", embedUrl }
+		};
+
+		DialogService.ShowAsync<VideoDialog>("Trailers", parameters, options);
 	}
 
 	private int _selected = 1;
@@ -351,22 +349,21 @@
 	//Calculates total number of pages based on the active tab
 	public int CalculateTotalPages()
 	{
-		int totalImages = 0;
+		int totalItems = 0;
 
 		if (_activeTab == "Posters")
 		{
-			totalImages = _movieImages.Posters.Count();
+			totalItems = _movieImages.Posters.Count();
 		}
 		else if (_activeTab == "Trailers")
 		{
-			totalImages = _youtubeTrailers.Count();
+			totalItems = _youtubeTrailers.Count();
 		}
 
-		double rawPageCount = totalImages / 12.0;
+		double rawPageCount = totalItems / 12.0;
 		int totalPages = (int)Math.Ceiling(rawPageCount);
 
-		_pageCount = totalPages;
-		return _pageCount;
+		return totalPages;
 	}
 
 	private string GetImageUrl(string fileSize, string imagePath)
