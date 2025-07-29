@@ -129,7 +129,7 @@
 							@foreach (var actor in GetPage(_actor.Images.Profiles))
 							{
 								<MudItem xs="6" md="3" lg="2" Class="center-xs">
-									<MudImage Class="actor-photo-container actor-photo rounded-lg"
+									<MudImage Class="image-container image rounded-lg"
 											  Src="@GetImageUrl("w780", actor.FilePath)"
 											  FallbackSrc="Images/notfound.png"
 											  @onclick="() => OpenDialogAsync(actor.FilePath)" />
@@ -226,21 +226,20 @@
 	//Calculates total number of pages based on the active tab
 	public int CalculateTotalPages()
 	{
-		int totalImages = 0;
+		int totalItems = 0;
 
 		if (_activeTab == "ActorPhotos")
 		{
-			totalImages = _actor.Images.Profiles.Count();
+			totalItems = _actor.Images.Profiles.Count();
 		}
 		else if (_activeTab == "ActedIn")
 		{
-			totalImages = _actor.MovieCredits.Cast.Count();
+			totalItems = _actor.MovieCredits.Cast.Count();
 		}
-		double rawPageCount = totalImages / 12.0;
+		double rawPageCount = totalItems / 12.0;
 		int totalPages = (int)Math.Ceiling(rawPageCount);
 
-		_pageCount = totalPages;
-		return _pageCount;
+		return totalPages;
 	}
 
 	private bool showFullBiography = false;

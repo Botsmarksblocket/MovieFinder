@@ -2,14 +2,21 @@
 /*SEVERAL PAGES*/
 /***************/
 
-.dialog-images {
+.video-wrapper {
+    aspect-ratio: 16 / 9;
+    width: 100%;
+    display: block;
+    border: 0;
+}
+
+.dialog-container {
     background-color: transparent !important;
     box-shadow: none !important;
     border: none !important;
 }
 
 .dialog-blur {
-    background-color: rgba(0, 0, 0, 0.8) !important;
+    background-color: rgba(0, 0, 0, 0.85) !important;
 }
 
 .actor-portrait {
@@ -17,12 +24,34 @@
     box-shadow: 0 0 8px 4px rgba(0, 0, 0, 0.2) !important;
 }
 
-.width-xs{
+.image-container {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    image-rendering: auto;
+}
+
+.image {
+    box-shadow: 0 0 4px 2px rgba(0, 0, 0, 0.2) !important;
+}
+
+    .image:hover {
+        transform: scale(1.03);
+        transition: all 0.25s;
+        cursor: pointer;
+    }
+
+    .image:not(hover) {
+        transition: all 0.25s;
+    }
+
+.width-xs {
     max-width: 80%;
 }
 
-@media(min-width: 959px){
-    .width-lg{
+@media(min-width: 959px) {
+    .width-lg {
         max-width: 70%;
     }
 }
@@ -34,9 +63,11 @@
         align-items: center;
         justify-content: space-evenly;
     }
+
     .width-xs {
         max-width: 352px !important;
     }
+
     .small-font-xs-description * {
         font-size: 14px !important;
     }
@@ -45,28 +76,6 @@
 /***********/
 /*ACTOR PAGE*/
 /***********/
-
-.actor-photo-container {
-    display: block;
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-    image-rendering: auto;
-}
-
-.actor-photo {
-    box-shadow: 0 0 4px 2px rgba(0, 0, 0, 0.2) !important;
-}
-
-.actor-photo:hover {
-    transform: scale(1.03);
-    transition: all 0.25s;
-    cursor: pointer;
-}
-
-.actor-photo:not(hover) {
-    transition: all 0.25s;
-}
 
 .actor-portrait-actorpage {
     height: 200px !important;
@@ -165,10 +174,10 @@ actor-photos-actorpage {
     .small-font-xs * {
         font-size: 17px !important;
     }
+
     .small-font-xs-portrait * {
         font-size: 14px !important;
     }
-
 }
 
 .movie-page-poster {

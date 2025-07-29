@@ -30,7 +30,7 @@
 			</MudItem>
 			<MudItem Class="center-xs" xs="12" md="7" lg="8">
 				<MudStack Class="center-xs mt-6 mx-2" Style="color: rgba(0,0,0,0.85);">
-					<MudText Typo="Typo.h4">@(_movie.Title?.ToUpper())</MudText>
+					<MudText Class="center-xs" Typo="Typo.h4">@(_movie.Title?.ToUpper())</MudText>
 					<MudText Class="width-xs" Typo="Typo.h5">@_movie.Tagline</MudText>
 					<MudText Class="width-xs" Typo="Typo.body1">@_movie.Description</MudText>
 				</MudStack>
@@ -107,7 +107,7 @@
 					</MudStack>
 
 					<MudStack Spacing="6"
-							  Class="justify-md-space-between justify-xs-space-around mt-8"
+							  Class="center-xs mt-8"
 							  Row="true">
 
 						<MudStack Row="false" Spacing="0" Class="flex-equal">
@@ -173,8 +173,8 @@
 										FixedContent
 										Outlined="true"
 										Class="mud-width-full">
-							<MudToggleItem Value="@("MoviePhotos")" Text="Posters" />
-							<MudToggleItem Value="@("MovieVideos")" Text="Videos" />
+							<MudToggleItem Value="@("Posters")" Text="Posters" />
+							<MudToggleItem Value="@("Trailers")" Text="Videos" />
 						</MudToggleGroup>
 					</MudStack>
 				</MudStack>
@@ -193,13 +193,13 @@
 					</div>
 				}
 
-				@if (_activeTab == "MoviePhotos")
+				@if (_activeTab == "Posters")
 				{
 					@if (!_movieImages.Posters.Any())
 					{
 						<div class="d-flex justify-center align-center flex-column">
 							<MudIcon Icon="@Icons.Material.Outlined.SearchOff" Size="Size.Large" Color="Color.Error" Title="Not found" />
-							<MudText>No photos found</MudText>
+							<MudText>No posters found</MudText>
 						</div>
 					}
 
@@ -209,23 +209,23 @@
 							@foreach (var movie in GetPage(_movieImages.Posters))
 							{
 								<MudItem xs="6" md="3" lg="2" Class="center-xs">
-									<MudImage Class="actor-photo-container actor-photo rounded-lg"
+									<MudImage Class="image-container image rounded-lg"
 											  Src="@GetImageUrl("w780", movie.FilePath)"
 											  FallbackSrc="Images/notfound.png"
-											  @onclick="() => OpenDialogAsync(movie.FilePath)" />
+											  @onclick="() => OpenImageDialogAsync(movie.FilePath)" />
 								</MudItem>
 							}
 						</MudGrid>
 					}
 				}
 
-				else if (_activeTab == "MovieVideos")
+				else if (_activeTab == "Trailers")
 				{
 					@if (!_youtubeTrailers.Any())
 					{
 						<div class="d-flex justify-center align-center flex-column">
 							<MudIcon Icon="@Icons.Material.Outlined.SearchOff" Size="Size.Large" Color="Color.Error" Title="Not found" />
-							<MudText>No movies found</MudText>
+							<MudText>No videos found</MudText>
 						</div>
 					}
 
@@ -235,13 +235,13 @@
 							@foreach (var video in GetPage(_youtubeTrailers))
 							{
 								var embedUrl = TrailerUrl(video.Key);
+								var thumbnail = ThumbnailUrl(video.Key);
 
 								if (!string.IsNullOrEmpty(embedUrl))
 								{
-									<MudItem xs="6" md="4" Class="center-xs actor" @onclick="() => OpenVideoDialogAsync(embedUrl)">
-										<iframe frameborder="0" style="border: 0;"
-												src="@embedUrl">
-										</iframe>
+									<MudItem xs="6" md="4" Class="center-xs" @onclick="() => OpenVideoDialogAsync(embedUrl)">
+										<MudImage Class="image-container image rounded-lg" Src="@thumbnail">
+										</MudImage>
 									</MudItem>
 								}
 							}
@@ -255,19 +255,6 @@
 
 
 @code {
-	private void OpenVideoDialogAsync(string embedUrl)
-	{
-		var options = new DialogOptions { BackgroundClass = "dialog-blur" };
-
-		var parameters = new DialogParameters
-		{
-			{ "VideoSrc", embedUrl }
-		};
-
-		DialogService.ShowAsync<VideoDialog>("Actor Image", parameters, options);
-	}
-
-
 	[Parameter]
 	public int Id { get; set; }
 	[Parameter]
@@ -303,7 +290,7 @@
 		_pageCount = CalculateTotalPages();
 	}
 
-	private void OpenDialogAsync(string filePath)
+	private void OpenImageDialogAsync(string filePath)
 	{
 		var options = new DialogOptions
 		{
@@ -318,9 +305,28 @@
 		DialogService.ShowAsync<ImageDialog>("Movie Image", parameters, options);
 	}
 
+	private void OpenVideoDialogAsync(string embedUrl)
+	{
+		var options = new DialogOptions
+		{
+			BackgroundClass = "dialog-blur",
+			FullScreen = false,
+			BackdropClick = true,
+			MaxWidth = MaxWidth.ExtraExtraLarge,
+			CloseOnEscapeKey = true
+		};
+
+		var parameters = new DialogParameters
+		{
+			{ "VideoSrc", embedUrl }
+		};
+
+		DialogService.ShowAsync<VideoDialog>("Trailers", parameters, options);
+	}
+
 	private int _selected = 1;
 	private int _pageCount;
-	private string _activeTab = "MoviePhotos";
+	private string _activeTab = "Posters";
 
 	private void OnTabChanged(string newValue)
 	{
@@ -343,22 +349,21 @@
 	//Calculates total number of pages based on the active tab
 	public int CalculateTotalPages()
 	{
-		int totalImages = 0;
+		int totalItems = 0;
 
-		if (_activeTab == "MoviePhotos")
+		if (_activeTab == "Posters")
 		{
-			totalImages = _movieImages.Posters.Count();
+			totalItems = _movieImages.Posters.Count();
 		}
-		else if (_activeTab == "MovieVideos")
+		else if (_activeTab == "Trailers")
 		{
-			totalImages = _youtubeTrailers.Count();
+			totalItems = _youtubeTrailers.Count();
 		}
 
-		double rawPageCount = totalImages / 12.0;
+		double rawPageCount = totalItems / 12.0;
 		int totalPages = (int)Math.Ceiling(rawPageCount);
 
-		_pageCount = totalPages;
-		return _pageCount;
+		return totalPages;
 	}
 
 	private string GetImageUrl(string fileSize, string imagePath)
@@ -368,11 +373,19 @@
 		: $"https://image.tmdb.org/t/p/{fileSize}{imagePath}";
 	}
 
+	//Returns a string of the trailer (autplays with sound)
 	private string TrailerUrl(string key)
 	{
 		return string.IsNullOrWhiteSpace(key)
 		? ""
-		: $"https://www.youtube.com/embed/{key}";
+		: $"https://www.youtube.com/embed/{key}?autoplay=1&mute=0";
+	}
+
+	private string ThumbnailUrl(string key)
+	{
+		return string.IsNullOrWhiteSpace(key)
+		? ""
+		: $"https://img.youtube.com/vi/{key}/hqdefault.jpg";
 	}
 
 	//Generates a valid url for a specific movie using the Slugify library
