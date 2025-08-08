@@ -1,0 +1,65 @@
+﻿@inject IJSRuntime JS
+@implements IDisposable
+@typeparam TItem
+
+@ChildContent(Items)
+
+@code {
+
+	[Parameter] public Func<int, Task<IEnumerable<TItem>>> LoadData { get; set; }
+	[Parameter] public RenderFragment<IEnumerable<TItem>> ChildContent { get; set; }
+	[Parameter] public int MaxPages { get; set; } = 500;
+
+	private List<TItem> Items = new();
+	private int _currentPage = 0;
+	private bool _isLoading = false;
+
+	private DotNetObjectReference<InfiniteScroll<TItem>> _dotNetRef;
+
+	protected override async Task OnInitializedAsync()
+	{
+		_dotNetRef = DotNetObjectReference.Create(this);
+		await JS.InvokeVoidAsync("scrollHelper.registerScroll", _dotNetRef);
+		await LoadMoreAsync();
+	}
+
+	//Loads more data
+	private async Task LoadMoreAsync()
+	{
+		if (_isLoading || _currentPage >= MaxPages) return;
+
+		_isLoading = true;
+		_currentPage++;
+
+		var newItems = await LoadData(_currentPage);
+		if (newItems != null)
+		{
+			Items.AddRange(newItems);
+			StateHasChanged();
+		}
+
+		_isLoading = false;
+	}
+
+	//Resets the loaded items and current page, then loads the first page of data async
+	public async Task ResetAsync()
+	{
+		Items.Clear();
+		_currentPage = 0;
+		await LoadMoreAsync();
+	}
+
+	//Cleans up resources by removing js scroll even listener and disposes the .NET object reference to prevent memory leaks
+	public void Dispose()
+	{
+		JS.InvokeVoidAsync("scrollHelper.removeScroll");
+		_dotNetRef?.Dispose();
+	}
+
+	//Invoked by JS when the users scrolls near bottom. Loads next page of items async
+	[JSInvokable]
+	public async Task OnScrollNearBottom()
+	{
+		await LoadMoreAsync();
+	}
+}

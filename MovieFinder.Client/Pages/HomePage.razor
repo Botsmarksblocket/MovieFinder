@@ -6,8 +6,6 @@
 @using Slugify
 @inject ITMDBService TMDB
 @inject ISnackbar Snackbar
-@inject IJSRuntime JS
-@implements IDisposable
 
 @page "/"
 
@@ -81,12 +79,14 @@
 			</MudItem>
 		</MudGrid>
 
-		<MudGrid>
-			@foreach (var movie in _allMovies)
-			{
-					<MovieComponent @key=movie.Id Movie="movie" FadeIn="fade-in"/>
-			}
-		</MudGrid>
+		<InfiniteScroll @ref="_infiniteScroll"
+						TItem="Movie"
+						LoadData="LoadMovies"
+						MaxPages="500"
+						ChildContent="MovieTemplate">
+		</InfiniteScroll>
+
+
 	</MudPaper>
 </MudPaper>
 
@@ -94,93 +94,54 @@
 	private SearchResult _searchResult;
 	private List<Movie> _allMovies = new();
 	private List<Genre> _genres = new();
-	private FilterParameter _parameters = new();
 	private SlugHelper _slugHelper = new();
+	private FilterParameter _parameters = new();
 
-	private DotNetObjectReference<HomePage> _dotNetRef;
+	private InfiniteScroll<Movie> _infiniteScroll;
 
-	private bool _isLoading = false;
+	private RenderFragment<IEnumerable<Movie>> MovieTemplate => movies => @<MudGrid>
+@foreach (var movie in movies)
+	{
+	<MovieComponent @key=movie.Id Movie="movie" FadeIn="fade-in" />
+	}
+</MudGrid>;
 
 	//Loads genres, trending movies and invokes JS upon page initialization
 	protected override async Task OnInitializedAsync()
 	{
-		try
-		{
-			_dotNetRef = DotNetObjectReference.Create(this);
-			await JS.InvokeVoidAsync("scrollHelper.registerScroll", _dotNetRef);
-			_genres = await TMDB.GetGenresAsync();
-			await LoadMoviesAsync();
-		}
-
-		catch
-		{
-			Snackbar.Add($"Something went wrong when trying to retrieve the movies.", Severity.Error);
-		}
+		_genres = await TMDB.GetGenresAsync();
 	}
 
-	//Cleans up resources by removin js scroll even listener and disposes the .NET object reference to prevent memory leaks
-	public void Dispose()
+	private async Task<IEnumerable<Movie>> LoadMovies(int page)
 	{
-		JS.InvokeVoidAsync("scrollHelper.removeScroll");
-		_dotNetRef?.Dispose();
-	}
-
-	//Resets the page parameters and load the movies with the filter parameters
-	private async Task LoadMoviesAsync()
-	{
-		_parameters.Page = 1;
-		_searchResult = await TMDB.GetFilteredMoviesAsync(_parameters);
-		_allMovies = _searchResult.Results;
-	}
-
-	//If results were returned successfully, add them to the movie list
-	private async Task LoadMoreMovies()
-	{
-		_isLoading = true;
-		_parameters.Page++;
+		_parameters.Page = page;
 		var result = await TMDB.GetFilteredMoviesAsync(_parameters);
-
-		if (result.Results != null)
-		{
-			_allMovies.AddRange(result.Results);
-		}
-
-		_isLoading = false;
-		StateHasChanged();
-	}
-
-	[JSInvokable]
-	public async Task OnScrollNearBottom()
-	{
-		if (_isLoading || _parameters.Page > 500)
-			return;
-
-		await LoadMoreMovies();
+		return result.Results;
 	}
 
 	private async Task OnSortByChanged(string sortBy)
 	{
 		_parameters.SortBy = sortBy;
-		await LoadMoviesAsync();
+		await _infiniteScroll.ResetAsync();
 	}
 
 	private async Task OnReleaseYearChanged(int releaseYear)
 	{
 		_parameters.ReleaseYear = releaseYear;
-		await LoadMoviesAsync();
+		await _infiniteScroll.ResetAsync();
 	}
 
 	private async Task OnMinimumRatingChanged(double minimumRating)
 	{
 		_parameters.MinimumRating = minimumRating;
-		await LoadMoviesAsync();
+		await _infiniteScroll.ResetAsync();
 	}
 
 	//Updates the movies displayed when choosing genres. If no genres are selected the trending movies gets shown instead
 	private async Task OnGenreSelectionChanged(IEnumerable<int> newSelection)
 	{
 		_parameters.GenreIds = newSelection.ToList();
-		await LoadMoviesAsync();
+		await _infiniteScroll.ResetAsync();
 	}
 
 	//Display logic for the multiselection text for genres
