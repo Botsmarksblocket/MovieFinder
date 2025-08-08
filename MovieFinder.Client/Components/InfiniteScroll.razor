@@ -1,0 +1,63 @@
+﻿@inject IJSRuntime JS
+@implements IDisposable
+@typeparam TItem
+
+<div>
+	@ChildContent(Items)
+</div>
+
+@code {
+
+	[Parameter] public Func<int, Task<IEnumerable<TItem>>> LoadData { get; set; }
+	[Parameter] public RenderFragment<IEnumerable<TItem>> ChildContent { get; set; }
+	[Parameter] public int MaxPages { get; set; } = 500;
+
+	private List<TItem> Items = new();
+	private int _currentPage = 0;
+	private bool _isLoading = false;
+
+	private DotNetObjectReference<InfiniteScroll<TItem>> _dotNetRef;
+
+	protected override async Task OnInitializedAsync()
+	{
+		_dotNetRef = DotNetObjectReference.Create(this);
+		await JS.InvokeVoidAsync("scrollHelper.registerScroll", _dotNetRef);
+		await LoadMoreAsync();
+	}
+
+	public void Dispose()
+	{
+		JS.InvokeVoidAsync("scrollHelper.removeScroll");
+		_dotNetRef?.Dispose();
+	}
+
+	private async Task LoadMoreAsync()
+	{
+		if (_isLoading || _currentPage >= MaxPages) return;
+
+		_isLoading = true;
+		_currentPage++;
+
+		var newItems = await LoadData(_currentPage);
+		if (newItems != null)
+		{
+			Items.AddRange(newItems);
+			StateHasChanged();
+		}
+
+		_isLoading = false;
+	}
+
+	public async Task ResetAsync()
+	{
+		Items.Clear();
+		_currentPage = 0;
+		await LoadMoreAsync();
+	}
+
+	[JSInvokable]
+	public async Task OnScrollNearBottom()
+	{
+		await LoadMoreAsync();
+	}
+}
