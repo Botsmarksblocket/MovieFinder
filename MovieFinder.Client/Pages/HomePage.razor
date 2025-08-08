@@ -100,24 +100,16 @@
 	private InfiniteScroll<Movie> _infiniteScroll;
 
 	private RenderFragment<IEnumerable<Movie>> MovieTemplate => movies => @<MudGrid>
-	@foreach (var movie in movies)
+@foreach (var movie in movies)
 	{
 	<MovieComponent @key=movie.Id Movie="movie" FadeIn="fade-in" />
 	}
-	</MudGrid>;
+</MudGrid>;
 
 	//Loads genres, trending movies and invokes JS upon page initialization
 	protected override async Task OnInitializedAsync()
 	{
-		try
-		{
-			_genres = await TMDB.GetGenresAsync();
-		}
-
-		catch
-		{
-			Snackbar.Add($"Something went wrong when trying to retrieve the movies.", Severity.Error);
-		}
+		_genres = await TMDB.GetGenresAsync();
 	}
 
 	private async Task<IEnumerable<Movie>> LoadMovies(int page)

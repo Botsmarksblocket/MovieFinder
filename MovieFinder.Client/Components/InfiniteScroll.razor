@@ -2,9 +2,7 @@
 @implements IDisposable
 @typeparam TItem
 
-<div>
-	@ChildContent(Items)
-</div>
+@ChildContent(Items)
 
 @code {
 
@@ -25,12 +23,7 @@
 		await LoadMoreAsync();
 	}
 
-	public void Dispose()
-	{
-		JS.InvokeVoidAsync("scrollHelper.removeScroll");
-		_dotNetRef?.Dispose();
-	}
-
+	//Loads more data
 	private async Task LoadMoreAsync()
 	{
 		if (_isLoading || _currentPage >= MaxPages) return;
@@ -48,6 +41,7 @@
 		_isLoading = false;
 	}
 
+	//Resets the loaded items and current page, then loads the first page of data async
 	public async Task ResetAsync()
 	{
 		Items.Clear();
@@ -55,6 +49,14 @@
 		await LoadMoreAsync();
 	}
 
+	//Cleans up resources by removing js scroll even listener and disposes the .NET object reference to prevent memory leaks
+	public void Dispose()
+	{
+		JS.InvokeVoidAsync("scrollHelper.removeScroll");
+		_dotNetRef?.Dispose();
+	}
+
+	//Invoked by JS when the users scrolls near bottom. Loads next page of items async
 	[JSInvokable]
 	public async Task OnScrollNearBottom()
 	{
