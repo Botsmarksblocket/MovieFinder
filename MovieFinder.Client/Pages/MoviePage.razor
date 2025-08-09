@@ -275,29 +275,6 @@
 	private InfiniteScroll<Movie> _infiniteScroll;
 	private List<Movie> _loadedMovies = new List<Movie>();
 
-	//Renderfragment which gets passed down into the InfiniteScroll component to display and load more movies
-	private RenderFragment<IEnumerable<Movie>> MovieTemplate => movies =>
-	@<MudGrid>
-@foreach (var movie in movies)
-	{
-	<MovieComponent @key=movie.Id Movie="movie" FadeIn="fade-in" />
-	}
-</MudGrid>;
-
-	//Returns 
-	private async Task<IEnumerable<Movie>> LoadMoviesAsync(int page)
-	{
-		var result = await TMDB.GetSimilarMoviesAsync(Id, page);
-
-		var newMovies = result.Results
-	.Where(m => !_loadedMovies.Any(lm => lm.Id == m.Id))
-	.ToList();
-
-		_loadedMovies.AddRange(newMovies);
-
-		return newMovies;
-	}
-
 	private List<string> _allLanguages = new List<string>();
 
 	private MovieDetail _movie = new MovieDetail
@@ -401,6 +378,30 @@
 		int totalPages = (int)Math.Ceiling(rawPageCount);
 
 		return totalPages;
+	}
+
+	//Renderfragment which gets passed down into the InfiniteScroll component to display and load more movies
+	private RenderFragment<IEnumerable<Movie>> MovieTemplate => movies =>
+	@<MudGrid>
+@foreach (var movie in movies)
+	{
+	<MovieComponent @key=movie.Id Movie="movie" FadeIn="fade-in" />
+	}
+</MudGrid>;
+
+	//Fetches a page of similar movies fromt TMDB
+	//Also filters out already added movies since TMDB sometimes returns the same movie twice
+	private async Task<IEnumerable<Movie>> LoadMoviesAsync(int page)
+	{
+		var result = await TMDB.GetSimilarMoviesAsync(Id, page);
+
+		var newMovies = result.Results
+					   .Where(m => !_loadedMovies.Any(lm => lm.Id == m.Id))
+					   .ToList();
+
+		_loadedMovies.AddRange(newMovies);
+
+		return newMovies;
 	}
 
 	private string GetImageUrl(string fileSize, string imagePath)
