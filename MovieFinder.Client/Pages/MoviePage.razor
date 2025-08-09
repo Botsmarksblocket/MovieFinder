@@ -13,258 +13,274 @@
 
 <PageTitle>@_movie.Title</PageTitle>
 
-<div class="backdrop-image"
-	 style=@($"background-image: url('{GetImageUrl("original", _movie.BackdropPath)}'); ")>
-</div>
+@if (_isLoading)
+{
+	<div class="d-flex justify-center align-center" style="height: 100vh;">
+		<MudProgressCircular Color="Color.Primary" Rounded="true" Style="height:100px;width:100px;" Indeterminate="true" />
+	</div>
+}
 
-<div class="content-wrapper d-flex justify-center ">
-
-	<MudPaper Style="min-height: 100vh;"
-			  Class="mt-8 mb-1 inner-container-background container-width">
-		<MudGrid Spacing="0">
-			<MudItem xs="12" md="5" lg="4">
-				<div class="mt-6 mx-8 center-xs">
-					<MudImage Class="movie-page-poster rounded" Src="@GetImageUrl("original", _movie.PosterPath)"
-							  Alt="Movie Poster"
-							  FallbackSrc="/Images/notfound.png" />
-				</div>
-			</MudItem>
-			<MudItem Class="center-xs" xs="12" md="7" lg="8">
-				<MudStack Class="center-xs mt-6 mx-2" Style="color: rgba(0,0,0,0.85);">
-					<MudText Class="center-xs" Typo="Typo.h4">@(_movie.Title?.ToUpper())</MudText>
-					<MudText Class="width-xs" Typo="Typo.h5">@_movie.Tagline</MudText>
-					<MudText Class="width-xs" Typo="Typo.body1">@_movie.Description</MudText>
-				</MudStack>
-				<MudStack Row="true"
-						  Wrap="Wrap.Wrap">
-					@foreach (var genre in _movie.Genres)
-					{
-						<MudChip Class="my-4 mx-2" T="string" Color="Color.Primary">@genre.Name</MudChip>
-					}
-				</MudStack>
-
-				<MudStack AlignItems="AlignItems.Center"
-						  Row="true"
-						  Wrap="Wrap.Wrap"
-						  Class="mx-2 justify-xs-center justify-md-start">
-					@foreach (var company in _movie.ProductionCompanies)
-					{
-						<MudTooltip Arrow="true"
-									Text="@company.Name">
-							@if (GetImageUrl("original", company.LogoPath) == "")
-							{
-								<MudChip Label="true" T="string" Style="background-color: #2b2b2b">
-									@company.Name
-								</MudChip>
-							}
-							else
-							{
-								<MudImage Style="color: rgba(0,0,0,65)"
-										  ObjectFit="ObjectFit.Contain"
-										  Width="100"
-										  Height="60"
-										  Class="mt-2"
-										  Src="@GetImageUrl("original", company.LogoPath)">
-								</MudImage>
-							}
-						</MudTooltip>
-					}
-				</MudStack>
-
-				<div class="color-wrapper small-font-xs">
-					<MudStack Spacing="6"
-							  Row="true"
-							  Class="justify-md-space-between justify-xs-space-around mt-4 ">
-						<MudStack Row="false" Spacing="0" Class="flex-equal">
-							<MudText Typo="Typo.h5"><b>Release date</b></MudText>
-							<MudText Typo="Typo.h5">@_movie.ReleaseDate</MudText>
-						</MudStack>
-
-						<MudStack Row="false" Spacing="0" Class="flex-equal">
-							<MudText Typo="Typo.h5"><b>Revenue</b></MudText>
-
-							@if (_movie.Revenue == 0)
-							{
-								<MudText Typo="Typo.h5">Unknown</MudText>
-							}
-							else
-							{
-								<MudText Typo="Typo.h5">$@_movie.Revenue.ToString("##,##")</MudText>
-							}
-						</MudStack>
-
-						<MudStack Row="false" Spacing="0" Class="flex-equal">
-							<MudText Typo="Typo.h5"><b>Budget</b></MudText>
-
-							@if (_movie.Budget == 0)
-							{
-								<MudText Typo="Typo.h5">Unknown</MudText>
-							}
-							else
-							{
-								<MudText Typo="Typo.h5">$@_movie.Budget.ToString("##,##")</MudText>
-							}
-						</MudStack>
-					</MudStack>
-
-					<MudStack Spacing="6"
-							  Class="center-xs mt-8"
-							  Row="true">
-
-						<MudStack Row="false" Spacing="0" Class="flex-equal">
-							<MudText Typo="Typo.h5"><b>Runtime</b></MudText>
-							<MudText Typo="Typo.h5">@_movie.Runtime minutes</MudText>
-						</MudStack>
-
-						<MudStack Row="false" Spacing="0" Class="flex-equal">
-							<MudText Typo="Typo.h5"><b>Vote average</b></MudText>
-							<MudText Typo="Typo.h5">@_movie.Rating.ToString("0.#") / 10</MudText>
-						</MudStack>
-
-						<MudStack Row="false" Spacing="0" Class="flex-equal">
-							<MudText Typo="Typo.h5"><b>Languages</b></MudText>
-							<MudText Typo="Typo.h5">
-								@String.Join(", ", _movie.Languages.Select(l => l.Language))
-							</MudText>
-						</MudStack>
-					</MudStack>
-				</div>
-			</MudItem>
-
-			@for (int i = 0; i < 6 && i < _actors.MovieCast.Count; i++)
-			{
-				var actor = _actors.MovieCast[i];
-				<MudItem xs="4" md="2" Class="mt-6 d-flex justify-center-portrait">
-					<MudCard Elevation="0"
-							 Class="color-wrapper center-portrait"
-							 Style="background-color: rgba(0,0,0,0);">
-						<NavLink href="@GenerateActorUrl(actor.Id, actor.Name)">
-
-							<MudImage Objectfit="ObjectFit.Cover"
-									  Class="actor-portrait actor-portrait-moviepage"
-									  Src="@GetImageUrl("original", actor.ProfilePicture)"
-									  FallbackSrc="Images/noprofile.png" />
-						</NavLink>
-
-						<div class="small-font-xs-portrait">
-							<MudCardContent>
-								<MudText Typo="Typo.body1"><b>@actor.Name</b></MudText>
-								@if (!string.IsNullOrEmpty(actor.Character))
-								{
-									<MudText Typo="Typo.body2">as @actor.Character</MudText>
-								}
-							</MudCardContent>
-						</div>
-					</MudCard>
-				</MudItem>
-			}
-		</MudGrid>
-
-		<div class="d-flex justify-center mt-8 mx-4">
-			<MudPaper Class="width-lg width-xs" Style="height: 100%; width: 100%; background-color: transparent;" Elevation="0">
-				<MudStack Class="center-xs">
-					<MudStack Style="max-width: 200px;">
-						<MudToggleGroup T="string"
-										Delimiters="true"
-										Size=Size.Small
-										Value="_activeTab"
-										ValueChanged="OnTabChanged"
-										SelectionMode="SelectionMode.SingleSelection"
-										Color="Color.Primary"
-										FixedContent
-										Outlined="true"
-										Class="mud-width-full">
-							<MudToggleItem Value="@("Posters")" Text="Posters" />
-							<MudToggleItem Value="@("Trailers")" Text="Videos" />
-						</MudToggleGroup>
-					</MudStack>
-				</MudStack>
-
-				<MudDivider DividerType="DividerType.Middle" Class="mt-4 mb-2"></MudDivider>
-
-				@if (_tabPageCount > 1)
-				{
-					<div class="d-flex justify-center mt-2 mb-2">
-						<MudPagination @bind-Selected="@_selected"
-									   BoundaryCount="1"
-									   MiddleCount="2"
-									   Size="Size.Small"
-									   Count="@CalculateTotalTabPages()"
-									   Variant="Variant.Text" />
+else
+{
+	<div class="backdrop-image"
+		 style=@($"background-image: url('{GetImageUrl("original", _movie.BackdropPath)}'); ")>
+	</div>
+	<div class="content-wrapper d-flex justify-center ">
+		<MudPaper Style="min-height: 100vh;"
+				  Class="mt-8 mb-1 inner-container-background container-width">
+			<MudGrid Spacing="0">
+				<MudItem xs="12" md="5" lg="4">
+					<div class="mt-6 mx-8 center-xs">
+						<MudImage Class="movie-page-poster rounded" Src="@GetImageUrl("original", _movie.PosterPath)"
+								  Alt="Movie Poster"
+								  FallbackSrc="/Images/notfound.png" />
 					</div>
-				}
-
-				<div style=" color: rgba(0,0,0,0.85);">
-					@if (_activeTab == "Posters")
-					{
-						@if (!_movieImages.Posters.Any())
+				</MudItem>
+				<MudItem Class="center-xs" xs="12" md="7" lg="8">
+					<MudStack Class="center-xs mt-6 mx-2" Style="color: rgba(0,0,0,0.85);">
+						<MudText Class="center-xs" Typo="Typo.h4">@(_movie.Title?.ToUpper())</MudText>
+						<MudText Class="width-xs" Typo="Typo.h5">@_movie.Tagline</MudText>
+						<MudText Class="width-xs" Typo="Typo.body1">@_movie.Description</MudText>
+					</MudStack>
+					<MudStack Row="true"
+							  Wrap="Wrap.Wrap">
+						@foreach (var genre in _movie.Genres)
 						{
-							<div class="d-flex justify-center align-center flex-column">
-								<MudIcon Icon="@Icons.Material.Outlined.SearchOff" Size="Size.Large" Color="Color.Error" Title="Not found" />
-								<MudText>No posters found</MudText>
-							</div>
+							<MudChip Class="my-4 mx-2" T="string" Color="Color.Primary">@genre.Name</MudChip>
 						}
+					</MudStack>
 
-						else
+					<MudStack AlignItems="AlignItems.Center"
+							  Row="true"
+							  Wrap="Wrap.Wrap"
+							  Class="mx-2 justify-xs-center justify-md-start">
+						@foreach (var company in _movie.ProductionCompanies)
 						{
-							<MudGrid Spacing="6">
-								@foreach (var movie in GetTabPage(_movieImages.Posters))
+							<MudTooltip Arrow="true"
+										Text="@company.Name">
+								@if (GetImageUrl("original", company.LogoPath) == "")
 								{
-									<MudItem xs="6" md="3" lg="2" Class="center-xs">
-										<MudImage Class="image-container image rounded-lg"
-												  Src="@GetImageUrl("w780", movie.FilePath)"
-												  FallbackSrc="Images/notfound.png"
-												  @onclick="() => OpenImageDialogAsync(movie.FilePath)" />
-									</MudItem>
+									<MudChip Label="true" T="string" Style="background-color: #2b2b2b">
+										@company.Name
+									</MudChip>
 								}
-							</MudGrid>
+								else
+								{
+									<MudImage Style="color: rgba(0,0,0,65)"
+											  ObjectFit="ObjectFit.Contain"
+											  Width="100"
+											  Height="60"
+											  Class="mt-2"
+											  Src="@GetImageUrl("original", company.LogoPath)">
+									</MudImage>
+								}
+							</MudTooltip>
 						}
+					</MudStack>
+
+					<div class="color-wrapper small-font-xs">
+						<MudStack Spacing="6"
+								  Row="true"
+								  Class="justify-md-space-between justify-xs-space-around mt-4 ">
+							<MudStack Row="false" Spacing="0" Class="flex-equal">
+								<MudText Typo="Typo.h5"><b>Release date</b></MudText>
+								<MudText Typo="Typo.h5">@_movie.ReleaseDate</MudText>
+							</MudStack>
+
+							<MudStack Row="false" Spacing="0" Class="flex-equal">
+								<MudText Typo="Typo.h5"><b>Revenue</b></MudText>
+
+								@if (_movie.Revenue == 0)
+								{
+									<MudText Typo="Typo.h5">Unknown</MudText>
+								}
+								else
+								{
+									<MudText Typo="Typo.h5">$@_movie.Revenue.ToString("##,##")</MudText>
+								}
+							</MudStack>
+
+							<MudStack Row="false" Spacing="0" Class="flex-equal">
+								<MudText Typo="Typo.h5"><b>Budget</b></MudText>
+
+								@if (_movie.Budget == 0)
+								{
+									<MudText Typo="Typo.h5">Unknown</MudText>
+								}
+								else
+								{
+									<MudText Typo="Typo.h5">$@_movie.Budget.ToString("##,##")</MudText>
+								}
+							</MudStack>
+						</MudStack>
+
+						<MudStack Spacing="6"
+								  Class="center-xs mt-8"
+								  Row="true">
+
+							<MudStack Row="false" Spacing="0" Class="flex-equal">
+								<MudText Typo="Typo.h5"><b>Runtime</b></MudText>
+								<MudText Typo="Typo.h5">@_movie.Runtime minutes</MudText>
+							</MudStack>
+
+							<MudStack Row="false" Spacing="0" Class="flex-equal">
+								<MudText Typo="Typo.h5"><b>Vote average</b></MudText>
+								<MudText Typo="Typo.h5">@_movie.Rating.ToString("0.#") / 10</MudText>
+							</MudStack>
+
+							<MudStack Row="false" Spacing="0" Class="flex-equal">
+								<MudText Typo="Typo.h5"><b>Languages</b></MudText>
+								<MudText Typo="Typo.h5">
+									@String.Join(", ", _movie.Languages.Select(l => l.Language))
+								</MudText>
+							</MudStack>
+						</MudStack>
+					</div>
+				</MudItem>
+
+				@for (int i = 0; i < 6 && i < _actors.MovieCast.Count; i++)
+				{
+					var actor = _actors.MovieCast[i];
+					<MudItem xs="4" md="2" Class="mt-6 d-flex justify-center-portrait">
+						<MudCard Elevation="0"
+								 Class="color-wrapper center-portrait"
+								 Style="background-color: rgba(0,0,0,0);">
+							<NavLink href="@GenerateActorUrl(actor.Id, actor.Name)">
+
+								<MudImage Objectfit="ObjectFit.Cover"
+										  Class="actor-portrait actor-portrait-moviepage"
+										  Src="@GetImageUrl("original", actor.ProfilePicture)"
+										  FallbackSrc="Images/noprofile.png" />
+							</NavLink>
+
+							<div class="small-font-xs-portrait">
+								<MudCardContent>
+									<MudText Typo="Typo.body1"><b>@actor.Name</b></MudText>
+									@if (!string.IsNullOrEmpty(actor.Character))
+									{
+										<MudText Typo="Typo.body2">as @actor.Character</MudText>
+									}
+								</MudCardContent>
+							</div>
+						</MudCard>
+					</MudItem>
+				}
+			</MudGrid>
+
+			<div class="d-flex justify-center mt-8 mx-4">
+				<MudPaper Class="width-lg width-xs" Style="height: 100%; width: 100%; background-color: transparent;" Elevation="0">
+					<MudStack Class="center-xs">
+						<MudStack Style="max-width: 200px;">
+							<MudToggleGroup T="string"
+											Delimiters="true"
+											Size=Size.Small
+											Value="_activeTab"
+											ValueChanged="OnTabChanged"
+											SelectionMode="SelectionMode.SingleSelection"
+											Color="Color.Primary"
+											FixedContent
+											Outlined="true"
+											Class="mud-width-full">
+								<MudToggleItem Value="@("Posters")" Text="Posters" />
+								<MudToggleItem Value="@("Trailers")" Text="Videos" />
+							</MudToggleGroup>
+						</MudStack>
+					</MudStack>
+
+					<MudDivider DividerType="DividerType.Middle" Class="mt-4 mb-2"></MudDivider>
+
+					@if (_tabPageCount > 1)
+					{
+						<div class="d-flex justify-center mt-2 mb-2">
+							<MudPagination @bind-Selected="@_selected"
+										   BoundaryCount="1"
+										   MiddleCount="2"
+										   Size="Size.Small"
+										   Count="@CalculateTotalTabPages()"
+										   Variant="Variant.Text" />
+						</div>
 					}
 
-					else if (_activeTab == "Trailers")
-					{
-						@if (!_youtubeTrailers.Any())
+					<div style=" color: rgba(0,0,0,0.85);">
+						@if (_activeTab == "Posters")
 						{
-							<div class="d-flex justify-center align-center flex-column">
-								<MudIcon Icon="@Icons.Material.Outlined.SearchOff" Size="Size.Large" Color="Color.Error" Title="Not found" />
-								<MudText>No videos found</MudText>
-							</div>
-						}
+							@if (!_movieImages.Posters.Any())
+							{
+								<div class="d-flex justify-center align-center flex-column">
+									<MudIcon Icon="@Icons.Material.Outlined.SearchOff" Size="Size.Large" Color="Color.Error" Title="Not found" />
+									<MudText>No posters found</MudText>
+								</div>
+							}
 
-						else
-						{
-							<MudGrid Spacing="6">
-								@foreach (var video in GetTabPage(_youtubeTrailers))
-								{
-									var embedUrl = TrailerUrl(video.Key);
-									var thumbnail = ThumbnailUrl(video.Key);
-
-									if (!string.IsNullOrEmpty(embedUrl))
+							else
+							{
+								<MudGrid Spacing="6">
+									@foreach (var movie in GetTabPage(_movieImages.Posters))
 									{
-										<MudItem xs="6" md="4" Class="center-xs" @onclick="() => OpenVideoDialogAsync(embedUrl)">
-											<MudImage Class="image-container image rounded-lg" Src="@thumbnail">
-											</MudImage>
+										<MudItem xs="6" md="3" lg="2" Class="center-xs">
+											<MudImage Class="image-container image rounded-lg"
+													  Src="@GetImageUrl("w780", movie.FilePath)"
+													  FallbackSrc="Images/notfound.png"
+													  @onclick="() => OpenImageDialogAsync(movie.FilePath)" />
 										</MudItem>
 									}
-								}
-							</MudGrid>
+								</MudGrid>
+							}
 						}
+
+						else if (_activeTab == "Trailers")
+						{
+							@if (!_youtubeTrailers.Any())
+							{
+								<div class="d-flex justify-center align-center flex-column">
+									<MudIcon Icon="@Icons.Material.Outlined.SearchOff" Size="Size.Large" Color="Color.Error" Title="Not found" />
+									<MudText>No videos found</MudText>
+								</div>
+							}
+
+							else
+							{
+								<MudGrid Spacing="6">
+									@foreach (var video in GetTabPage(_youtubeTrailers))
+									{
+										var embedUrl = TrailerUrl(video.Key);
+										var thumbnail = ThumbnailUrl(video.Key);
+
+										if (!string.IsNullOrEmpty(embedUrl))
+										{
+											<MudItem xs="6" md="4" Class="center-xs" @onclick="() => OpenVideoDialogAsync(embedUrl)">
+												<MudImage Class="image-container image rounded-lg" Src="@thumbnail">
+												</MudImage>
+											</MudItem>
+										}
+									}
+								</MudGrid>
+							}
+						}
+					</div>
+
+					<MudDivider DividerType="DividerType.Middle" Class="mt-4 mb-2"></MudDivider>
+
+					@if (_loadedMovies.Count > 0)
+					{
+						<MudText Style="color: rgba(0,0,0,0.85);" Class="center-xs" Typo="Typo.h4">Similar movies</MudText>
+						<InfiniteScroll @ref="_infiniteScroll"
+										TItem="Movie"
+										LoadData="LoadMoviesAsync"
+										ChildContent="MovieTemplate">
+						</InfiniteScroll>
 					}
-				</div>
-				<MudDivider DividerType="DividerType.Middle" Class="mt-4 mb-2"></MudDivider>
 
-				<MudText Style="color: rgba(0,0,0,0.85);" Class="center-xs" Typo="Typo.h4">Similar movies</MudText>
 
-				<InfiniteScroll @ref="_infiniteScroll"
-								TItem="Movie"
-								LoadData="LoadMoviesAsync"
-								ChildContent="MovieTemplate">
-				</InfiniteScroll>
 
-			</MudPaper>
-		</div>
-	</MudPaper>
-</div>
+
+
+				</MudPaper>
+			</div>
+		</MudPaper>
+	</div>
+}
+
 
 @code {
 	[Parameter]
@@ -274,6 +290,8 @@
 	private SlugHelper _slugHelper = new();
 	private InfiniteScroll<Movie> _infiniteScroll;
 	private List<Movie> _loadedMovies = new List<Movie>();
+
+	private bool _isLoading = true;
 
 	private List<string> _allLanguages = new List<string>();
 
@@ -290,6 +308,7 @@
 	};
 
 	private List<MovieVideo.MovieVideoItem> _youtubeTrailers = new();
+
 	private Actor _actors = new Actor
 	{
 		MovieCast = new List<Cast>()
@@ -297,11 +316,15 @@
 
 	protected override async Task OnParametersSetAsync()
 	{
+		_isLoading = true;
+
 		_movie = await TMDB.GetMovieDetailsAsync(Id);
 		_movieImages = await TMDB.GetMovieImagesAsync(Id);
 		_youtubeTrailers = await TMDB.GetYoutubeTrailersAsync(Id);
 		_actors = await TMDB.GetActorsForMovieAsync(Id);
 		_tabPageCount = CalculateTotalTabPages();
+
+		_isLoading = false;
 	}
 
 	private void OpenImageDialogAsync(string filePath)

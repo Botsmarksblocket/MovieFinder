@@ -59,13 +59,13 @@
 						   Variant="Variant.Outlined">
 					<MudSelectItem Value="@("None")">None</MudSelectItem>
 					<MudSelectItem Value="@("vote_count.desc")">Most votes</MudSelectItem>
-					<MudSelectItem Value="@("vote_count.asc")">Least votes (minimum 10)</MudSelectItem>
+					<MudSelectItem Value="@("vote_count.asc")">Least votes</MudSelectItem>
 					<MudSelectItem Value="@("vote_average.desc")">Highest rating</MudSelectItem>
 					<MudSelectItem Value="@("vote_average.asc")">Lowest rating</MudSelectItem>
 				</MudSelect>
 			</MudItem>
 
-			<MudItem xs="12" md="6">
+			<MudItem xs="12" md="3">
 				<MudSlider T="double"
 						   Value="@_parameters.MinimumRating"
 						   ValueChanged="OnMinimumRatingChanged"
@@ -75,6 +75,19 @@
 						   Immediate="false"
 						   Size="Size.Medium">
 					Minimum rating: @_parameters.MinimumRating.ToString()
+				</MudSlider>
+			</MudItem>
+
+			<MudItem xs="12" md="3">
+				<MudSlider T="int"
+						   Value="@_parameters.MinimumVotes"
+						   ValueChanged="OnMinimumVotesChanged"
+						   Min="0"
+						   Max="1000"
+						   Step="1"
+						   Immediate="false"
+						   Size="Size.Medium">
+					Minimum votes: @_parameters.MinimumVotes.ToString()
 				</MudSlider>
 			</MudItem>
 		</MudGrid>
@@ -133,6 +146,12 @@
 	private async Task OnMinimumRatingChanged(double minimumRating)
 	{
 		_parameters.MinimumRating = minimumRating;
+		await _infiniteScroll.ResetAsync();
+	}
+
+	private async Task OnMinimumVotesChanged(int minimumVotes)
+	{
+		_parameters.MinimumVotes = minimumVotes;
 		await _infiniteScroll.ResetAsync();
 	}
 

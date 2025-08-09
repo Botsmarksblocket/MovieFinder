@@ -132,7 +132,7 @@ namespace MovieFinder.Client.Services
             var queryParameters = new Dictionary<string, string>
             {
                 ["api_key"] = _apiKey,
-                ["vote_count.gte"] = "10",
+                ["vote_count.gte"] = parameter.MinimumVotes.ToString(),
                 ["page"] = parameter.Page.ToString()
             };
 
@@ -152,6 +152,8 @@ namespace MovieFinder.Client.Services
             }
 
             queryParameters["vote_average.gte"] = parameter.MinimumRating.ToString(CultureInfo.InvariantCulture);
+
+
 
             var url = QueryHelpers.AddQueryString(baseUrl, queryParameters);
 
