@@ -181,14 +181,14 @@
 
 				<MudDivider DividerType="DividerType.Middle" Class="mt-4 mb-2"></MudDivider>
 
-				@if (_pageCount > 1)
+				@if (_tabPageCount > 1)
 				{
 					<div class="d-flex justify-center mt-2 mb-2">
 						<MudPagination @bind-Selected="@_selected"
 									   BoundaryCount="1"
 									   MiddleCount="2"
 									   Size="Size.Small"
-									   Count="@CalculateTotalPages()"
+									   Count="@CalculateTotalTabPages()"
 									   Variant="Variant.Text" />
 					</div>
 				}
@@ -206,7 +206,7 @@
 					else
 					{
 						<MudGrid Spacing="6">
-							@foreach (var movie in GetPage(_movieImages.Posters))
+							@foreach (var movie in GetTabPage(_movieImages.Posters))
 							{
 								<MudItem xs="6" md="3" lg="2" Class="center-xs">
 									<MudImage Class="image-container image rounded-lg"
@@ -232,7 +232,7 @@
 					else
 					{
 						<MudGrid Spacing="6">
-							@foreach (var video in GetPage(_youtubeTrailers))
+							@foreach (var video in GetTabPage(_youtubeTrailers))
 							{
 								var embedUrl = TrailerUrl(video.Key);
 								var thumbnail = ThumbnailUrl(video.Key);
@@ -252,7 +252,6 @@
 		</div>
 	</MudPaper>
 </div>
-
 
 @code {
 	[Parameter]
@@ -281,13 +280,29 @@
 		MovieCast = new List<Cast>()
 	};
 
+	// 	//Renderfragment which gets passed down into the InfiniteScroll component to display and load more movies
+	// private RenderFragment<IEnumerable<Movie>> MovieTemplate => movies =>
+	// @<MudGrid>
+	// 		@foreach (var movie in movies)
+	// 	{
+	// 	<MovieComponent @key=movie.Id Movie="movie" FadeIn="fade-in" />
+	// 	}
+	// </MudGrid>;
+
+	// private async Task<IEnumerable<Movie>> LoadMovies(int page)
+	// {
+	// 	_parameters.Page = page;
+	// 	var result = await TMDB.GetFilteredMoviesAsync(_parameters);
+	// 	return result.Results;
+	// }
+
 	protected override async Task OnParametersSetAsync()
 	{
 		_movie = await TMDB.GetMovieDetailsAsync(Id);
 		_movieImages = await TMDB.GetMovieImagesAsync(Id);
 		_youtubeTrailers = await TMDB.GetYoutubeTrailersAsync(Id);
 		_actors = await TMDB.GetActorsForMovieAsync(Id);
-		_pageCount = CalculateTotalPages();
+		_tabPageCount = CalculateTotalTabPages();
 	}
 
 	private void OpenImageDialogAsync(string filePath)
@@ -325,7 +340,7 @@
 	}
 
 	private int _selected = 1;
-	private int _pageCount;
+	private int _tabPageCount;
 	private string _activeTab = "Posters";
 
 	private void OnTabChanged(string newValue)
@@ -336,7 +351,7 @@
 
 	// Returns a paginated subset of the provided collection
 	// Generic so it works for any collection type
-	private IEnumerable<T> GetPage<T>(IEnumerable<T> items)
+	private IEnumerable<T> GetTabPage<T>(IEnumerable<T> items)
 	{
 		int pageSize = 12;
 
@@ -347,7 +362,7 @@
 	}
 
 	//Calculates total number of pages based on the active tab
-	public int CalculateTotalPages()
+	public int CalculateTotalTabPages()
 	{
 		int totalItems = 0;
 
@@ -373,7 +388,7 @@
 		: $"https://image.tmdb.org/t/p/{fileSize}{imagePath}";
 	}
 
-	//Returns a string of the trailer (autplays with sound)
+	//Returns a string of the trailer (autoplays with sound)
 	private string TrailerUrl(string key)
 	{
 		return string.IsNullOrWhiteSpace(key)
