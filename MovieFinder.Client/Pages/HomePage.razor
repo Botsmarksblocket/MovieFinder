@@ -19,7 +19,7 @@
 <MudPaper Class="d-flex justify-center" Elevation="0">
 	<MudPaper Width="75%" Style="min-height: 100vh;" Elevation="0" Class="mt-6">
 		<MudGrid>
-			<MudItem xs="6" md="6">
+			<MudItem xs="12" md="6">
 				<MudSelect MultiSelectionTextFunc="@(new Func<List<string>, string>(GetMultiSelectionText))"
 						   T="int"
 						   Clearable="true"
@@ -81,11 +81,9 @@
 
 		<InfiniteScroll @ref="_infiniteScroll"
 						TItem="Movie"
-						LoadData="LoadMovies"
-						MaxPages="500"
+						LoadData="LoadMoviesAsync"
 						ChildContent="MovieTemplate">
 		</InfiniteScroll>
-
 
 	</MudPaper>
 </MudPaper>
@@ -96,15 +94,7 @@
 	private List<Genre> _genres = new();
 	private SlugHelper _slugHelper = new();
 	private FilterParameter _parameters = new();
-
 	private InfiniteScroll<Movie> _infiniteScroll;
-
-	private RenderFragment<IEnumerable<Movie>> MovieTemplate => movies => @<MudGrid>
-@foreach (var movie in movies)
-	{
-	<MovieComponent @key=movie.Id Movie="movie" FadeIn="fade-in" />
-	}
-</MudGrid>;
 
 	//Loads genres, trending movies and invokes JS upon page initialization
 	protected override async Task OnInitializedAsync()
@@ -112,7 +102,16 @@
 		_genres = await TMDB.GetGenresAsync();
 	}
 
-	private async Task<IEnumerable<Movie>> LoadMovies(int page)
+	//Renderfragment which gets passed down into the InfiniteScroll component to display and load more movies
+	private RenderFragment<IEnumerable<Movie>> MovieTemplate => movies =>
+	@<MudGrid>
+			@foreach (var movie in movies)
+		{
+		<MovieComponent @key=movie.Id Movie="movie" FadeIn="fade-in" />
+		}
+	</MudGrid>;
+
+	private async Task<IEnumerable<Movie>> LoadMoviesAsync(int page)
 	{
 		_parameters.Page = page;
 		var result = await TMDB.GetFilteredMoviesAsync(_parameters);

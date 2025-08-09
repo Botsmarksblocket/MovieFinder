@@ -3,6 +3,7 @@
 @using MovieFinder.Client.Models.Movies
 @using MovieFinder.Client.Models.Shared
 @using MovieFinder.Client.Dialogs
+@using MovieFinder.Client.Components
 @using MudBlazor.Services
 @using Services
 @using Slugify
@@ -181,78 +182,89 @@
 
 				<MudDivider DividerType="DividerType.Middle" Class="mt-4 mb-2"></MudDivider>
 
-				@if (_pageCount > 1)
+				@if (_tabPageCount > 1)
 				{
 					<div class="d-flex justify-center mt-2 mb-2">
 						<MudPagination @bind-Selected="@_selected"
 									   BoundaryCount="1"
 									   MiddleCount="2"
 									   Size="Size.Small"
-									   Count="@CalculateTotalPages()"
+									   Count="@CalculateTotalTabPages()"
 									   Variant="Variant.Text" />
 					</div>
 				}
 
-				@if (_activeTab == "Posters")
-				{
-					@if (!_movieImages.Posters.Any())
+				<div style=" color: rgba(0,0,0,0.85);">
+					@if (_activeTab == "Posters")
 					{
-						<div class="d-flex justify-center align-center flex-column">
-							<MudIcon Icon="@Icons.Material.Outlined.SearchOff" Size="Size.Large" Color="Color.Error" Title="Not found" />
-							<MudText>No posters found</MudText>
-						</div>
-					}
+						@if (!_movieImages.Posters.Any())
+						{
+							<div class="d-flex justify-center align-center flex-column">
+								<MudIcon Icon="@Icons.Material.Outlined.SearchOff" Size="Size.Large" Color="Color.Error" Title="Not found" />
+								<MudText>No posters found</MudText>
+							</div>
+						}
 
-					else
-					{
-						<MudGrid Spacing="6">
-							@foreach (var movie in GetPage(_movieImages.Posters))
-							{
-								<MudItem xs="6" md="3" lg="2" Class="center-xs">
-									<MudImage Class="image-container image rounded-lg"
-											  Src="@GetImageUrl("w780", movie.FilePath)"
-											  FallbackSrc="Images/notfound.png"
-											  @onclick="() => OpenImageDialogAsync(movie.FilePath)" />
-								</MudItem>
-							}
-						</MudGrid>
-					}
-				}
-
-				else if (_activeTab == "Trailers")
-				{
-					@if (!_youtubeTrailers.Any())
-					{
-						<div class="d-flex justify-center align-center flex-column">
-							<MudIcon Icon="@Icons.Material.Outlined.SearchOff" Size="Size.Large" Color="Color.Error" Title="Not found" />
-							<MudText>No videos found</MudText>
-						</div>
-					}
-
-					else
-					{
-						<MudGrid Spacing="6">
-							@foreach (var video in GetPage(_youtubeTrailers))
-							{
-								var embedUrl = TrailerUrl(video.Key);
-								var thumbnail = ThumbnailUrl(video.Key);
-
-								if (!string.IsNullOrEmpty(embedUrl))
+						else
+						{
+							<MudGrid Spacing="6">
+								@foreach (var movie in GetTabPage(_movieImages.Posters))
 								{
-									<MudItem xs="6" md="4" Class="center-xs" @onclick="() => OpenVideoDialogAsync(embedUrl)">
-										<MudImage Class="image-container image rounded-lg" Src="@thumbnail">
-										</MudImage>
+									<MudItem xs="6" md="3" lg="2" Class="center-xs">
+										<MudImage Class="image-container image rounded-lg"
+												  Src="@GetImageUrl("w780", movie.FilePath)"
+												  FallbackSrc="Images/notfound.png"
+												  @onclick="() => OpenImageDialogAsync(movie.FilePath)" />
 									</MudItem>
 								}
-							}
-						</MudGrid>
+							</MudGrid>
+						}
 					}
-				}
+
+					else if (_activeTab == "Trailers")
+					{
+						@if (!_youtubeTrailers.Any())
+						{
+							<div class="d-flex justify-center align-center flex-column">
+								<MudIcon Icon="@Icons.Material.Outlined.SearchOff" Size="Size.Large" Color="Color.Error" Title="Not found" />
+								<MudText>No videos found</MudText>
+							</div>
+						}
+
+						else
+						{
+							<MudGrid Spacing="6">
+								@foreach (var video in GetTabPage(_youtubeTrailers))
+								{
+									var embedUrl = TrailerUrl(video.Key);
+									var thumbnail = ThumbnailUrl(video.Key);
+
+									if (!string.IsNullOrEmpty(embedUrl))
+									{
+										<MudItem xs="6" md="4" Class="center-xs" @onclick="() => OpenVideoDialogAsync(embedUrl)">
+											<MudImage Class="image-container image rounded-lg" Src="@thumbnail">
+											</MudImage>
+										</MudItem>
+									}
+								}
+							</MudGrid>
+						}
+					}
+				</div>
+				<MudDivider DividerType="DividerType.Middle" Class="mt-4 mb-2"></MudDivider>
+
+				<MudText Style="color: rgba(0,0,0,0.85);" Class="center-xs" Typo="Typo.h4">Similar movies</MudText>
+
+				<InfiniteScroll @ref="_infiniteScroll"
+								TItem="Movie"
+								LoadData="LoadMoviesAsync"
+								ChildContent="MovieTemplate">
+				</InfiniteScroll>
+
 			</MudPaper>
 		</div>
 	</MudPaper>
 </div>
-
 
 @code {
 	[Parameter]
@@ -260,6 +272,8 @@
 	[Parameter]
 	public string Slug { get; set; }
 	private SlugHelper _slugHelper = new();
+	private InfiniteScroll<Movie> _infiniteScroll;
+	private List<Movie> _loadedMovies = new List<Movie>();
 
 	private List<string> _allLanguages = new List<string>();
 
@@ -287,7 +301,7 @@
 		_movieImages = await TMDB.GetMovieImagesAsync(Id);
 		_youtubeTrailers = await TMDB.GetYoutubeTrailersAsync(Id);
 		_actors = await TMDB.GetActorsForMovieAsync(Id);
-		_pageCount = CalculateTotalPages();
+		_tabPageCount = CalculateTotalTabPages();
 	}
 
 	private void OpenImageDialogAsync(string filePath)
@@ -325,7 +339,7 @@
 	}
 
 	private int _selected = 1;
-	private int _pageCount;
+	private int _tabPageCount;
 	private string _activeTab = "Posters";
 
 	private void OnTabChanged(string newValue)
@@ -336,7 +350,7 @@
 
 	// Returns a paginated subset of the provided collection
 	// Generic so it works for any collection type
-	private IEnumerable<T> GetPage<T>(IEnumerable<T> items)
+	private IEnumerable<T> GetTabPage<T>(IEnumerable<T> items)
 	{
 		int pageSize = 12;
 
@@ -347,7 +361,7 @@
 	}
 
 	//Calculates total number of pages based on the active tab
-	public int CalculateTotalPages()
+	public int CalculateTotalTabPages()
 	{
 		int totalItems = 0;
 
@@ -366,6 +380,30 @@
 		return totalPages;
 	}
 
+	//Renderfragment which gets passed down into the InfiniteScroll component to display and load more movies
+	private RenderFragment<IEnumerable<Movie>> MovieTemplate => movies =>
+	@<MudGrid>
+@foreach (var movie in movies)
+	{
+	<MovieComponent @key=movie.Id Movie="movie" FadeIn="fade-in" />
+	}
+</MudGrid>;
+
+	//Fetches a page of similar movies fromt TMDB
+	//Also filters out already added movies since TMDB sometimes returns the same movie twice
+	private async Task<IEnumerable<Movie>> LoadMoviesAsync(int page)
+	{
+		var result = await TMDB.GetSimilarMoviesAsync(Id, page);
+
+		var newMovies = result.Results
+					   .Where(m => !_loadedMovies.Any(lm => lm.Id == m.Id))
+					   .ToList();
+
+		_loadedMovies.AddRange(newMovies);
+
+		return newMovies;
+	}
+
 	private string GetImageUrl(string fileSize, string imagePath)
 	{
 		return string.IsNullOrWhiteSpace(imagePath)
@@ -373,7 +411,7 @@
 		: $"https://image.tmdb.org/t/p/{fileSize}{imagePath}";
 	}
 
-	//Returns a string of the trailer (autplays with sound)
+	//Returns a string of the trailer (autoplays with sound)
 	private string TrailerUrl(string key)
 	{
 		return string.IsNullOrWhiteSpace(key)

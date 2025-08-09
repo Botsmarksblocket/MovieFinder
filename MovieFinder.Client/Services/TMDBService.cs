@@ -19,6 +19,7 @@ namespace MovieFinder.Client.Services
         Task<List<MovieVideoItem>> GetYoutubeTrailersAsync(int movieId);
         Task<List<Genre>> GetGenresAsync();
         Task<List<Movie>> GetSearchedMoviesAsync(string searchWord);
+        Task<SearchResult> GetSimilarMoviesAsync(int movieId, int page);
         Task<SearchResult> GetFilteredMoviesAsync(FilterParameter parameters);
         Task<Actor> GetActorsForMovieAsync(int movieId);
         Task<ActorDetail> GetActorDetailsAsync(int actorId);
@@ -105,6 +106,22 @@ namespace MovieFinder.Client.Services
             var response = await _httpClient.GetFromJsonAsync<SearchResult>(url);
 
             return response?.Results ?? new List<Movie>();
+        }
+
+        public async Task<SearchResult> GetSimilarMoviesAsync(int movieId, int page)
+        {
+            var baseUrl = $"https://api.themoviedb.org/3/movie/{movieId}/similar";
+
+            var queryParameters = new Dictionary<string, string>
+            {
+                ["api_key"] = _apiKey,
+                ["page"] = page.ToString()
+            };
+
+            var url = QueryHelpers.AddQueryString(baseUrl, queryParameters);
+
+            return await _httpClient.GetFromJsonAsync<SearchResult>(url)
+                ?? new SearchResult { Results = new List<Movie>() };
         }
 
         //Retrieves list of movies from TMDB based on provided filter parameters.
