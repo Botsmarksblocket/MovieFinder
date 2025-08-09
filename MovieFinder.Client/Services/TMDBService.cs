@@ -19,8 +19,7 @@ namespace MovieFinder.Client.Services
         Task<List<MovieVideoItem>> GetYoutubeTrailersAsync(int movieId);
         Task<List<Genre>> GetGenresAsync();
         Task<List<Movie>> GetSearchedMoviesAsync(string searchWord);
-        Task<SearchResult> GetSimilarMoviesAsync(int movieId, int page = 1);
-
+        Task<SearchResult> GetSimilarMoviesAsync(int movieId, int page);
         Task<SearchResult> GetFilteredMoviesAsync(FilterParameter parameters);
         Task<Actor> GetActorsForMovieAsync(int movieId);
         Task<ActorDetail> GetActorDetailsAsync(int actorId);
@@ -109,7 +108,7 @@ namespace MovieFinder.Client.Services
             return response?.Results ?? new List<Movie>();
         }
 
-        public async Task<SearchResult> GetSimilarMoviesAsync(int movieId, int page = 1)
+        public async Task<SearchResult> GetSimilarMoviesAsync(int movieId, int page)
         {
             var baseUrl = $"https://api.themoviedb.org/3/movie/{movieId}/similar";
 

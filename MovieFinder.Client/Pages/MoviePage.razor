@@ -3,6 +3,7 @@
 @using MovieFinder.Client.Models.Movies
 @using MovieFinder.Client.Models.Shared
 @using MovieFinder.Client.Dialogs
+@using MovieFinder.Client.Components
 @using MudBlazor.Services
 @using Services
 @using Slugify
@@ -193,61 +194,73 @@
 					</div>
 				}
 
-				@if (_activeTab == "Posters")
-				{
-					@if (!_movieImages.Posters.Any())
+				<div style=" color: rgba(0,0,0,0.85);">
+					@if (_activeTab == "Posters")
 					{
-						<div class="d-flex justify-center align-center flex-column">
-							<MudIcon Icon="@Icons.Material.Outlined.SearchOff" Size="Size.Large" Color="Color.Error" Title="Not found" />
-							<MudText>No posters found</MudText>
-						</div>
-					}
+						@if (!_movieImages.Posters.Any())
+						{
+							<div class="d-flex justify-center align-center flex-column">
+								<MudIcon Icon="@Icons.Material.Outlined.SearchOff" Size="Size.Large" Color="Color.Error" Title="Not found" />
+								<MudText>No posters found</MudText>
+							</div>
+						}
 
-					else
-					{
-						<MudGrid Spacing="6">
-							@foreach (var movie in GetTabPage(_movieImages.Posters))
-							{
-								<MudItem xs="6" md="3" lg="2" Class="center-xs">
-									<MudImage Class="image-container image rounded-lg"
-											  Src="@GetImageUrl("w780", movie.FilePath)"
-											  FallbackSrc="Images/notfound.png"
-											  @onclick="() => OpenImageDialogAsync(movie.FilePath)" />
-								</MudItem>
-							}
-						</MudGrid>
-					}
-				}
-
-				else if (_activeTab == "Trailers")
-				{
-					@if (!_youtubeTrailers.Any())
-					{
-						<div class="d-flex justify-center align-center flex-column">
-							<MudIcon Icon="@Icons.Material.Outlined.SearchOff" Size="Size.Large" Color="Color.Error" Title="Not found" />
-							<MudText>No videos found</MudText>
-						</div>
-					}
-
-					else
-					{
-						<MudGrid Spacing="6">
-							@foreach (var video in GetTabPage(_youtubeTrailers))
-							{
-								var embedUrl = TrailerUrl(video.Key);
-								var thumbnail = ThumbnailUrl(video.Key);
-
-								if (!string.IsNullOrEmpty(embedUrl))
+						else
+						{
+							<MudGrid Spacing="6">
+								@foreach (var movie in GetTabPage(_movieImages.Posters))
 								{
-									<MudItem xs="6" md="4" Class="center-xs" @onclick="() => OpenVideoDialogAsync(embedUrl)">
-										<MudImage Class="image-container image rounded-lg" Src="@thumbnail">
-										</MudImage>
+									<MudItem xs="6" md="3" lg="2" Class="center-xs">
+										<MudImage Class="image-container image rounded-lg"
+												  Src="@GetImageUrl("w780", movie.FilePath)"
+												  FallbackSrc="Images/notfound.png"
+												  @onclick="() => OpenImageDialogAsync(movie.FilePath)" />
 									</MudItem>
 								}
-							}
-						</MudGrid>
+							</MudGrid>
+						}
 					}
-				}
+
+					else if (_activeTab == "Trailers")
+					{
+						@if (!_youtubeTrailers.Any())
+						{
+							<div class="d-flex justify-center align-center flex-column">
+								<MudIcon Icon="@Icons.Material.Outlined.SearchOff" Size="Size.Large" Color="Color.Error" Title="Not found" />
+								<MudText>No videos found</MudText>
+							</div>
+						}
+
+						else
+						{
+							<MudGrid Spacing="6">
+								@foreach (var video in GetTabPage(_youtubeTrailers))
+								{
+									var embedUrl = TrailerUrl(video.Key);
+									var thumbnail = ThumbnailUrl(video.Key);
+
+									if (!string.IsNullOrEmpty(embedUrl))
+									{
+										<MudItem xs="6" md="4" Class="center-xs" @onclick="() => OpenVideoDialogAsync(embedUrl)">
+											<MudImage Class="image-container image rounded-lg" Src="@thumbnail">
+											</MudImage>
+										</MudItem>
+									}
+								}
+							</MudGrid>
+						}
+					}
+				</div>
+				<MudDivider DividerType="DividerType.Middle" Class="mt-4 mb-2"></MudDivider>
+
+				<MudText Style="color: rgba(0,0,0,0.85);" Class="center-xs" Typo="Typo.h4">Similar movies</MudText>
+
+				<InfiniteScroll @ref="_infiniteScroll"
+								TItem="Movie"
+								LoadData="LoadMoviesAsync"
+								ChildContent="MovieTemplate">
+				</InfiniteScroll>
+
 			</MudPaper>
 		</div>
 	</MudPaper>
@@ -259,6 +272,31 @@
 	[Parameter]
 	public string Slug { get; set; }
 	private SlugHelper _slugHelper = new();
+	private InfiniteScroll<Movie> _infiniteScroll;
+	private List<Movie> _loadedMovies = new List<Movie>();
+
+	//Renderfragment which gets passed down into the InfiniteScroll component to display and load more movies
+	private RenderFragment<IEnumerable<Movie>> MovieTemplate => movies =>
+	@<MudGrid>
+@foreach (var movie in movies)
+	{
+	<MovieComponent @key=movie.Id Movie="movie" FadeIn="fade-in" />
+	}
+</MudGrid>;
+
+	//Returns 
+	private async Task<IEnumerable<Movie>> LoadMoviesAsync(int page)
+	{
+		var result = await TMDB.GetSimilarMoviesAsync(Id, page);
+
+		var newMovies = result.Results
+	.Where(m => !_loadedMovies.Any(lm => lm.Id == m.Id))
+	.ToList();
+
+		_loadedMovies.AddRange(newMovies);
+
+		return newMovies;
+	}
 
 	private List<string> _allLanguages = new List<string>();
 
@@ -279,22 +317,6 @@
 	{
 		MovieCast = new List<Cast>()
 	};
-
-	// 	//Renderfragment which gets passed down into the InfiniteScroll component to display and load more movies
-	// private RenderFragment<IEnumerable<Movie>> MovieTemplate => movies =>
-	// @<MudGrid>
-	// 		@foreach (var movie in movies)
-	// 	{
-	// 	<MovieComponent @key=movie.Id Movie="movie" FadeIn="fade-in" />
-	// 	}
-	// </MudGrid>;
-
-	// private async Task<IEnumerable<Movie>> LoadMovies(int page)
-	// {
-	// 	_parameters.Page = page;
-	// 	var result = await TMDB.GetFilteredMoviesAsync(_parameters);
-	// 	return result.Results;
-	// }
 
 	protected override async Task OnParametersSetAsync()
 	{
