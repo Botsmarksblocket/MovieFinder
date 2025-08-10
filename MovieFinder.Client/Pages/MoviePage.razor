@@ -261,18 +261,16 @@ else
 
 					<MudDivider DividerType="DividerType.Middle" Class="mt-4 mb-2"></MudDivider>
 
-					@if (_loadedMovies.Count > 0)
+					<MudText Style="color: rgba(0,0,0,0.85);" Class="center-xs" Typo="Typo.h4">Similar movies</MudText>
+
+					@if(_loadedMovies.Count > 0)
 					{
-						<MudText Style="color: rgba(0,0,0,0.85);" Class="center-xs" Typo="Typo.h4">Similar movies</MudText>
 						<InfiniteScroll @ref="_infiniteScroll"
 										TItem="Movie"
 										LoadData="LoadMoviesAsync"
 										ChildContent="MovieTemplate">
-						</InfiniteScroll>
+						</InfiniteScroll>						
 					}
-
-
-
 
 
 				</MudPaper>
@@ -317,14 +315,14 @@ else
 	protected override async Task OnParametersSetAsync()
 	{
 		_isLoading = true;
-
+		
 		_movie = await TMDB.GetMovieDetailsAsync(Id);
 		_movieImages = await TMDB.GetMovieImagesAsync(Id);
 		_youtubeTrailers = await TMDB.GetYoutubeTrailersAsync(Id);
 		_actors = await TMDB.GetActorsForMovieAsync(Id);
 		_tabPageCount = CalculateTotalTabPages();
 
-		_isLoading = false;
+		_isLoading = false; 
 	}
 
 	private void OpenImageDialogAsync(string filePath)
