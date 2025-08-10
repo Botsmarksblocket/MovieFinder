@@ -33,7 +33,7 @@ namespace MovieFinder.Client.Models.Movies
         public int Runtime { get;set; }
 
         [JsonPropertyName("revenue")]
-        public int Revenue { get; set; }
+        public long Revenue { get; set; }
 
         [JsonPropertyName("vote_average")]
         public double Rating { get; set; }

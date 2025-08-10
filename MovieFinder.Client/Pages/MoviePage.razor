@@ -259,21 +259,19 @@ else
 						}
 					</div>
 
-					<MudDivider DividerType="DividerType.Middle" Class="mt-4 mb-2"></MudDivider>
-
-					@if (_loadedMovies.Count > 0)
+					@if (_hasMoviesLoaded == true)
 					{
-						<MudText Style="color: rgba(0,0,0,0.85);" Class="center-xs" Typo="Typo.h4">Similar movies</MudText>
-						<InfiniteScroll @ref="_infiniteScroll"
-										TItem="Movie"
-										LoadData="LoadMoviesAsync"
-										ChildContent="MovieTemplate">
-						</InfiniteScroll>
+
+						<MudDivider DividerType="DividerType.Middle" Class="mt-4 mb-2"></MudDivider>
+
+						<MudText Style="color: rgba(0,0,0,0.85);" Class="d-flex justify-center mt-4" Typo="Typo.h4">Similar movies</MudText>
 					}
 
-
-
-
+					<InfiniteScroll @ref="_infiniteScroll"
+									TItem="Movie"
+									LoadData="LoadMoviesAsync"
+									ChildContent="MovieTemplate">
+					</InfiniteScroll>
 
 				</MudPaper>
 			</div>
@@ -292,6 +290,7 @@ else
 	private List<Movie> _loadedMovies = new List<Movie>();
 
 	private bool _isLoading = true;
+	private bool _hasMoviesLoaded = false;
 
 	private List<string> _allLanguages = new List<string>();
 
@@ -317,6 +316,8 @@ else
 	protected override async Task OnParametersSetAsync()
 	{
 		_isLoading = true;
+		_hasMoviesLoaded = false;
+		_loadedMovies.Clear();
 
 		_movie = await TMDB.GetMovieDetailsAsync(Id);
 		_movieImages = await TMDB.GetMovieImagesAsync(Id);
@@ -325,6 +326,7 @@ else
 		_tabPageCount = CalculateTotalTabPages();
 
 		_isLoading = false;
+		StateHasChanged();
 	}
 
 	private void OpenImageDialogAsync(string filePath)
@@ -410,7 +412,8 @@ else
 	{
 	<MovieComponent @key=movie.Id Movie="movie" FadeIn="fade-in" />
 	}
-</MudGrid>;
+</MudGrid>
+	;
 
 	//Fetches a page of similar movies fromt TMDB
 	//Also filters out already added movies since TMDB sometimes returns the same movie twice
@@ -419,11 +422,14 @@ else
 		var result = await TMDB.GetSimilarMoviesAsync(Id, page);
 
 		var newMovies = result.Results
-					   .Where(m => !_loadedMovies.Any(lm => lm.Id == m.Id))
-					   .ToList();
+								.Where(m => !_loadedMovies.Any(lm => lm.Id == m.Id))
+								.ToList();
 
 		_loadedMovies.AddRange(newMovies);
 
+		_hasMoviesLoaded = _loadedMovies.Any();
+
+		StateHasChanged();
 		return newMovies;
 	}
 

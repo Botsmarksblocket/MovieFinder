@@ -5,7 +5,6 @@
 @ChildContent(Items)
 
 @code {
-
 	[Parameter] public Func<int, Task<IEnumerable<TItem>>> LoadData { get; set; }
 	[Parameter] public RenderFragment<IEnumerable<TItem>> ChildContent { get; set; }
 	[Parameter] public int MaxPages { get; set; } = 500;
