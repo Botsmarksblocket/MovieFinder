@@ -43,15 +43,15 @@
 						   SelectedValue="CalculateRating(Movie.Rating)"
 						   ReadOnly="true" />
 
-				<div style="overflow: auto;">
+				<div style="overflow: auto;" class="smallerText" >
 					@* Shortens the movie description if it's too long *@
 					@if (Movie.Description.Length > 500)
 					{
-						<h4>@Movie.Description.Substring(0, 500) ...</h4>
+						<MudText Typo="Typo.body2">@Movie.Description.Substring(0, 500) ...</MudText>
 					}
 					else
 					{
-						<h4>@Movie.Description</h4>
+						<MudText Typo="Typo.body2">@Movie.Description</MudText>
 					}
 				</div>
 			</div>

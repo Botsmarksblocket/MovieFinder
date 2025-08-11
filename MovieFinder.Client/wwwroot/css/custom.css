@@ -221,6 +221,19 @@ actor-photos-actorpage {
     padding-right: 5px;
 }
 
+/*.movie-rating {
+    position: absolute;
+    top: 8px;
+    right: 0px;
+    background: rgba(44,155,240,0.95);  same blue, 80% opacity 
+padding: 2px 4px;
+    border-radius: 50px;
+    color: white;
+    font-weight: bold;
+    padding: 4px 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+}*/
+
 /*For changing the background of the MudInput-fields*/
 .mud-input.mud-input-filled {
     background-color: #16202b !important;
