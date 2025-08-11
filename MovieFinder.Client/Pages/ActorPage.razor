@@ -14,14 +14,14 @@
 
 @if (_isLoading)
 {
-	<div class="d-flex justify-center align-center" style="height: 100vh;">
+	<div class="d-flex justify-center align-center">
 		<MudProgressCircular Color="Color.Primary" Rounded="true" Style="height:100px;width:100px;" Indeterminate="true" />
 	</div>
 }
 
 else
 {
-	<MudPaper Class="d-flex justify-center" Elevation="0">
+	<MudPaper Class="d-flex justify-center" Style="min-height: 100vh;" Elevation="0">
 		<MudPaper Style="background-color:white;" Elevation="0" Class="mt-20 container-width">
 			<MudGrid Class="mt-4" Justify="Justify.Center">
 				<MudItem xs="12" md="3">
@@ -110,7 +110,6 @@ else
 					</MudStack>
 
 					<MudDivider DividerType="DividerType.Middle" Class="mt-4 mb-2"></MudDivider>
-
 
 					<div class="d-flex justify-center mt-2 mb-2">
 						<MudPagination @bind-Selected="@_selected"
