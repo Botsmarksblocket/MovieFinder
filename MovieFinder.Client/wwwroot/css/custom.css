@@ -223,15 +223,14 @@ actor-photos-actorpage {
 
 /*.movie-rating {
     position: absolute;
-    top: 8px;
+    top: 0px;
+    width:100%;
+    text-align:right;
     right: 0px;
-    background: rgba(44,155,240,0.95);  same blue, 80% opacity 
-padding: 2px 4px;
-    border-radius: 50px;
+    background: linear-gradient(to right, rgba(64, 4, 4, 0), rgba(59, 130, 246, 1));
+    padding: 2px 4px;
+    border-color: none;
     color: white;
-    font-weight: bold;
-    padding: 4px 8px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
 }*/
 
 /*For changing the background of the MudInput-fields*/
