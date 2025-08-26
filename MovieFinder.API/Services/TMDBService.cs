@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.WebUtilities;
+using System.Globalization;
 using MovieFinder.Shared.Models.Actors;
 using MovieFinder.Shared.Models.Movies;
 using MovieFinder.Shared.Models.Common;
-using System.Globalization;
 using System.Net.Http.Json;
 using static System.Net.WebRequestMethods;
 
-namespace MovieFinder.Client.Services
+namespace MovieFinder.API.Services
 {
     //Service which calls TMDB API to retrieve movie genres, list of filtered movies and specific movies
 
@@ -21,8 +21,8 @@ namespace MovieFinder.Client.Services
         Task<SearchResult> GetFilteredMoviesAsync(FilterParameter parameters);
         Task<Actor> GetActorsForMovieAsync(int movieId);
         Task<ActorDetail> GetActorDetailsAsync(int actorId);
-
     }
+
     public class TMDBService : ITMDBService
     {
         private HttpClient _httpClient { get; }
@@ -35,7 +35,7 @@ namespace MovieFinder.Client.Services
         }
 
         //Returns details about a specific movie
-        public async Task <MovieDetail> GetMovieDetailsAsync(int movieId)
+        public async Task<MovieDetail> GetMovieDetailsAsync(int movieId)
         {
             var baseUrl = $"https://api.themoviedb.org/3/movie/{movieId}";
 

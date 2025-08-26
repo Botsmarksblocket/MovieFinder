@@ -1,7 +1,7 @@
-﻿using MovieFinder.Client.Models.Movies;
+﻿using MovieFinder.Shared.Models.Movies;
 using System.Text.Json.Serialization;
 
-namespace MovieFinder.Client.Models.Shared
+namespace MovieFinder.Shared.Models.Common
 {
     public class SearchResult
     {

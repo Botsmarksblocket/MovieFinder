@@ -1,8 +1,7 @@
-﻿using MovieFinder.Client.Models.Actors;
-using MovieFinder.Client.Models.Shared;
+﻿using MovieFinder.Shared.Models.Common;
 using System.Text.Json.Serialization;
 
-namespace MovieFinder.Client.Models.Movies
+namespace MovieFinder.Shared.Models.Movies
 {
     //Contains more properties than the Movie-class. This class is used for the MoviePage
     public class MovieDetail

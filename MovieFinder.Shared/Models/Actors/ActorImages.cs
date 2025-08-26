@@ -1,7 +1,6 @@
-﻿using MovieFinder.Client.Pages;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
-namespace MovieFinder.Client.Models.Actors
+namespace MovieFinder.Shared.Models.Actors
 {
     public class ActorImages
     {

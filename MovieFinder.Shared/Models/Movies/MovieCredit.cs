@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace MovieFinder.Client.Models.Movies
+namespace MovieFinder.Shared.Models.Movies
 {
     public class MovieCredit
     {

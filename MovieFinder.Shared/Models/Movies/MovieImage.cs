@@ -1,7 +1,6 @@
-﻿using MovieFinder.Client.Pages;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
-namespace MovieFinder.Client.Models.Movies
+namespace MovieFinder.Shared.Models.Movies
 {
     //Seperate class with no ties to any other movie classes
     public class MovieImage
