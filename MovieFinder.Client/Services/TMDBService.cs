@@ -1,11 +1,9 @@
 ﻿using Microsoft.AspNetCore.WebUtilities;
-using MovieFinder.Client.Models.Actors;
-using MovieFinder.Client.Models.Movies;
-using MovieFinder.Client.Models.Shared;
+using MovieFinder.Shared.Models.Actors;
+using MovieFinder.Shared.Models.Movies;
+using MovieFinder.Shared.Models.Common;
 using System.Globalization;
 using System.Net.Http.Json;
-using System.Web;
-using static MovieFinder.Client.Models.Movies.MovieVideo;
 using static System.Net.WebRequestMethods;
 
 namespace MovieFinder.Client.Services

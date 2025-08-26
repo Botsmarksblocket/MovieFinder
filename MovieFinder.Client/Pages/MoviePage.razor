@@ -1,7 +1,7 @@
 ﻿@using Models
-@using MovieFinder.Client.Models.Actors
-@using MovieFinder.Client.Models.Movies
-@using MovieFinder.Client.Models.Shared
+@using MovieFinder.Shared.Models.Actors
+@using MovieFinder.Shared.Models.Movies
+@using MovieFinder.Shared.Models.Common
 @using MovieFinder.Client.Dialogs
 @using MovieFinder.Client.Components
 @using MudBlazor.Services
@@ -305,7 +305,7 @@ else
 		Posters = new List<MovieImages>()
 	};
 
-	private List<MovieVideo.MovieVideoItem> _youtubeTrailers = new();
+	private List<MovieVideoItem> _youtubeTrailers = new();
 
 	private Actor _actors = new Actor
 	{
