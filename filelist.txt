@@ -1,0 +1,1419 @@
+Folder PATH listing
+Volume serial number is DAF5-0F97
+C:.
+³   .gitignore
+³   filelist.txt
+³   MovieFinder.sln
+³   README.md
+³   
+ÃÄÄÄ.github
+³   ÀÄÄÄworkflows
+ÃÄÄÄMovieFinder.API
+³   ³   appsettings.Development.json
+³   ³   appsettings.json
+³   ³   filelist.txt
+³   ³   MovieFinder.API.csproj
+³   ³   MovieFinder.API.csproj.user
+³   ³   MovieFinder.API.http
+³   ³   Program.cs
+³   ³   
+³   ÃÄÄÄbin
+³   ³   ÀÄÄÄDebug
+³   ³       ÀÄÄÄnet9.0
+³   ÃÄÄÄobj
+³   ³   ³   MovieFinder.API.csproj.nuget.dgspec.json
+³   ³   ³   MovieFinder.API.csproj.nuget.g.props
+³   ³   ³   MovieFinder.API.csproj.nuget.g.targets
+³   ³   ³   project.assets.json
+³   ³   ³   project.nuget.cache
+³   ³   ³   
+³   ³   ÀÄÄÄDebug
+³   ³       ÀÄÄÄnet9.0
+³   ³           ³   .NETCoreApp,Version=v9.0.AssemblyAttributes.cs
+³   ³           ³   MovieFinder.API.AssemblyInfo.cs
+³   ³           ³   MovieFinder.API.AssemblyInfoInputs.cache
+³   ³           ³   MovieFinder.API.assets.cache
+³   ³           ³   MovieFinder.API.csproj.AssemblyReference.cache
+³   ³           ³   MovieFinder.API.GeneratedMSBuildEditorConfig.editorconfig
+³   ³           ³   MovieFinder.API.GlobalUsings.g.cs
+³   ³           ³   rpswa.dswa.cache.json
+³   ³           ³   staticwebassets.removed.txt
+³   ³           ³   
+³   ³           ÃÄÄÄref
+³   ³           ÃÄÄÄrefint
+³   ³           ÀÄÄÄstaticwebassets
+³   ÀÄÄÄProperties
+³           launchSettings.json
+³           
+ÀÄÄÄMovieFinder.Client
+    ³   App.razor
+    ³   filelist.txt
+    ³   MovieFinder.Client.csproj
+    ³   MovieFinder.Client.csproj.user
+    ³   Program.cs
+    ³   _Imports.razor
+    ³   
+    ÃÄÄÄbin
+    ³   ÀÄÄÄDebug
+    ³       ÀÄÄÄnet8.0
+    ³           ³   dotnet.js
+    ³           ³   dotnet.js.map
+    ³           ³   dotnet.native.js
+    ³           ³   dotnet.native.wasm
+    ³           ³   dotnet.runtime.js
+    ³           ³   dotnet.runtime.js.map
+    ³           ³   emcc-props.json
+    ³           ³   icudt_CJK.dat
+    ³           ³   icudt_EFIGS.dat
+    ³           ³   icudt_no_CJK.dat
+    ³           ³   Microsoft.AspNetCore.Authorization.dll
+    ³           ³   Microsoft.AspNetCore.Components.dll
+    ³           ³   Microsoft.AspNetCore.Components.Forms.dll
+    ³           ³   Microsoft.AspNetCore.Components.Web.dll
+    ³           ³   Microsoft.AspNetCore.Components.WebAssembly.dll
+    ³           ³   Microsoft.AspNetCore.Metadata.dll
+    ³           ³   Microsoft.AspNetCore.WebUtilities.dll
+    ³           ³   Microsoft.CSharp.dll
+    ³           ³   Microsoft.Extensions.Configuration.Abstractions.dll
+    ³           ³   Microsoft.Extensions.Configuration.Binder.dll
+    ³           ³   Microsoft.Extensions.Configuration.dll
+    ³           ³   Microsoft.Extensions.Configuration.FileExtensions.dll
+    ³           ³   Microsoft.Extensions.Configuration.Json.dll
+    ³           ³   Microsoft.Extensions.DependencyInjection.Abstractions.dll
+    ³           ³   Microsoft.Extensions.DependencyInjection.dll
+    ³           ³   Microsoft.Extensions.FileProviders.Abstractions.dll
+    ³           ³   Microsoft.Extensions.FileProviders.Physical.dll
+    ³           ³   Microsoft.Extensions.FileSystemGlobbing.dll
+    ³           ³   Microsoft.Extensions.Localization.Abstractions.dll
+    ³           ³   Microsoft.Extensions.Localization.dll
+    ³           ³   Microsoft.Extensions.Logging.Abstractions.dll
+    ³           ³   Microsoft.Extensions.Logging.dll
+    ³           ³   Microsoft.Extensions.Options.dll
+    ³           ³   Microsoft.Extensions.Primitives.dll
+    ³           ³   Microsoft.JSInterop.dll
+    ³           ³   Microsoft.JSInterop.WebAssembly.dll
+    ³           ³   Microsoft.Net.Http.Headers.dll
+    ³           ³   Microsoft.VisualBasic.Core.dll
+    ³           ³   Microsoft.VisualBasic.dll
+    ³           ³   Microsoft.Win32.Primitives.dll
+    ³           ³   Microsoft.Win32.Registry.dll
+    ³           ³   MovieFinder.Client.dll
+    ³           ³   MovieFinder.Client.pdb
+    ³           ³   MovieFinder.Client.staticwebassets.endpoints.json
+    ³           ³   MovieFinder.Client.staticwebassets.runtime.json
+    ³           ³   mscorlib.dll
+    ³           ³   MudBlazor.dll
+    ³           ³   netstandard.dll
+    ³           ³   Slugify.Core.dll
+    ³           ³   System.AppContext.dll
+    ³           ³   System.Buffers.dll
+    ³           ³   System.Collections.Concurrent.dll
+    ³           ³   System.Collections.dll
+    ³           ³   System.Collections.Immutable.dll
+    ³           ³   System.Collections.NonGeneric.dll
+    ³           ³   System.Collections.Specialized.dll
+    ³           ³   System.ComponentModel.Annotations.dll
+    ³           ³   System.ComponentModel.DataAnnotations.dll
+    ³           ³   System.ComponentModel.dll
+    ³           ³   System.ComponentModel.EventBasedAsync.dll
+    ³           ³   System.ComponentModel.Primitives.dll
+    ³           ³   System.ComponentModel.TypeConverter.dll
+    ³           ³   System.Configuration.dll
+    ³           ³   System.Console.dll
+    ³           ³   System.Core.dll
+    ³           ³   System.Data.Common.dll
+    ³           ³   System.Data.DataSetExtensions.dll
+    ³           ³   System.Data.dll
+    ³           ³   System.Diagnostics.Contracts.dll
+    ³           ³   System.Diagnostics.Debug.dll
+    ³           ³   System.Diagnostics.DiagnosticSource.dll
+    ³           ³   System.Diagnostics.FileVersionInfo.dll
+    ³           ³   System.Diagnostics.Process.dll
+    ³           ³   System.Diagnostics.StackTrace.dll
+    ³           ³   System.Diagnostics.TextWriterTraceListener.dll
+    ³           ³   System.Diagnostics.Tools.dll
+    ³           ³   System.Diagnostics.TraceSource.dll
+    ³           ³   System.Diagnostics.Tracing.dll
+    ³           ³   System.dll
+    ³           ³   System.Drawing.dll
+    ³           ³   System.Drawing.Primitives.dll
+    ³           ³   System.Dynamic.Runtime.dll
+    ³           ³   System.Formats.Asn1.dll
+    ³           ³   System.Formats.Tar.dll
+    ³           ³   System.Globalization.Calendars.dll
+    ³           ³   System.Globalization.dll
+    ³           ³   System.Globalization.Extensions.dll
+    ³           ³   System.IO.Compression.Brotli.dll
+    ³           ³   System.IO.Compression.dll
+    ³           ³   System.IO.Compression.FileSystem.dll
+    ³           ³   System.IO.Compression.ZipFile.dll
+    ³           ³   System.IO.dll
+    ³           ³   System.IO.FileSystem.AccessControl.dll
+    ³           ³   System.IO.FileSystem.dll
+    ³           ³   System.IO.FileSystem.DriveInfo.dll
+    ³           ³   System.IO.FileSystem.Primitives.dll
+    ³           ³   System.IO.FileSystem.Watcher.dll
+    ³           ³   System.IO.IsolatedStorage.dll
+    ³           ³   System.IO.MemoryMappedFiles.dll
+    ³           ³   System.IO.Pipelines.dll
+    ³           ³   System.IO.Pipes.AccessControl.dll
+    ³           ³   System.IO.Pipes.dll
+    ³           ³   System.IO.UnmanagedMemoryStream.dll
+    ³           ³   System.Linq.dll
+    ³           ³   System.Linq.Expressions.dll
+    ³           ³   System.Linq.Parallel.dll
+    ³           ³   System.Linq.Queryable.dll
+    ³           ³   System.Memory.dll
+    ³           ³   System.Net.dll
+    ³           ³   System.Net.Http.dll
+    ³           ³   System.Net.Http.Json.dll
+    ³           ³   System.Net.HttpListener.dll
+    ³           ³   System.Net.Mail.dll
+    ³           ³   System.Net.NameResolution.dll
+    ³           ³   System.Net.NetworkInformation.dll
+    ³           ³   System.Net.Ping.dll
+    ³           ³   System.Net.Primitives.dll
+    ³           ³   System.Net.Quic.dll
+    ³           ³   System.Net.Requests.dll
+    ³           ³   System.Net.Security.dll
+    ³           ³   System.Net.ServicePoint.dll
+    ³           ³   System.Net.Sockets.dll
+    ³           ³   System.Net.WebClient.dll
+    ³           ³   System.Net.WebHeaderCollection.dll
+    ³           ³   System.Net.WebProxy.dll
+    ³           ³   System.Net.WebSockets.Client.dll
+    ³           ³   System.Net.WebSockets.dll
+    ³           ³   System.Numerics.dll
+    ³           ³   System.Numerics.Vectors.dll
+    ³           ³   System.ObjectModel.dll
+    ³           ³   System.Private.CoreLib.dll
+    ³           ³   System.Private.DataContractSerialization.dll
+    ³           ³   System.Private.Uri.dll
+    ³           ³   System.Private.Xml.dll
+    ³           ³   System.Private.Xml.Linq.dll
+    ³           ³   System.Reflection.DispatchProxy.dll
+    ³           ³   System.Reflection.dll
+    ³           ³   System.Reflection.Emit.dll
+    ³           ³   System.Reflection.Emit.ILGeneration.dll
+    ³           ³   System.Reflection.Emit.Lightweight.dll
+    ³           ³   System.Reflection.Extensions.dll
+    ³           ³   System.Reflection.Metadata.dll
+    ³           ³   System.Reflection.Primitives.dll
+    ³           ³   System.Reflection.TypeExtensions.dll
+    ³           ³   System.Resources.Reader.dll
+    ³           ³   System.Resources.ResourceManager.dll
+    ³           ³   System.Resources.Writer.dll
+    ³           ³   System.Runtime.CompilerServices.Unsafe.dll
+    ³           ³   System.Runtime.CompilerServices.VisualC.dll
+    ³           ³   System.Runtime.dll
+    ³           ³   System.Runtime.Extensions.dll
+    ³           ³   System.Runtime.Handles.dll
+    ³           ³   System.Runtime.InteropServices.dll
+    ³           ³   System.Runtime.InteropServices.JavaScript.dll
+    ³           ³   System.Runtime.InteropServices.RuntimeInformation.dll
+    ³           ³   System.Runtime.Intrinsics.dll
+    ³           ³   System.Runtime.Loader.dll
+    ³           ³   System.Runtime.Numerics.dll
+    ³           ³   System.Runtime.Serialization.dll
+    ³           ³   System.Runtime.Serialization.Formatters.dll
+    ³           ³   System.Runtime.Serialization.Json.dll
+    ³           ³   System.Runtime.Serialization.Primitives.dll
+    ³           ³   System.Runtime.Serialization.Xml.dll
+    ³           ³   System.Security.AccessControl.dll
+    ³           ³   System.Security.Claims.dll
+    ³           ³   System.Security.Cryptography.Algorithms.dll
+    ³           ³   System.Security.Cryptography.Cng.dll
+    ³           ³   System.Security.Cryptography.Csp.dll
+    ³           ³   System.Security.Cryptography.dll
+    ³           ³   System.Security.Cryptography.Encoding.dll
+    ³           ³   System.Security.Cryptography.OpenSsl.dll
+    ³           ³   System.Security.Cryptography.Primitives.dll
+    ³           ³   System.Security.Cryptography.X509Certificates.dll
+    ³           ³   System.Security.dll
+    ³           ³   System.Security.Principal.dll
+    ³           ³   System.Security.Principal.Windows.dll
+    ³           ³   System.Security.SecureString.dll
+    ³           ³   System.ServiceModel.Web.dll
+    ³           ³   System.ServiceProcess.dll
+    ³           ³   System.Text.Encoding.CodePages.dll
+    ³           ³   System.Text.Encoding.dll
+    ³           ³   System.Text.Encoding.Extensions.dll
+    ³           ³   System.Text.Encodings.Web.dll
+    ³           ³   System.Text.Json.dll
+    ³           ³   System.Text.RegularExpressions.dll
+    ³           ³   System.Threading.Channels.dll
+    ³           ³   System.Threading.dll
+    ³           ³   System.Threading.Overlapped.dll
+    ³           ³   System.Threading.Tasks.Dataflow.dll
+    ³           ³   System.Threading.Tasks.dll
+    ³           ³   System.Threading.Tasks.Extensions.dll
+    ³           ³   System.Threading.Tasks.Parallel.dll
+    ³           ³   System.Threading.Thread.dll
+    ³           ³   System.Threading.ThreadPool.dll
+    ³           ³   System.Threading.Timer.dll
+    ³           ³   System.Transactions.dll
+    ³           ³   System.Transactions.Local.dll
+    ³           ³   System.ValueTuple.dll
+    ³           ³   System.Web.dll
+    ³           ³   System.Web.HttpUtility.dll
+    ³           ³   System.Windows.dll
+    ³           ³   System.Xml.dll
+    ³           ³   System.Xml.Linq.dll
+    ³           ³   System.Xml.ReaderWriter.dll
+    ³           ³   System.Xml.Serialization.dll
+    ³           ³   System.Xml.XDocument.dll
+    ³           ³   System.Xml.XmlDocument.dll
+    ³           ³   System.Xml.XmlSerializer.dll
+    ³           ³   System.Xml.XPath.dll
+    ³           ³   System.Xml.XPath.XDocument.dll
+    ³           ³   WindowsBase.dll
+    ³           ³   
+    ³           ÀÄÄÄwwwroot
+    ³               ÀÄÄÄ_framework
+    ³                       blazor.boot.json
+    ³                       blazor.boot.json.gz
+    ³                       blazor.webassembly.js
+    ³                       blazor.webassembly.js.gz
+    ³                       dotnet.js
+    ³                       dotnet.js.gz
+    ³                       dotnet.js.map
+    ³                       dotnet.js.map.gz
+    ³                       dotnet.native.js
+    ³                       dotnet.native.js.gz
+    ³                       dotnet.native.wasm
+    ³                       dotnet.native.wasm.gz
+    ³                       dotnet.runtime.js
+    ³                       dotnet.runtime.js.gz
+    ³                       dotnet.runtime.js.map
+    ³                       dotnet.runtime.js.map.gz
+    ³                       emcc-props.json
+    ³                       emcc-props.json.gz
+    ³                       icudt_CJK.dat
+    ³                       icudt_CJK.dat.gz
+    ³                       icudt_EFIGS.dat
+    ³                       icudt_EFIGS.dat.gz
+    ³                       icudt_no_CJK.dat
+    ³                       icudt_no_CJK.dat.gz
+    ³                       Microsoft.AspNetCore.Authorization.wasm
+    ³                       Microsoft.AspNetCore.Authorization.wasm.gz
+    ³                       Microsoft.AspNetCore.Components.Forms.wasm
+    ³                       Microsoft.AspNetCore.Components.Forms.wasm.gz
+    ³                       Microsoft.AspNetCore.Components.wasm
+    ³                       Microsoft.AspNetCore.Components.wasm.gz
+    ³                       Microsoft.AspNetCore.Components.Web.wasm
+    ³                       Microsoft.AspNetCore.Components.Web.wasm.gz
+    ³                       Microsoft.AspNetCore.Components.WebAssembly.wasm
+    ³                       Microsoft.AspNetCore.Components.WebAssembly.wasm.gz
+    ³                       Microsoft.AspNetCore.Metadata.wasm
+    ³                       Microsoft.AspNetCore.Metadata.wasm.gz
+    ³                       Microsoft.AspNetCore.WebUtilities.wasm
+    ³                       Microsoft.AspNetCore.WebUtilities.wasm.gz
+    ³                       Microsoft.CSharp.wasm
+    ³                       Microsoft.CSharp.wasm.gz
+    ³                       Microsoft.Extensions.Configuration.Abstractions.wasm
+    ³                       Microsoft.Extensions.Configuration.Abstractions.wasm.gz
+    ³                       Microsoft.Extensions.Configuration.Binder.wasm
+    ³                       Microsoft.Extensions.Configuration.Binder.wasm.gz
+    ³                       Microsoft.Extensions.Configuration.FileExtensions.wasm
+    ³                       Microsoft.Extensions.Configuration.FileExtensions.wasm.gz
+    ³                       Microsoft.Extensions.Configuration.Json.wasm
+    ³                       Microsoft.Extensions.Configuration.Json.wasm.gz
+    ³                       Microsoft.Extensions.Configuration.wasm
+    ³                       Microsoft.Extensions.Configuration.wasm.gz
+    ³                       Microsoft.Extensions.DependencyInjection.Abstractions.wasm
+    ³                       Microsoft.Extensions.DependencyInjection.Abstractions.wasm.gz
+    ³                       Microsoft.Extensions.DependencyInjection.wasm
+    ³                       Microsoft.Extensions.DependencyInjection.wasm.gz
+    ³                       Microsoft.Extensions.FileProviders.Abstractions.wasm
+    ³                       Microsoft.Extensions.FileProviders.Abstractions.wasm.gz
+    ³                       Microsoft.Extensions.FileProviders.Physical.wasm
+    ³                       Microsoft.Extensions.FileProviders.Physical.wasm.gz
+    ³                       Microsoft.Extensions.FileSystemGlobbing.wasm
+    ³                       Microsoft.Extensions.FileSystemGlobbing.wasm.gz
+    ³                       Microsoft.Extensions.Localization.Abstractions.wasm
+    ³                       Microsoft.Extensions.Localization.Abstractions.wasm.gz
+    ³                       Microsoft.Extensions.Localization.wasm
+    ³                       Microsoft.Extensions.Localization.wasm.gz
+    ³                       Microsoft.Extensions.Logging.Abstractions.wasm
+    ³                       Microsoft.Extensions.Logging.Abstractions.wasm.gz
+    ³                       Microsoft.Extensions.Logging.wasm
+    ³                       Microsoft.Extensions.Logging.wasm.gz
+    ³                       Microsoft.Extensions.Options.wasm
+    ³                       Microsoft.Extensions.Options.wasm.gz
+    ³                       Microsoft.Extensions.Primitives.wasm
+    ³                       Microsoft.Extensions.Primitives.wasm.gz
+    ³                       Microsoft.JSInterop.wasm
+    ³                       Microsoft.JSInterop.wasm.gz
+    ³                       Microsoft.JSInterop.WebAssembly.wasm
+    ³                       Microsoft.JSInterop.WebAssembly.wasm.gz
+    ³                       Microsoft.Net.Http.Headers.wasm
+    ³                       Microsoft.Net.Http.Headers.wasm.gz
+    ³                       Microsoft.VisualBasic.Core.wasm
+    ³                       Microsoft.VisualBasic.Core.wasm.gz
+    ³                       Microsoft.VisualBasic.wasm
+    ³                       Microsoft.VisualBasic.wasm.gz
+    ³                       Microsoft.Win32.Primitives.wasm
+    ³                       Microsoft.Win32.Primitives.wasm.gz
+    ³                       Microsoft.Win32.Registry.wasm
+    ³                       Microsoft.Win32.Registry.wasm.gz
+    ³                       MovieFinder.Client.pdb
+    ³                       MovieFinder.Client.pdb.gz
+    ³                       MovieFinder.Client.wasm
+    ³                       MovieFinder.Client.wasm.gz
+    ³                       mscorlib.wasm
+    ³                       mscorlib.wasm.gz
+    ³                       MudBlazor.wasm
+    ³                       MudBlazor.wasm.gz
+    ³                       netstandard.wasm
+    ³                       netstandard.wasm.gz
+    ³                       Slugify.Core.wasm
+    ³                       Slugify.Core.wasm.gz
+    ³                       System.AppContext.wasm
+    ³                       System.AppContext.wasm.gz
+    ³                       System.Buffers.wasm
+    ³                       System.Buffers.wasm.gz
+    ³                       System.Collections.Concurrent.wasm
+    ³                       System.Collections.Concurrent.wasm.gz
+    ³                       System.Collections.Immutable.wasm
+    ³                       System.Collections.Immutable.wasm.gz
+    ³                       System.Collections.NonGeneric.wasm
+    ³                       System.Collections.NonGeneric.wasm.gz
+    ³                       System.Collections.Specialized.wasm
+    ³                       System.Collections.Specialized.wasm.gz
+    ³                       System.Collections.wasm
+    ³                       System.Collections.wasm.gz
+    ³                       System.ComponentModel.Annotations.wasm
+    ³                       System.ComponentModel.Annotations.wasm.gz
+    ³                       System.ComponentModel.DataAnnotations.wasm
+    ³                       System.ComponentModel.DataAnnotations.wasm.gz
+    ³                       System.ComponentModel.EventBasedAsync.wasm
+    ³                       System.ComponentModel.EventBasedAsync.wasm.gz
+    ³                       System.ComponentModel.Primitives.wasm
+    ³                       System.ComponentModel.Primitives.wasm.gz
+    ³                       System.ComponentModel.TypeConverter.wasm
+    ³                       System.ComponentModel.TypeConverter.wasm.gz
+    ³                       System.ComponentModel.wasm
+    ³                       System.ComponentModel.wasm.gz
+    ³                       System.Configuration.wasm
+    ³                       System.Configuration.wasm.gz
+    ³                       System.Console.wasm
+    ³                       System.Console.wasm.gz
+    ³                       System.Core.wasm
+    ³                       System.Core.wasm.gz
+    ³                       System.Data.Common.wasm
+    ³                       System.Data.Common.wasm.gz
+    ³                       System.Data.DataSetExtensions.wasm
+    ³                       System.Data.DataSetExtensions.wasm.gz
+    ³                       System.Data.wasm
+    ³                       System.Data.wasm.gz
+    ³                       System.Diagnostics.Contracts.wasm
+    ³                       System.Diagnostics.Contracts.wasm.gz
+    ³                       System.Diagnostics.Debug.wasm
+    ³                       System.Diagnostics.Debug.wasm.gz
+    ³                       System.Diagnostics.DiagnosticSource.wasm
+    ³                       System.Diagnostics.DiagnosticSource.wasm.gz
+    ³                       System.Diagnostics.FileVersionInfo.wasm
+    ³                       System.Diagnostics.FileVersionInfo.wasm.gz
+    ³                       System.Diagnostics.Process.wasm
+    ³                       System.Diagnostics.Process.wasm.gz
+    ³                       System.Diagnostics.StackTrace.wasm
+    ³                       System.Diagnostics.StackTrace.wasm.gz
+    ³                       System.Diagnostics.TextWriterTraceListener.wasm
+    ³                       System.Diagnostics.TextWriterTraceListener.wasm.gz
+    ³                       System.Diagnostics.Tools.wasm
+    ³                       System.Diagnostics.Tools.wasm.gz
+    ³                       System.Diagnostics.TraceSource.wasm
+    ³                       System.Diagnostics.TraceSource.wasm.gz
+    ³                       System.Diagnostics.Tracing.wasm
+    ³                       System.Diagnostics.Tracing.wasm.gz
+    ³                       System.Drawing.Primitives.wasm
+    ³                       System.Drawing.Primitives.wasm.gz
+    ³                       System.Drawing.wasm
+    ³                       System.Drawing.wasm.gz
+    ³                       System.Dynamic.Runtime.wasm
+    ³                       System.Dynamic.Runtime.wasm.gz
+    ³                       System.Formats.Asn1.wasm
+    ³                       System.Formats.Asn1.wasm.gz
+    ³                       System.Formats.Tar.wasm
+    ³                       System.Formats.Tar.wasm.gz
+    ³                       System.Globalization.Calendars.wasm
+    ³                       System.Globalization.Calendars.wasm.gz
+    ³                       System.Globalization.Extensions.wasm
+    ³                       System.Globalization.Extensions.wasm.gz
+    ³                       System.Globalization.wasm
+    ³                       System.Globalization.wasm.gz
+    ³                       System.IO.Compression.Brotli.wasm
+    ³                       System.IO.Compression.Brotli.wasm.gz
+    ³                       System.IO.Compression.FileSystem.wasm
+    ³                       System.IO.Compression.FileSystem.wasm.gz
+    ³                       System.IO.Compression.wasm
+    ³                       System.IO.Compression.wasm.gz
+    ³                       System.IO.Compression.ZipFile.wasm
+    ³                       System.IO.Compression.ZipFile.wasm.gz
+    ³                       System.IO.FileSystem.AccessControl.wasm
+    ³                       System.IO.FileSystem.AccessControl.wasm.gz
+    ³                       System.IO.FileSystem.DriveInfo.wasm
+    ³                       System.IO.FileSystem.DriveInfo.wasm.gz
+    ³                       System.IO.FileSystem.Primitives.wasm
+    ³                       System.IO.FileSystem.Primitives.wasm.gz
+    ³                       System.IO.FileSystem.wasm
+    ³                       System.IO.FileSystem.wasm.gz
+    ³                       System.IO.FileSystem.Watcher.wasm
+    ³                       System.IO.FileSystem.Watcher.wasm.gz
+    ³                       System.IO.IsolatedStorage.wasm
+    ³                       System.IO.IsolatedStorage.wasm.gz
+    ³                       System.IO.MemoryMappedFiles.wasm
+    ³                       System.IO.MemoryMappedFiles.wasm.gz
+    ³                       System.IO.Pipelines.wasm
+    ³                       System.IO.Pipelines.wasm.gz
+    ³                       System.IO.Pipes.AccessControl.wasm
+    ³                       System.IO.Pipes.AccessControl.wasm.gz
+    ³                       System.IO.Pipes.wasm
+    ³                       System.IO.Pipes.wasm.gz
+    ³                       System.IO.UnmanagedMemoryStream.wasm
+    ³                       System.IO.UnmanagedMemoryStream.wasm.gz
+    ³                       System.IO.wasm
+    ³                       System.IO.wasm.gz
+    ³                       System.Linq.Expressions.wasm
+    ³                       System.Linq.Expressions.wasm.gz
+    ³                       System.Linq.Parallel.wasm
+    ³                       System.Linq.Parallel.wasm.gz
+    ³                       System.Linq.Queryable.wasm
+    ³                       System.Linq.Queryable.wasm.gz
+    ³                       System.Linq.wasm
+    ³                       System.Linq.wasm.gz
+    ³                       System.Memory.wasm
+    ³                       System.Memory.wasm.gz
+    ³                       System.Net.Http.Json.wasm
+    ³                       System.Net.Http.Json.wasm.gz
+    ³                       System.Net.Http.wasm
+    ³                       System.Net.Http.wasm.gz
+    ³                       System.Net.HttpListener.wasm
+    ³                       System.Net.HttpListener.wasm.gz
+    ³                       System.Net.Mail.wasm
+    ³                       System.Net.Mail.wasm.gz
+    ³                       System.Net.NameResolution.wasm
+    ³                       System.Net.NameResolution.wasm.gz
+    ³                       System.Net.NetworkInformation.wasm
+    ³                       System.Net.NetworkInformation.wasm.gz
+    ³                       System.Net.Ping.wasm
+    ³                       System.Net.Ping.wasm.gz
+    ³                       System.Net.Primitives.wasm
+    ³                       System.Net.Primitives.wasm.gz
+    ³                       System.Net.Quic.wasm
+    ³                       System.Net.Quic.wasm.gz
+    ³                       System.Net.Requests.wasm
+    ³                       System.Net.Requests.wasm.gz
+    ³                       System.Net.Security.wasm
+    ³                       System.Net.Security.wasm.gz
+    ³                       System.Net.ServicePoint.wasm
+    ³                       System.Net.ServicePoint.wasm.gz
+    ³                       System.Net.Sockets.wasm
+    ³                       System.Net.Sockets.wasm.gz
+    ³                       System.Net.wasm
+    ³                       System.Net.wasm.gz
+    ³                       System.Net.WebClient.wasm
+    ³                       System.Net.WebClient.wasm.gz
+    ³                       System.Net.WebHeaderCollection.wasm
+    ³                       System.Net.WebHeaderCollection.wasm.gz
+    ³                       System.Net.WebProxy.wasm
+    ³                       System.Net.WebProxy.wasm.gz
+    ³                       System.Net.WebSockets.Client.wasm
+    ³                       System.Net.WebSockets.Client.wasm.gz
+    ³                       System.Net.WebSockets.wasm
+    ³                       System.Net.WebSockets.wasm.gz
+    ³                       System.Numerics.Vectors.wasm
+    ³                       System.Numerics.Vectors.wasm.gz
+    ³                       System.Numerics.wasm
+    ³                       System.Numerics.wasm.gz
+    ³                       System.ObjectModel.wasm
+    ³                       System.ObjectModel.wasm.gz
+    ³                       System.Private.CoreLib.wasm
+    ³                       System.Private.CoreLib.wasm.gz
+    ³                       System.Private.DataContractSerialization.wasm
+    ³                       System.Private.DataContractSerialization.wasm.gz
+    ³                       System.Private.Uri.wasm
+    ³                       System.Private.Uri.wasm.gz
+    ³                       System.Private.Xml.Linq.wasm
+    ³                       System.Private.Xml.Linq.wasm.gz
+    ³                       System.Private.Xml.wasm
+    ³                       System.Private.Xml.wasm.gz
+    ³                       System.Reflection.DispatchProxy.wasm
+    ³                       System.Reflection.DispatchProxy.wasm.gz
+    ³                       System.Reflection.Emit.ILGeneration.wasm
+    ³                       System.Reflection.Emit.ILGeneration.wasm.gz
+    ³                       System.Reflection.Emit.Lightweight.wasm
+    ³                       System.Reflection.Emit.Lightweight.wasm.gz
+    ³                       System.Reflection.Emit.wasm
+    ³                       System.Reflection.Emit.wasm.gz
+    ³                       System.Reflection.Extensions.wasm
+    ³                       System.Reflection.Extensions.wasm.gz
+    ³                       System.Reflection.Metadata.wasm
+    ³                       System.Reflection.Metadata.wasm.gz
+    ³                       System.Reflection.Primitives.wasm
+    ³                       System.Reflection.Primitives.wasm.gz
+    ³                       System.Reflection.TypeExtensions.wasm
+    ³                       System.Reflection.TypeExtensions.wasm.gz
+    ³                       System.Reflection.wasm
+    ³                       System.Reflection.wasm.gz
+    ³                       System.Resources.Reader.wasm
+    ³                       System.Resources.Reader.wasm.gz
+    ³                       System.Resources.ResourceManager.wasm
+    ³                       System.Resources.ResourceManager.wasm.gz
+    ³                       System.Resources.Writer.wasm
+    ³                       System.Resources.Writer.wasm.gz
+    ³                       System.Runtime.CompilerServices.Unsafe.wasm
+    ³                       System.Runtime.CompilerServices.Unsafe.wasm.gz
+    ³                       System.Runtime.CompilerServices.VisualC.wasm
+    ³                       System.Runtime.CompilerServices.VisualC.wasm.gz
+    ³                       System.Runtime.Extensions.wasm
+    ³                       System.Runtime.Extensions.wasm.gz
+    ³                       System.Runtime.Handles.wasm
+    ³                       System.Runtime.Handles.wasm.gz
+    ³                       System.Runtime.InteropServices.JavaScript.wasm
+    ³                       System.Runtime.InteropServices.JavaScript.wasm.gz
+    ³                       System.Runtime.InteropServices.RuntimeInformation.wasm
+    ³                       System.Runtime.InteropServices.RuntimeInformation.wasm.gz
+    ³                       System.Runtime.InteropServices.wasm
+    ³                       System.Runtime.InteropServices.wasm.gz
+    ³                       System.Runtime.Intrinsics.wasm
+    ³                       System.Runtime.Intrinsics.wasm.gz
+    ³                       System.Runtime.Loader.wasm
+    ³                       System.Runtime.Loader.wasm.gz
+    ³                       System.Runtime.Numerics.wasm
+    ³                       System.Runtime.Numerics.wasm.gz
+    ³                       System.Runtime.Serialization.Formatters.wasm
+    ³                       System.Runtime.Serialization.Formatters.wasm.gz
+    ³                       System.Runtime.Serialization.Json.wasm
+    ³                       System.Runtime.Serialization.Json.wasm.gz
+    ³                       System.Runtime.Serialization.Primitives.wasm
+    ³                       System.Runtime.Serialization.Primitives.wasm.gz
+    ³                       System.Runtime.Serialization.wasm
+    ³                       System.Runtime.Serialization.wasm.gz
+    ³                       System.Runtime.Serialization.Xml.wasm
+    ³                       System.Runtime.Serialization.Xml.wasm.gz
+    ³                       System.Runtime.wasm
+    ³                       System.Runtime.wasm.gz
+    ³                       System.Security.AccessControl.wasm
+    ³                       System.Security.AccessControl.wasm.gz
+    ³                       System.Security.Claims.wasm
+    ³                       System.Security.Claims.wasm.gz
+    ³                       System.Security.Cryptography.Algorithms.wasm
+    ³                       System.Security.Cryptography.Algorithms.wasm.gz
+    ³                       System.Security.Cryptography.Cng.wasm
+    ³                       System.Security.Cryptography.Cng.wasm.gz
+    ³                       System.Security.Cryptography.Csp.wasm
+    ³                       System.Security.Cryptography.Csp.wasm.gz
+    ³                       System.Security.Cryptography.Encoding.wasm
+    ³                       System.Security.Cryptography.Encoding.wasm.gz
+    ³                       System.Security.Cryptography.OpenSsl.wasm
+    ³                       System.Security.Cryptography.OpenSsl.wasm.gz
+    ³                       System.Security.Cryptography.Primitives.wasm
+    ³                       System.Security.Cryptography.Primitives.wasm.gz
+    ³                       System.Security.Cryptography.wasm
+    ³                       System.Security.Cryptography.wasm.gz
+    ³                       System.Security.Cryptography.X509Certificates.wasm
+    ³                       System.Security.Cryptography.X509Certificates.wasm.gz
+    ³                       System.Security.Principal.wasm
+    ³                       System.Security.Principal.wasm.gz
+    ³                       System.Security.Principal.Windows.wasm
+    ³                       System.Security.Principal.Windows.wasm.gz
+    ³                       System.Security.SecureString.wasm
+    ³                       System.Security.SecureString.wasm.gz
+    ³                       System.Security.wasm
+    ³                       System.Security.wasm.gz
+    ³                       System.ServiceModel.Web.wasm
+    ³                       System.ServiceModel.Web.wasm.gz
+    ³                       System.ServiceProcess.wasm
+    ³                       System.ServiceProcess.wasm.gz
+    ³                       System.Text.Encoding.CodePages.wasm
+    ³                       System.Text.Encoding.CodePages.wasm.gz
+    ³                       System.Text.Encoding.Extensions.wasm
+    ³                       System.Text.Encoding.Extensions.wasm.gz
+    ³                       System.Text.Encoding.wasm
+    ³                       System.Text.Encoding.wasm.gz
+    ³                       System.Text.Encodings.Web.wasm
+    ³                       System.Text.Encodings.Web.wasm.gz
+    ³                       System.Text.Json.wasm
+    ³                       System.Text.Json.wasm.gz
+    ³                       System.Text.RegularExpressions.wasm
+    ³                       System.Text.RegularExpressions.wasm.gz
+    ³                       System.Threading.Channels.wasm
+    ³                       System.Threading.Channels.wasm.gz
+    ³                       System.Threading.Overlapped.wasm
+    ³                       System.Threading.Overlapped.wasm.gz
+    ³                       System.Threading.Tasks.Dataflow.wasm
+    ³                       System.Threading.Tasks.Dataflow.wasm.gz
+    ³                       System.Threading.Tasks.Extensions.wasm
+    ³                       System.Threading.Tasks.Extensions.wasm.gz
+    ³                       System.Threading.Tasks.Parallel.wasm
+    ³                       System.Threading.Tasks.Parallel.wasm.gz
+    ³                       System.Threading.Tasks.wasm
+    ³                       System.Threading.Tasks.wasm.gz
+    ³                       System.Threading.Thread.wasm
+    ³                       System.Threading.Thread.wasm.gz
+    ³                       System.Threading.ThreadPool.wasm
+    ³                       System.Threading.ThreadPool.wasm.gz
+    ³                       System.Threading.Timer.wasm
+    ³                       System.Threading.Timer.wasm.gz
+    ³                       System.Threading.wasm
+    ³                       System.Threading.wasm.gz
+    ³                       System.Transactions.Local.wasm
+    ³                       System.Transactions.Local.wasm.gz
+    ³                       System.Transactions.wasm
+    ³                       System.Transactions.wasm.gz
+    ³                       System.ValueTuple.wasm
+    ³                       System.ValueTuple.wasm.gz
+    ³                       System.wasm
+    ³                       System.wasm.gz
+    ³                       System.Web.HttpUtility.wasm
+    ³                       System.Web.HttpUtility.wasm.gz
+    ³                       System.Web.wasm
+    ³                       System.Web.wasm.gz
+    ³                       System.Windows.wasm
+    ³                       System.Windows.wasm.gz
+    ³                       System.Xml.Linq.wasm
+    ³                       System.Xml.Linq.wasm.gz
+    ³                       System.Xml.ReaderWriter.wasm
+    ³                       System.Xml.ReaderWriter.wasm.gz
+    ³                       System.Xml.Serialization.wasm
+    ³                       System.Xml.Serialization.wasm.gz
+    ³                       System.Xml.wasm
+    ³                       System.Xml.wasm.gz
+    ³                       System.Xml.XDocument.wasm
+    ³                       System.Xml.XDocument.wasm.gz
+    ³                       System.Xml.XmlDocument.wasm
+    ³                       System.Xml.XmlDocument.wasm.gz
+    ³                       System.Xml.XmlSerializer.wasm
+    ³                       System.Xml.XmlSerializer.wasm.gz
+    ³                       System.Xml.XPath.wasm
+    ³                       System.Xml.XPath.wasm.gz
+    ³                       System.Xml.XPath.XDocument.wasm
+    ³                       System.Xml.XPath.XDocument.wasm.gz
+    ³                       WindowsBase.wasm
+    ³                       WindowsBase.wasm.gz
+    ³                       
+    ÃÄÄÄComponents
+    ³       InfiniteScroll.razor
+    ³       MovieComponent.razor
+    ³       
+    ÃÄÄÄDialogs
+    ³       ImageDialog.razor
+    ³       VideoDialog.razor
+    ³       
+    ÃÄÄÄLayout
+    ³       MainLayout.razor
+    ³       
+    ÃÄÄÄModels
+    ³   ÃÄÄÄActors
+    ³   ³       Actor.cs
+    ³   ³       ActorDetail.cs
+    ³   ³       ActorImages.cs
+    ³   ³       Cast.cs
+    ³   ³       
+    ³   ÃÄÄÄMovies
+    ³   ³       AvailableLanguage.cs
+    ³   ³       Movie.cs
+    ³   ³       MovieCredit.cs
+    ³   ³       MovieDetail.cs
+    ³   ³       MovieImage.cs
+    ³   ³       MovieVideo.cs
+    ³   ³       ProductionCompany.cs
+    ³   ³       
+    ³   ÀÄÄÄShared
+    ³           FilterParameter.cs
+    ³           Genre.cs
+    ³           SearchResult.cs
+    ³           
+    ÃÄÄÄobj
+    ³   ³   MovieFinder.Client.csproj.nuget.dgspec.json
+    ³   ³   MovieFinder.Client.csproj.nuget.g.props
+    ³   ³   MovieFinder.Client.csproj.nuget.g.targets
+    ³   ³   project.assets.json
+    ³   ³   project.nuget.cache
+    ³   ³   
+    ³   ÀÄÄÄDebug
+    ³       ÀÄÄÄnet8.0
+    ³           ³   .NETCoreApp,Version=v8.0.AssemblyAttributes.cs
+    ³           ³   blazor.boot.json
+    ³           ³   blazor.build.boot-extension.json
+    ³           ³   MovieFin.12B95976.Up2Date
+    ³           ³   MovieFinder.Client.AssemblyInfo.cs
+    ³           ³   MovieFinder.Client.AssemblyInfoInputs.cache
+    ³           ³   MovieFinder.Client.assets.cache
+    ³           ³   MovieFinder.Client.csproj.AssemblyReference.cache
+    ³           ³   MovieFinder.Client.csproj.BuildWithSkipAnalyzers
+    ³           ³   MovieFinder.Client.csproj.CoreCompileInputs.cache
+    ³           ³   MovieFinder.Client.csproj.FileListAbsolute.txt
+    ³           ³   MovieFinder.Client.dll
+    ³           ³   MovieFinder.Client.GeneratedMSBuildEditorConfig.editorconfig
+    ³           ³   MovieFinder.Client.GlobalUsings.g.cs
+    ³           ³   MovieFinder.Client.MvcApplicationPartsAssemblyInfo.cache
+    ³           ³   MovieFinder.Client.pdb
+    ³           ³   MovieFinder.Client.sourcelink.json
+    ³           ³   rbcswa.dswa.cache.json
+    ³           ³   rjimswa.dswa.cache.json
+    ³           ³   rjsmcshtml.dswa.cache.json
+    ³           ³   rjsmrazor.dswa.cache.json
+    ³           ³   rpswa.dswa.cache.json
+    ³           ³   staticwebassets.build.endpoints.json
+    ³           ³   staticwebassets.build.json
+    ³           ³   staticwebassets.build.json.cache
+    ³           ³   staticwebassets.development.json
+    ³           ³   staticwebassets.references.upToDateCheck.txt
+    ³           ³   staticwebassets.removed.txt
+    ³           ³   staticwebassets.upToDateCheck.txt
+    ³           ³   
+    ³           ÃÄÄÄcompressed
+    ³           ³       008tcj73j8-06opf0z07f.gz
+    ³           ³       015vfkimw7-givpiypapf.gz
+    ³           ³       01ailyrddh-fzl14kvvq9.gz
+    ³           ³       03kvuir9zg-iudrcw56e1.gz
+    ³           ³       0abepxp6jx-mvtw4pdlij.gz
+    ³           ³       10vtwh2si9-e5u2ivw30a.gz
+    ³           ³       135rtphh1z-piypvzuqj8.gz
+    ³           ³       1bnxl4qkc2-tptq2av103.gz
+    ³           ³       1nvk6omebm-t0l60f90lu.gz
+    ³           ³       1ppx24h5bb-k93ef8r8u6.gz
+    ³           ³       1qs9la41tg-47li9wjxov.gz
+    ³           ³       1y17metjun-cs3cyov30j.gz
+    ³           ³       1zpocuvkux-d7w4svpm9q.gz
+    ³           ³       20klpnl7w5-w4phz5yeep.gz
+    ³           ³       245a47n1yo-opm4r6991y.gz
+    ³           ³       25u7d84tdp-wdm17x7d4l.gz
+    ³           ³       2nc16kv4tm-onphtwitqw.gz
+    ³           ³       2neudktib4-oyz0vx2fzb.gz
+    ³           ³       2y9iqxqc41-yeodhjzqwd.gz
+    ³           ³       3fdzvfec2y-fvzxwobd9s.gz
+    ³           ³       3rdtj64i2n-5z90s42y4u.gz
+    ³           ³       3tqsmg8grm-bqd9bvqlq4.gz
+    ³           ³       3wunap50pb-ll7xamd0gs.gz
+    ³           ³       3yh1029nyl-0swkfpcdps.gz
+    ³           ³       425nxpiljm-mujs83v4dk.gz
+    ³           ³       452dm0xpyo-aarglzwnbc.gz
+    ³           ³       4sn6dtdbzd-1c7ksbormu.gz
+    ³           ³       4xgvccrfs6-s5e5gzme85.gz
+    ³           ³       5dtw0703p9-yqyy43b7x4.gz
+    ³           ³       61uehsh18h-c995dzm6ke.gz
+    ³           ³       62yb9u6mym-bto72qlg9q.gz
+    ³           ³       633o4w1zau-mm5x7hprww.gz
+    ³           ³       6b7i9qcdxw-j8am5golm5.gz
+    ³           ³       6ndpuinka8-0r3amze666.gz
+    ³           ³       6s00ttsdnj-eqvj70q5r6.gz
+    ³           ³       6yqdevb181-y9337xw5rv.gz
+    ³           ³       7bvegjj42l-ns3ysu9v5d.gz
+    ³           ³       7hlfibjsvk-s8icnh28lu.gz
+    ³           ³       7mibxgys5a-h88eujx3ce.gz
+    ³           ³       7od9ts8len-83rj8xex5q.gz
+    ³           ³       7zq8fr0jw2-25n89ioaul.gz
+    ³           ³       82c7uptjex-quxi7dvjyy.gz
+    ³           ³       82jvs6j0lh-fxsazdljf4.gz
+    ³           ³       83u4ba56x7-86wrfk47sm.gz
+    ³           ³       8e97rsmhaj-rmw7of04b1.gz
+    ³           ³       8i7usg8wbu-08ws1e7r3z.gz
+    ³           ³       97maueajr7-nea90qdx1a.gz
+    ³           ³       9h5x7gzfrm-44h7rk5n04.gz
+    ³           ³       9kl5ct60s8-ecig0hcyx5.gz
+    ³           ³       9vzkndtgqs-5ynne4xbft.gz
+    ³           ³       9z1bmpw6qf-t1avkvsnt6.gz
+    ³           ³       a0zxquo9td-tz325eqvv5.gz
+    ³           ³       a38zubn74y-49h7rkj5y3.gz
+    ³           ³       a81ckcvilc-dj7t3tn925.gz
+    ³           ³       a9z6xarsew-11dl4rgyin.gz
+    ³           ³       ae3slr8ab8-pkn1gyz7pd.gz
+    ³           ³       ae4hxdellb-rv31b1y5tk.gz
+    ³           ³       ajp3himsh9-ykuwlwcnvv.gz
+    ³           ³       amvb1rh5n0-kfcvbrd4ov.gz
+    ³           ³       aozsdzoytv-t538op17b5.gz
+    ³           ³       ath72tou0e-8kr5d0tjmo.gz
+    ³           ³       awkk2c7271-y9j53ldofb.gz
+    ³           ³       b7aq7hnbzf-9g33vk4821.gz
+    ³           ³       bm10l8lxu6-oe4ycfcjoi.gz
+    ³           ³       bngi80qsbt-au5iiaolm6.gz
+    ³           ³       byyev42tap-thwqe1to4t.gz
+    ³           ³       cbktzcotu4-uzhvkgbuya.gz
+    ³           ³       cd2lcpdxcx-v5a1vwkeuh.gz
+    ³           ³       cjc9pvf6ch-5xyxcxd807.gz
+    ³           ³       ck41llnwlm-aymxk3cy9j.gz
+    ³           ³       cn0tysxy6d-1a8xwvbxzz.gz
+    ³           ³       ctwximg74j-1o75gohiz7.gz
+    ³           ³       d16lntudd9-rdjkbepxrk.gz
+    ³           ³       d1w1jmcm9s-hd1eqzw66m.gz
+    ³           ³       d3hj24ple9-3u2qa153d4.gz
+    ³           ³       d4gbebvmks-gs0p4gm9v4.gz
+    ³           ³       dgsvh70lqo-2izf9igwvg.gz
+    ³           ³       dh8yifdeyd-drweemmual.gz
+    ³           ³       e0a9htzdh4-1wkj9e5od4.gz
+    ³           ³       e0l5vip8pf-x5118cx6rf.gz
+    ³           ³       e312je35bj-pqv7nevblm.gz
+    ³           ³       e4xhgxyypr-mvbfaotml8.gz
+    ³           ³       eghtjulhsr-n2vqcsqnv8.gz
+    ³           ³       egphyybxvd-g70k520eu1.gz
+    ³           ³       enkswpfwpm-4fqplfwz1g.gz
+    ³           ³       f92cs2t7w4-n7iqagrlq4.gz
+    ³           ³       fa20jayc9i-tr42ods1qv.gz
+    ³           ³       fbcn6n1cht-2onamaa40a.gz
+    ³           ³       fbmql3og39-txus4zzmh1.gz
+    ³           ³       foif0m9uj7-oei7zmzvu8.gz
+    ³           ³       frsl6j9caz-6dt3x8z8s3.gz
+    ³           ³       fukmojnmql-5mmzxht6er.gz
+    ³           ³       fzvjb1ik73-2sffq1ucac.gz
+    ³           ³       g0hvp2bhyb-nus1wkpiro.gz
+    ³           ³       g1qommfvmn-ix4l6a0e1v.gz
+    ³           ³       ghmhso6eil-xlpspxuy08.gz
+    ³           ³       gsdvxs25j7-xxsiiypy5w.gz
+    ³           ³       gyrr1sl7g7-mv535bwyet.gz
+    ³           ³       h3odh5n1o0-yy6f57640l.gz
+    ³           ³       h4pfj7vpwe-pbycz9d9yd.gz
+    ³           ³       h4tw7cxn4a-2acow02xbc.gz
+    ³           ³       hfqtp2061f-kp5cskunw3.gz
+    ³           ³       hiwm8mjdao-2fgdoze07w.gz
+    ³           ³       hqxf70ignl-vdsc6gcx63.gz
+    ³           ³       hs2kgoig9g-sopawqvpra.gz
+    ³           ³       hwmzdmx62c-84zf0v86h0.gz
+    ³           ³       ij1yw68qgu-97v4shrwms.gz
+    ³           ³       im21kg2ccj-eyul58izqc.gz
+    ³           ³       iu4tokbl5q-jvb2oz55e9.gz
+    ³           ³       ixbtpof63u-8nuo0cmf45.gz
+    ³           ³       j61d8asst3-lfu7j35m59.gz
+    ³           ³       jgyy796ny3-m4hkwkg7se.gz
+    ³           ³       jiub1r0qp9-oqymu76b4a.gz
+    ³           ³       jk2xj6a1ko-8mbek9xmwp.gz
+    ³           ³       k0452hgvvt-m8dw3tlozf.gz
+    ³           ³       kakshlzxqb-q9tkhfu6mi.gz
+    ³           ³       kcky1gx1am-c3m3dk58e2.gz
+    ³           ³       kdn1t01qoy-6xw3jzli4m.gz
+    ³           ³       klrjlqhphx-4rxmrfg6ri.gz
+    ³           ³       kn4ux29sxw-jt8xzja2dj.gz
+    ³           ³       ktvgqbctji-k8e9dtlti3.gz
+    ³           ³       li577ws5aa-xlg0m0zjzz.gz
+    ³           ³       lmpahxgjl0-tjcz0u77k5.gz
+    ³           ³       lsskuhmlni-bef32657le.gz
+    ³           ³       ly4jzczqh7-en8mb8dgz5.gz
+    ³           ³       mbnsv401dq-ahb3diyzjp.gz
+    ³           ³       ms1aw6abgh-x6tkt2dqja.gz
+    ³           ³       mu8wmiklpp-wmfzl5j9e7.gz
+    ³           ³       mwhjwltox0-aim9v92mii.gz
+    ³           ³       n0e91gi1h3-q34fwb6a9a.gz
+    ³           ³       n3pppu4gd6-k5seawevc7.gz
+    ³           ³       n73vcytr97-x2woihjrr1.gz
+    ³           ³       nco8l8ftd8-i47vxqdqw2.gz
+    ³           ³       njkb125604-z0px4pemw0.gz
+    ³           ³       nk9ghdwtrq-7k1wq8cosa.gz
+    ³           ³       o573jpuplk-xqsu2wsvba.gz
+    ³           ³       o6g57ggkxz-1fnd4wgcx9.gz
+    ³           ³       ogb0uau4r8-i13thla5gr.gz
+    ³           ³       oht9pya77n-bcjy48z358.gz
+    ³           ³       onozm0s40k-4of8o6oy2x.gz
+    ³           ³       orglwmohe8-463d67d6wi.gz
+    ³           ³       owb3pa9jpp-klcysiyo3d.gz
+    ³           ³       p2syyujwl0-bu9rq0ziwk.gz
+    ³           ³       pgsssz0aad-e121ut7rn2.gz
+    ³           ³       pn63h4r1ho-p1ffxwadab.gz
+    ³           ³       ppx9wry2k7-1ssg4wpdui.gz
+    ³           ³       prf1mng2k0-i464dwxnbb.gz
+    ³           ³       puc0pychuh-1yffo4p4p6.gz
+    ³           ³       q7e6pszhvy-71cgy4v0iu.gz
+    ³           ³       qavucppi5c-3svj8zln0c.gz
+    ³           ³       qixhncm38p-ixi55ulx9v.gz
+    ³           ³       qnutpi6muz-a42ub6y47j.gz
+    ³           ³       qps9n61885-kp519xkl0i.gz
+    ³           ³       qw08i242gf-nikz4plbe1.gz
+    ³           ³       rde0do35h4-6ooa5guk9o.gz
+    ³           ³       rmta4rarum-p3sbb90akv.gz
+    ³           ³       rt9e39wxod-pfqd8ma33i.gz
+    ³           ³       s1lci3iom0-aslf0c3gwv.gz
+    ³           ³       s5y09brn23-cxsgpfjkps.gz
+    ³           ³       s8qzkucfi9-2qxduvw29r.gz
+    ³           ³       s93l7l4v4g-5o4fwjxv7k.gz
+    ³           ³       sdsh3axun0-b4vu25l163.gz
+    ³           ³       sg04tt0j6t-ybcsnz2wh1.gz
+    ³           ³       sncex0c3sr-gevaphe2bw.gz
+    ³           ³       sva078a1jx-xtjqgewnsy.gz
+    ³           ³       syt31fydx9-wgxfwhzmtf.gz
+    ³           ³       szm1yf8skm-ae1qwufxjk.gz
+    ³           ³       t2sdk3bdkq-zxml5qfxw1.gz
+    ³           ³       thsv460hhq-4j2fswqmby.gz
+    ³           ³       tjl8gfdson-3uudqrjyld.gz
+    ³           ³       tkzk3624gt-4p5k2kt1u7.gz
+    ³           ³       tl4vpy3kyd-embd1n0d01.gz
+    ³           ³       tm5a0zioi0-lsakbjp1fg.gz
+    ³           ³       tnf2yz841j-q9s69lghpp.gz
+    ³           ³       tsz5tdb4xu-wp9yt1sdou.gz
+    ³           ³       tu85g8jh3e-iw5njcrnzl.gz
+    ³           ³       u8z739096p-ncnd1dksyt.gz
+    ³           ³       uhshf9bcky-1waztxdy2b.gz
+    ³           ³       uj222g2lfg-lsohh1u1gk.gz
+    ³           ³       um8wmswf6h-7ly0ozkl5l.gz
+    ³           ³       v4s279ldm2-gmi7z8rriy.gz
+    ³           ³       v6gw66634u-96hxrlqp0n.gz
+    ³           ³       v7g3ofvy8z-jnj0lyxf5f.gz
+    ³           ³       vdhmdh3ndt-szyv3zsckb.gz
+    ³           ³       vgs5wjubzo-05yilw3ihz.gz
+    ³           ³       vieimyij87-1t8oxmgbjs.gz
+    ³           ³       vtpg41ygjr-225qp0t0qd.gz
+    ³           ³       vznynmw7xc-hvg0royzt7.gz
+    ³           ³       w0jp2265ba-4njtqvtvgx.gz
+    ³           ³       w12b69dwb9-zo5w81znrq.gz
+    ³           ³       w6grhidskh-nik3tr8xii.gz
+    ³           ³       w77ya0ezpd-ezer9a39dj.gz
+    ³           ³       w7yg32aef4-kgyjb8k43h.gz
+    ³           ³       wdpnlk8h3j-u3upiikrdt.gz
+    ³           ³       wkkdufqwt1-vbl3iftxmx.gz
+    ³           ³       wsnf5ki87n-kon0rs26za.gz
+    ³           ³       wtln0v4wzh-rnav217uy2.gz
+    ³           ³       x3w3s3rg1s-9oszv2ri5x.gz
+    ³           ³       xsc852knp7-9xyue60r4w.gz
+    ³           ³       xx0mod8c0v-tnb9oatilq.gz
+    ³           ³       y98xhvua88-817e1wgkee.gz
+    ³           ³       ykzs30zdk4-f8ktd6d091.gz
+    ³           ³       yoybjcjzv2-rpvltkbyzt.gz
+    ³           ³       yt54uyot7a-t3bxh1b3zm.gz
+    ³           ³       z0s0miwzwp-ia4fj4go78.gz
+    ³           ³       z0uwitgxrb-j2cj2lluzd.gz
+    ³           ³       z4voipufkf-z3ovj5lxdl.gz
+    ³           ³       z6q6mcnps2-kxt6y1dz81.gz
+    ³           ³       zd84z65woe-q2v7fwp7aa.gz
+    ³           ³       znopexpxv4-b4zo7lpk8w.gz
+    ³           ³       zqcyjcetth-s710xtxasw.gz
+    ³           ³       
+    ³           ÃÄÄÄref
+    ³           ³       MovieFinder.Client.dll
+    ³           ³       
+    ³           ÃÄÄÄrefint
+    ³           ³       MovieFinder.Client.dll
+    ³           ³       
+    ³           ÃÄÄÄscopedcss
+    ³           ³   ÃÄÄÄbundle
+    ³           ³   ÃÄÄÄPages
+    ³           ³   ÀÄÄÄprojectbundle
+    ³           ÃÄÄÄstaticwebassets
+    ³           ÃÄÄÄtmp-webcil
+    ³           ³       Microsoft.AspNetCore.Authorization.wasm
+    ³           ³       Microsoft.AspNetCore.Components.Forms.wasm
+    ³           ³       Microsoft.AspNetCore.Components.wasm
+    ³           ³       Microsoft.AspNetCore.Components.Web.wasm
+    ³           ³       Microsoft.AspNetCore.Components.WebAssembly.wasm
+    ³           ³       Microsoft.AspNetCore.Metadata.wasm
+    ³           ³       Microsoft.AspNetCore.WebUtilities.wasm
+    ³           ³       Microsoft.CSharp.wasm
+    ³           ³       Microsoft.Extensions.Configuration.Abstractions.wasm
+    ³           ³       Microsoft.Extensions.Configuration.Binder.wasm
+    ³           ³       Microsoft.Extensions.Configuration.FileExtensions.wasm
+    ³           ³       Microsoft.Extensions.Configuration.Json.wasm
+    ³           ³       Microsoft.Extensions.Configuration.wasm
+    ³           ³       Microsoft.Extensions.DependencyInjection.Abstractions.wasm
+    ³           ³       Microsoft.Extensions.DependencyInjection.wasm
+    ³           ³       Microsoft.Extensions.FileProviders.Abstractions.wasm
+    ³           ³       Microsoft.Extensions.FileProviders.Physical.wasm
+    ³           ³       Microsoft.Extensions.FileSystemGlobbing.wasm
+    ³           ³       Microsoft.Extensions.Localization.Abstractions.wasm
+    ³           ³       Microsoft.Extensions.Localization.wasm
+    ³           ³       Microsoft.Extensions.Logging.Abstractions.wasm
+    ³           ³       Microsoft.Extensions.Logging.wasm
+    ³           ³       Microsoft.Extensions.Options.wasm
+    ³           ³       Microsoft.Extensions.Primitives.wasm
+    ³           ³       Microsoft.JSInterop.wasm
+    ³           ³       Microsoft.JSInterop.WebAssembly.wasm
+    ³           ³       Microsoft.Net.Http.Headers.wasm
+    ³           ³       Microsoft.VisualBasic.Core.wasm
+    ³           ³       Microsoft.VisualBasic.wasm
+    ³           ³       Microsoft.Win32.Primitives.wasm
+    ³           ³       Microsoft.Win32.Registry.wasm
+    ³           ³       MovieFinder.Client.wasm
+    ³           ³       mscorlib.wasm
+    ³           ³       MudBlazor.wasm
+    ³           ³       netstandard.wasm
+    ³           ³       Slugify.Core.wasm
+    ³           ³       System.AppContext.wasm
+    ³           ³       System.Buffers.wasm
+    ³           ³       System.Collections.Concurrent.wasm
+    ³           ³       System.Collections.Immutable.wasm
+    ³           ³       System.Collections.NonGeneric.wasm
+    ³           ³       System.Collections.Specialized.wasm
+    ³           ³       System.Collections.wasm
+    ³           ³       System.ComponentModel.Annotations.wasm
+    ³           ³       System.ComponentModel.DataAnnotations.wasm
+    ³           ³       System.ComponentModel.EventBasedAsync.wasm
+    ³           ³       System.ComponentModel.Primitives.wasm
+    ³           ³       System.ComponentModel.TypeConverter.wasm
+    ³           ³       System.ComponentModel.wasm
+    ³           ³       System.Configuration.wasm
+    ³           ³       System.Console.wasm
+    ³           ³       System.Core.wasm
+    ³           ³       System.Data.Common.wasm
+    ³           ³       System.Data.DataSetExtensions.wasm
+    ³           ³       System.Data.wasm
+    ³           ³       System.Diagnostics.Contracts.wasm
+    ³           ³       System.Diagnostics.Debug.wasm
+    ³           ³       System.Diagnostics.DiagnosticSource.wasm
+    ³           ³       System.Diagnostics.FileVersionInfo.wasm
+    ³           ³       System.Diagnostics.Process.wasm
+    ³           ³       System.Diagnostics.StackTrace.wasm
+    ³           ³       System.Diagnostics.TextWriterTraceListener.wasm
+    ³           ³       System.Diagnostics.Tools.wasm
+    ³           ³       System.Diagnostics.TraceSource.wasm
+    ³           ³       System.Diagnostics.Tracing.wasm
+    ³           ³       System.Drawing.Primitives.wasm
+    ³           ³       System.Drawing.wasm
+    ³           ³       System.Dynamic.Runtime.wasm
+    ³           ³       System.Formats.Asn1.wasm
+    ³           ³       System.Formats.Tar.wasm
+    ³           ³       System.Globalization.Calendars.wasm
+    ³           ³       System.Globalization.Extensions.wasm
+    ³           ³       System.Globalization.wasm
+    ³           ³       System.IO.Compression.Brotli.wasm
+    ³           ³       System.IO.Compression.FileSystem.wasm
+    ³           ³       System.IO.Compression.wasm
+    ³           ³       System.IO.Compression.ZipFile.wasm
+    ³           ³       System.IO.FileSystem.AccessControl.wasm
+    ³           ³       System.IO.FileSystem.DriveInfo.wasm
+    ³           ³       System.IO.FileSystem.Primitives.wasm
+    ³           ³       System.IO.FileSystem.wasm
+    ³           ³       System.IO.FileSystem.Watcher.wasm
+    ³           ³       System.IO.IsolatedStorage.wasm
+    ³           ³       System.IO.MemoryMappedFiles.wasm
+    ³           ³       System.IO.Pipelines.wasm
+    ³           ³       System.IO.Pipes.AccessControl.wasm
+    ³           ³       System.IO.Pipes.wasm
+    ³           ³       System.IO.UnmanagedMemoryStream.wasm
+    ³           ³       System.IO.wasm
+    ³           ³       System.Linq.Expressions.wasm
+    ³           ³       System.Linq.Parallel.wasm
+    ³           ³       System.Linq.Queryable.wasm
+    ³           ³       System.Linq.wasm
+    ³           ³       System.Memory.wasm
+    ³           ³       System.Net.Http.Json.wasm
+    ³           ³       System.Net.Http.wasm
+    ³           ³       System.Net.HttpListener.wasm
+    ³           ³       System.Net.Mail.wasm
+    ³           ³       System.Net.NameResolution.wasm
+    ³           ³       System.Net.NetworkInformation.wasm
+    ³           ³       System.Net.Ping.wasm
+    ³           ³       System.Net.Primitives.wasm
+    ³           ³       System.Net.Quic.wasm
+    ³           ³       System.Net.Requests.wasm
+    ³           ³       System.Net.Security.wasm
+    ³           ³       System.Net.ServicePoint.wasm
+    ³           ³       System.Net.Sockets.wasm
+    ³           ³       System.Net.wasm
+    ³           ³       System.Net.WebClient.wasm
+    ³           ³       System.Net.WebHeaderCollection.wasm
+    ³           ³       System.Net.WebProxy.wasm
+    ³           ³       System.Net.WebSockets.Client.wasm
+    ³           ³       System.Net.WebSockets.wasm
+    ³           ³       System.Numerics.Vectors.wasm
+    ³           ³       System.Numerics.wasm
+    ³           ³       System.ObjectModel.wasm
+    ³           ³       System.Private.CoreLib.wasm
+    ³           ³       System.Private.DataContractSerialization.wasm
+    ³           ³       System.Private.Uri.wasm
+    ³           ³       System.Private.Xml.Linq.wasm
+    ³           ³       System.Private.Xml.wasm
+    ³           ³       System.Reflection.DispatchProxy.wasm
+    ³           ³       System.Reflection.Emit.ILGeneration.wasm
+    ³           ³       System.Reflection.Emit.Lightweight.wasm
+    ³           ³       System.Reflection.Emit.wasm
+    ³           ³       System.Reflection.Extensions.wasm
+    ³           ³       System.Reflection.Metadata.wasm
+    ³           ³       System.Reflection.Primitives.wasm
+    ³           ³       System.Reflection.TypeExtensions.wasm
+    ³           ³       System.Reflection.wasm
+    ³           ³       System.Resources.Reader.wasm
+    ³           ³       System.Resources.ResourceManager.wasm
+    ³           ³       System.Resources.Writer.wasm
+    ³           ³       System.Runtime.CompilerServices.Unsafe.wasm
+    ³           ³       System.Runtime.CompilerServices.VisualC.wasm
+    ³           ³       System.Runtime.Extensions.wasm
+    ³           ³       System.Runtime.Handles.wasm
+    ³           ³       System.Runtime.InteropServices.JavaScript.wasm
+    ³           ³       System.Runtime.InteropServices.RuntimeInformation.wasm
+    ³           ³       System.Runtime.InteropServices.wasm
+    ³           ³       System.Runtime.Intrinsics.wasm
+    ³           ³       System.Runtime.Loader.wasm
+    ³           ³       System.Runtime.Numerics.wasm
+    ³           ³       System.Runtime.Serialization.Formatters.wasm
+    ³           ³       System.Runtime.Serialization.Json.wasm
+    ³           ³       System.Runtime.Serialization.Primitives.wasm
+    ³           ³       System.Runtime.Serialization.wasm
+    ³           ³       System.Runtime.Serialization.Xml.wasm
+    ³           ³       System.Runtime.wasm
+    ³           ³       System.Security.AccessControl.wasm
+    ³           ³       System.Security.Claims.wasm
+    ³           ³       System.Security.Cryptography.Algorithms.wasm
+    ³           ³       System.Security.Cryptography.Cng.wasm
+    ³           ³       System.Security.Cryptography.Csp.wasm
+    ³           ³       System.Security.Cryptography.Encoding.wasm
+    ³           ³       System.Security.Cryptography.OpenSsl.wasm
+    ³           ³       System.Security.Cryptography.Primitives.wasm
+    ³           ³       System.Security.Cryptography.wasm
+    ³           ³       System.Security.Cryptography.X509Certificates.wasm
+    ³           ³       System.Security.Principal.wasm
+    ³           ³       System.Security.Principal.Windows.wasm
+    ³           ³       System.Security.SecureString.wasm
+    ³           ³       System.Security.wasm
+    ³           ³       System.ServiceModel.Web.wasm
+    ³           ³       System.ServiceProcess.wasm
+    ³           ³       System.Text.Encoding.CodePages.wasm
+    ³           ³       System.Text.Encoding.Extensions.wasm
+    ³           ³       System.Text.Encoding.wasm
+    ³           ³       System.Text.Encodings.Web.wasm
+    ³           ³       System.Text.Json.wasm
+    ³           ³       System.Text.RegularExpressions.wasm
+    ³           ³       System.Threading.Channels.wasm
+    ³           ³       System.Threading.Overlapped.wasm
+    ³           ³       System.Threading.Tasks.Dataflow.wasm
+    ³           ³       System.Threading.Tasks.Extensions.wasm
+    ³           ³       System.Threading.Tasks.Parallel.wasm
+    ³           ³       System.Threading.Tasks.wasm
+    ³           ³       System.Threading.Thread.wasm
+    ³           ³       System.Threading.ThreadPool.wasm
+    ³           ³       System.Threading.Timer.wasm
+    ³           ³       System.Threading.wasm
+    ³           ³       System.Transactions.Local.wasm
+    ³           ³       System.Transactions.wasm
+    ³           ³       System.ValueTuple.wasm
+    ³           ³       System.wasm
+    ³           ³       System.Web.HttpUtility.wasm
+    ³           ³       System.Web.wasm
+    ³           ³       System.Windows.wasm
+    ³           ³       System.Xml.Linq.wasm
+    ³           ³       System.Xml.ReaderWriter.wasm
+    ³           ³       System.Xml.Serialization.wasm
+    ³           ³       System.Xml.wasm
+    ³           ³       System.Xml.XDocument.wasm
+    ³           ³       System.Xml.XmlDocument.wasm
+    ³           ³       System.Xml.XmlSerializer.wasm
+    ³           ³       System.Xml.XPath.wasm
+    ³           ³       System.Xml.XPath.XDocument.wasm
+    ³           ³       WindowsBase.wasm
+    ³           ³       
+    ³           ÀÄÄÄwebcil
+    ³                   Microsoft.AspNetCore.Authorization.wasm
+    ³                   Microsoft.AspNetCore.Components.Forms.wasm
+    ³                   Microsoft.AspNetCore.Components.wasm
+    ³                   Microsoft.AspNetCore.Components.Web.wasm
+    ³                   Microsoft.AspNetCore.Components.WebAssembly.wasm
+    ³                   Microsoft.AspNetCore.Metadata.wasm
+    ³                   Microsoft.AspNetCore.WebUtilities.wasm
+    ³                   Microsoft.CSharp.wasm
+    ³                   Microsoft.Extensions.Configuration.Abstractions.wasm
+    ³                   Microsoft.Extensions.Configuration.Binder.wasm
+    ³                   Microsoft.Extensions.Configuration.FileExtensions.wasm
+    ³                   Microsoft.Extensions.Configuration.Json.wasm
+    ³                   Microsoft.Extensions.Configuration.wasm
+    ³                   Microsoft.Extensions.DependencyInjection.Abstractions.wasm
+    ³                   Microsoft.Extensions.DependencyInjection.wasm
+    ³                   Microsoft.Extensions.FileProviders.Abstractions.wasm
+    ³                   Microsoft.Extensions.FileProviders.Physical.wasm
+    ³                   Microsoft.Extensions.FileSystemGlobbing.wasm
+    ³                   Microsoft.Extensions.Localization.Abstractions.wasm
+    ³                   Microsoft.Extensions.Localization.wasm
+    ³                   Microsoft.Extensions.Logging.Abstractions.wasm
+    ³                   Microsoft.Extensions.Logging.wasm
+    ³                   Microsoft.Extensions.Options.wasm
+    ³                   Microsoft.Extensions.Primitives.wasm
+    ³                   Microsoft.JSInterop.wasm
+    ³                   Microsoft.JSInterop.WebAssembly.wasm
+    ³                   Microsoft.Net.Http.Headers.wasm
+    ³                   Microsoft.VisualBasic.Core.wasm
+    ³                   Microsoft.VisualBasic.wasm
+    ³                   Microsoft.Win32.Primitives.wasm
+    ³                   Microsoft.Win32.Registry.wasm
+    ³                   MovieFinder.Client.wasm
+    ³                   mscorlib.wasm
+    ³                   MudBlazor.wasm
+    ³                   netstandard.wasm
+    ³                   Slugify.Core.wasm
+    ³                   System.AppContext.wasm
+    ³                   System.Buffers.wasm
+    ³                   System.Collections.Concurrent.wasm
+    ³                   System.Collections.Immutable.wasm
+    ³                   System.Collections.NonGeneric.wasm
+    ³                   System.Collections.Specialized.wasm
+    ³                   System.Collections.wasm
+    ³                   System.ComponentModel.Annotations.wasm
+    ³                   System.ComponentModel.DataAnnotations.wasm
+    ³                   System.ComponentModel.EventBasedAsync.wasm
+    ³                   System.ComponentModel.Primitives.wasm
+    ³                   System.ComponentModel.TypeConverter.wasm
+    ³                   System.ComponentModel.wasm
+    ³                   System.Configuration.wasm
+    ³                   System.Console.wasm
+    ³                   System.Core.wasm
+    ³                   System.Data.Common.wasm
+    ³                   System.Data.DataSetExtensions.wasm
+    ³                   System.Data.wasm
+    ³                   System.Diagnostics.Contracts.wasm
+    ³                   System.Diagnostics.Debug.wasm
+    ³                   System.Diagnostics.DiagnosticSource.wasm
+    ³                   System.Diagnostics.FileVersionInfo.wasm
+    ³                   System.Diagnostics.Process.wasm
+    ³                   System.Diagnostics.StackTrace.wasm
+    ³                   System.Diagnostics.TextWriterTraceListener.wasm
+    ³                   System.Diagnostics.Tools.wasm
+    ³                   System.Diagnostics.TraceSource.wasm
+    ³                   System.Diagnostics.Tracing.wasm
+    ³                   System.Drawing.Primitives.wasm
+    ³                   System.Drawing.wasm
+    ³                   System.Dynamic.Runtime.wasm
+    ³                   System.Formats.Asn1.wasm
+    ³                   System.Formats.Tar.wasm
+    ³                   System.Globalization.Calendars.wasm
+    ³                   System.Globalization.Extensions.wasm
+    ³                   System.Globalization.wasm
+    ³                   System.IO.Compression.Brotli.wasm
+    ³                   System.IO.Compression.FileSystem.wasm
+    ³                   System.IO.Compression.wasm
+    ³                   System.IO.Compression.ZipFile.wasm
+    ³                   System.IO.FileSystem.AccessControl.wasm
+    ³                   System.IO.FileSystem.DriveInfo.wasm
+    ³                   System.IO.FileSystem.Primitives.wasm
+    ³                   System.IO.FileSystem.wasm
+    ³                   System.IO.FileSystem.Watcher.wasm
+    ³                   System.IO.IsolatedStorage.wasm
+    ³                   System.IO.MemoryMappedFiles.wasm
+    ³                   System.IO.Pipelines.wasm
+    ³                   System.IO.Pipes.AccessControl.wasm
+    ³                   System.IO.Pipes.wasm
+    ³                   System.IO.UnmanagedMemoryStream.wasm
+    ³                   System.IO.wasm
+    ³                   System.Linq.Expressions.wasm
+    ³                   System.Linq.Parallel.wasm
+    ³                   System.Linq.Queryable.wasm
+    ³                   System.Linq.wasm
+    ³                   System.Memory.wasm
+    ³                   System.Net.Http.Json.wasm
+    ³                   System.Net.Http.wasm
+    ³                   System.Net.HttpListener.wasm
+    ³                   System.Net.Mail.wasm
+    ³                   System.Net.NameResolution.wasm
+    ³                   System.Net.NetworkInformation.wasm
+    ³                   System.Net.Ping.wasm
+    ³                   System.Net.Primitives.wasm
+    ³                   System.Net.Quic.wasm
+    ³                   System.Net.Requests.wasm
+    ³                   System.Net.Security.wasm
+    ³                   System.Net.ServicePoint.wasm
+    ³                   System.Net.Sockets.wasm
+    ³                   System.Net.wasm
+    ³                   System.Net.WebClient.wasm
+    ³                   System.Net.WebHeaderCollection.wasm
+    ³                   System.Net.WebProxy.wasm
+    ³                   System.Net.WebSockets.Client.wasm
+    ³                   System.Net.WebSockets.wasm
+    ³                   System.Numerics.Vectors.wasm
+    ³                   System.Numerics.wasm
+    ³                   System.ObjectModel.wasm
+    ³                   System.Private.CoreLib.wasm
+    ³                   System.Private.DataContractSerialization.wasm
+    ³                   System.Private.Uri.wasm
+    ³                   System.Private.Xml.Linq.wasm
+    ³                   System.Private.Xml.wasm
+    ³                   System.Reflection.DispatchProxy.wasm
+    ³                   System.Reflection.Emit.ILGeneration.wasm
+    ³                   System.Reflection.Emit.Lightweight.wasm
+    ³                   System.Reflection.Emit.wasm
+    ³                   System.Reflection.Extensions.wasm
+    ³                   System.Reflection.Metadata.wasm
+    ³                   System.Reflection.Primitives.wasm
+    ³                   System.Reflection.TypeExtensions.wasm
+    ³                   System.Reflection.wasm
+    ³                   System.Resources.Reader.wasm
+    ³                   System.Resources.ResourceManager.wasm
+    ³                   System.Resources.Writer.wasm
+    ³                   System.Runtime.CompilerServices.Unsafe.wasm
+    ³                   System.Runtime.CompilerServices.VisualC.wasm
+    ³                   System.Runtime.Extensions.wasm
+    ³                   System.Runtime.Handles.wasm
+    ³                   System.Runtime.InteropServices.JavaScript.wasm
+    ³                   System.Runtime.InteropServices.RuntimeInformation.wasm
+    ³                   System.Runtime.InteropServices.wasm
+    ³                   System.Runtime.Intrinsics.wasm
+    ³                   System.Runtime.Loader.wasm
+    ³                   System.Runtime.Numerics.wasm
+    ³                   System.Runtime.Serialization.Formatters.wasm
+    ³                   System.Runtime.Serialization.Json.wasm
+    ³                   System.Runtime.Serialization.Primitives.wasm
+    ³                   System.Runtime.Serialization.wasm
+    ³                   System.Runtime.Serialization.Xml.wasm
+    ³                   System.Runtime.wasm
+    ³                   System.Security.AccessControl.wasm
+    ³                   System.Security.Claims.wasm
+    ³                   System.Security.Cryptography.Algorithms.wasm
+    ³                   System.Security.Cryptography.Cng.wasm
+    ³                   System.Security.Cryptography.Csp.wasm
+    ³                   System.Security.Cryptography.Encoding.wasm
+    ³                   System.Security.Cryptography.OpenSsl.wasm
+    ³                   System.Security.Cryptography.Primitives.wasm
+    ³                   System.Security.Cryptography.wasm
+    ³                   System.Security.Cryptography.X509Certificates.wasm
+    ³                   System.Security.Principal.wasm
+    ³                   System.Security.Principal.Windows.wasm
+    ³                   System.Security.SecureString.wasm
+    ³                   System.Security.wasm
+    ³                   System.ServiceModel.Web.wasm
+    ³                   System.ServiceProcess.wasm
+    ³                   System.Text.Encoding.CodePages.wasm
+    ³                   System.Text.Encoding.Extensions.wasm
+    ³                   System.Text.Encoding.wasm
+    ³                   System.Text.Encodings.Web.wasm
+    ³                   System.Text.Json.wasm
+    ³                   System.Text.RegularExpressions.wasm
+    ³                   System.Threading.Channels.wasm
+    ³                   System.Threading.Overlapped.wasm
+    ³                   System.Threading.Tasks.Dataflow.wasm
+    ³                   System.Threading.Tasks.Extensions.wasm
+    ³                   System.Threading.Tasks.Parallel.wasm
+    ³                   System.Threading.Tasks.wasm
+    ³                   System.Threading.Thread.wasm
+    ³                   System.Threading.ThreadPool.wasm
+    ³                   System.Threading.Timer.wasm
+    ³                   System.Threading.wasm
+    ³                   System.Transactions.Local.wasm
+    ³                   System.Transactions.wasm
+    ³                   System.ValueTuple.wasm
+    ³                   System.wasm
+    ³                   System.Web.HttpUtility.wasm
+    ³                   System.Web.wasm
+    ³                   System.Windows.wasm
+    ³                   System.Xml.Linq.wasm
+    ³                   System.Xml.ReaderWriter.wasm
+    ³                   System.Xml.Serialization.wasm
+    ³                   System.Xml.wasm
+    ³                   System.Xml.XDocument.wasm
+    ³                   System.Xml.XmlDocument.wasm
+    ³                   System.Xml.XmlSerializer.wasm
+    ³                   System.Xml.XPath.wasm
+    ³                   System.Xml.XPath.XDocument.wasm
+    ³                   WindowsBase.wasm
+    ³                   
+    ÃÄÄÄPages
+    ³       ActorPage.razor
+    ³       HomePage.razor
+    ³       MoviePage.razor
+    ³       
+    ÃÄÄÄProperties
+    ³       launchSettings.json
+    ³       
+    ÃÄÄÄServices
+    ³       TMDBService.cs
+    ³       
+    ÀÄÄÄwwwroot
+        ³   appsettings.Development.json
+        ³   appsettings.json
+        ³   icon-192.png
+        ³   index.html
+        ³   
+        ÃÄÄÄcss
+        ³       app.css
+        ³       custom.css
+        ³       
+        ÃÄÄÄImages
+        ³       noprofile.png
+        ³       notfound.png
+        ³       tmdb.svg
+        ³       
+        ÀÄÄÄjs
+                scrollListener.js
+                
