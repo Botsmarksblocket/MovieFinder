@@ -11,8 +11,7 @@ namespace MovieFinder.API.Endpoints
             actors.MapGet("/{id:int}", async (int id, ITMDBService tmdb) =>
                 await tmdb.GetActorDetailsAsync(id));
 
-            // Nested under movies for clarity
-            routes.MapGet("/movies/{id:int}/actors", async (int id, ITMDBService tmdb) =>
+            actors.MapGet("/movie/{id:int}", async (int id, ITMDBService tmdb) =>
                 await tmdb.GetActorsForMovieAsync(id));
         }
     }
