@@ -10,20 +10,11 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 
 builder.Services.AddMudServices();
 
+//TODO: Update for production
 builder.Services.AddScoped(sp => new HttpClient
 {
-    BaseAddress = new Uri(builder.HostEnvironment.BaseAddress)
+    BaseAddress = new Uri("https://localhost:7282/api/v1/")
 });
-
-if (builder.HostEnvironment.IsDevelopment())
-{
-    using var httpClient = new HttpClient
-    {
-        BaseAddress = new Uri(builder.HostEnvironment.BaseAddress)
-    };
-    using var stream = await httpClient.GetStreamAsync("appsettings.Development.json");
-    builder.Configuration.AddJsonStream(stream);
-}
 
 builder.Services.AddScoped<ITMDBService, TMDBService>();
 
