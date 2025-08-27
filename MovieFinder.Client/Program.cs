@@ -16,6 +16,6 @@ builder.Services.AddScoped(sp => new HttpClient
     BaseAddress = new Uri("https://localhost:7282/api/v1/")
 });
 
-builder.Services.AddScoped<ITMDBService, TMDBService>();
+builder.Services.AddScoped<IMovieApiService, MovieApiService>();
 
 await builder.Build().RunAsync();

@@ -7,7 +7,7 @@
 @using MovieFinder.Shared.Models.Actors
 @using MovieFinder.Shared.Models.Common
 @using MovieFinder.Client.Components
-@inject ITMDBService TMDB
+@inject IMovieApiService TMDB
 @page "/actor/{id:int}/{slug}"
 
 <PageTitle>@_actor.Name</PageTitle>

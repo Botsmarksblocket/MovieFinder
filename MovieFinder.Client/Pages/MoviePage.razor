@@ -7,7 +7,7 @@
 @using Services
 @using Slugify
 @inject IDialogService DialogService
-@inject ITMDBService TMDB
+@inject IMovieApiService TMDB
 @page "/movie/{id:int}/{slug}"
 
 <PageTitle>@_movie.Title</PageTitle>

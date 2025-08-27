@@ -5,7 +5,7 @@ using MovieFinder.Shared.Models.Common;
 
 namespace MovieFinder.Client.Services
 {
-    public interface ITMDBService
+    public interface IMovieApiService
     {
         Task<MovieDetail?> GetMovieDetailsAsync(int movieId);
         Task<MovieImage?> GetMovieImagesAsync(int movieId);
@@ -18,12 +18,12 @@ namespace MovieFinder.Client.Services
         Task<ActorDetail?> GetActorDetailsAsync(int actorId);
     }
 
-    public class TMDBService : ITMDBService
+    public class MovieApiService : IMovieApiService
     {
 
         private readonly HttpClient _httpClient;
 
-        public TMDBService(HttpClient httpClient)
+        public MovieApiService(HttpClient httpClient)
         {
             _httpClient = httpClient;
         }
@@ -48,7 +48,7 @@ namespace MovieFinder.Client.Services
 
         // Search for movies by keyword
         public async Task<List<Movie>> GetSearchedMoviesAsync(string searchWord) =>
-            await _httpClient.GetFromJsonAsync<List<Movie>>($"movies/search/{searchWord}")
+            await _httpClient.GetFromJsonAsync<List<Movie>>($"movies/search/?query={searchWord}")
             ?? new List<Movie>();
 
         // Get similar movies
