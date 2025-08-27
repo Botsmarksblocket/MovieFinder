@@ -1,5 +1,7 @@
-using MovieFinder.API.Services;
+using Microsoft.AspNetCore.RateLimiting;
+using System.Threading.RateLimiting;
 using MovieFinder.API.Endpoints;
+using MovieFinder.API.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +13,25 @@ var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddRateLimiter(options =>
+{
+    options.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(httpContext =>
+    {
+        var clientId = httpContext.Connection.RemoteIpAddress?.ToString() ?? "unknown";
+
+        return RateLimitPartition.GetFixedWindowLimiter(
+            partitionKey: clientId,
+            factory: _ => new FixedWindowRateLimiterOptions
+            {
+                PermitLimit = 30,
+                Window = TimeSpan.FromSeconds(30),
+                QueueLimit = 2
+            });
+    });
+
+    options.RejectionStatusCode = 429;
+});
 
 builder.Services.AddCors(options =>
 {
@@ -25,6 +46,7 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
+app.UseRateLimiter();
 app.UseCors(MyAllowSpecificOrigins);
 
 // Configure the HTTP request pipeline.
