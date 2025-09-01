@@ -1,26 +1,23 @@
 ﻿using Microsoft.AspNetCore.WebUtilities;
-using MovieFinder.Shared.Models.Actors;
-using MovieFinder.Shared.Models.Common;
-using MovieFinder.Shared.Models.Movies;
-using MovieFinder.Shared.Result;
 using System.Globalization;
+using MovieFinder.Shared.Models.Actors;
+using MovieFinder.Shared.Models.Movies;
+using MovieFinder.Shared.Models.Common;
 using System.Net.Http.Json;
-using System.Text.Json;
-using static System.Net.WebRequestMethods;
 
 namespace MovieFinder.API.Services
 {
     public interface ITMDBService
     {
-        Task<MovieDetail> GetMovieDetailsAsync(int movieId);
-        Task<Result<MovieImage>> GetMovieImagesAsync(int movieId);
+        Task<MovieDetail?> GetMovieDetailsAsync(int movieId);
+        Task<MovieImage?> GetMovieImagesAsync(int movieId);
         Task<List<MovieVideoItem>> GetYoutubeTrailersAsync(int movieId);
         Task<List<Genre>> GetGenresAsync();
         Task<List<Movie>> GetSearchedMoviesAsync(string searchWord);
         Task<SearchResult> GetSimilarMoviesAsync(int movieId, int page);
         Task<SearchResult> GetFilteredMoviesAsync(FilterParameter parameters);
-        Task<Actor> GetActorsForMovieAsync(int movieId);
-        Task<ActorDetail> GetActorDetailsAsync(int actorId);
+        Task<Actor?> GetActorsForMovieAsync(int movieId);
+        Task<ActorDetail?> GetActorDetailsAsync(int actorId);
     }
 
     public class TMDBService : ITMDBService
@@ -35,7 +32,7 @@ namespace MovieFinder.API.Services
         }
 
         //Returns details about a specific movie
-        public async Task<MovieDetail> GetMovieDetailsAsync(int movieId)
+        public async Task<MovieDetail?> GetMovieDetailsAsync(int movieId)
         {
             var baseUrl = $"https://api.themoviedb.org/3/movie/{movieId}";
 
@@ -45,12 +42,20 @@ namespace MovieFinder.API.Services
             };
 
             var url = QueryHelpers.AddQueryString(baseUrl, queryParameters);
-            var response = await _httpClient.GetFromJsonAsync<MovieDetail>(url);
-            return response;
+
+            try
+            {
+                return await _httpClient.GetFromJsonAsync<MovieDetail?>(url);
+            }
+
+            catch
+            {
+                return null;
+            }
         }
 
         //Returns all images from a movie
-        public async Task<Result<MovieImage>> GetMovieImagesAsync(int movieId)
+        public async Task<MovieImage?> GetMovieImagesAsync(int movieId)
         {
             var baseUrl = $"https://api.themoviedb.org/3/movie/{movieId}/images";
 
@@ -63,29 +68,14 @@ namespace MovieFinder.API.Services
 
             try
             {
-                var response = await _httpClient.GetAsync(url);
-
-                if (!response.IsSuccessStatusCode)
-                {
-                    return Result<MovieImage>.Fail("Failed to fetch images from TMDB");
-                }
-
-                var result = await response.Content.ReadFromJsonAsync<MovieImage>();
-
-                return result is not null
-                    ? Result<MovieImage>.Ok(result)
-                    : Result<MovieImage>.Fail("No data returned from TMDB");
+                return await _httpClient.GetFromJsonAsync<MovieImage?>(url);
             }
-            catch (HttpRequestException)
+
+            catch
             {
-                // network issues
-                return Result<MovieImage>.Fail("Could not reach TMDB");
+                return null;
             }
-            catch (JsonException)
-            {
-                // unexpected schema
-                return Result<MovieImage>.Fail("Invalid response from TMDB");
-            }
+
         }
 
         //Returns all videos from a movie
@@ -99,18 +89,41 @@ namespace MovieFinder.API.Services
             };
 
             var url = QueryHelpers.AddQueryString(baseUrl, queryParameters);
-            var response = await _httpClient.GetFromJsonAsync<MovieVideo>(url);
-            return response?.Results?
-                .Where(v => v.Site == "YouTube" && v.Type == "Trailer")
-                .ToList() ?? new List<MovieVideoItem>();
+
+            try
+            {
+                var result = await _httpClient.GetFromJsonAsync<MovieVideo?>(url);
+                return result?.Results?.Where(v => v.Site == "YouTube" && v.Type == "Trailer").ToList()
+                       ?? new List<MovieVideoItem>();
+            }
+
+            catch
+            {
+                return new List<MovieVideoItem>();
+            }
         }
 
         //Retrieves all movie genres
         public async Task<List<Genre>> GetGenresAsync()
         {
             var url = $"https://api.themoviedb.org/3/genre/movie/list?api_key={_apiKey}";
-            var response = await _httpClient.GetFromJsonAsync<GenreResult>(url);
-            return response?.Genres ?? new List<Genre>();
+
+            try
+            {
+                var response = await _httpClient.GetAsync(url);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    return new List<Genre>();
+                }
+
+                var result = await response.Content.ReadFromJsonAsync<GenreResult>();
+                return result?.Genres ?? new List<Genre>();
+            }
+            catch
+            {
+                return new List<Genre>();
+            }
         }
 
         //Retrieves specific movies which user searched for
@@ -125,9 +138,24 @@ namespace MovieFinder.API.Services
             };
 
             var url = QueryHelpers.AddQueryString(baseUrl, queryParameters);
-            var response = await _httpClient.GetFromJsonAsync<SearchResult>(url);
 
-            return response?.Results ?? new List<Movie>();
+            try
+            {
+                var response = await _httpClient.GetAsync(url);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    return new List<Movie>();
+                }
+
+
+                var result = await response.Content.ReadFromJsonAsync<SearchResult>();
+                return result?.Results ?? new List<Movie>();
+            }
+            catch
+            {
+                return new List<Movie>();
+            }
         }
 
         public async Task<SearchResult> GetSimilarMoviesAsync(int movieId, int page)
@@ -142,8 +170,22 @@ namespace MovieFinder.API.Services
 
             var url = QueryHelpers.AddQueryString(baseUrl, queryParameters);
 
-            return await _httpClient.GetFromJsonAsync<SearchResult>(url)
-                ?? new SearchResult { Results = new List<Movie>() };
+            try
+            {
+                var response = await _httpClient.GetAsync(url);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    return new SearchResult { Results = new List<Movie>() };
+                }
+
+                return await response.Content.ReadFromJsonAsync<SearchResult>()
+                       ?? new SearchResult { Results = new List<Movie>() };
+            }
+            catch
+            {
+                return new SearchResult { Results = new List<Movie>() };
+            }
         }
 
         //Retrieves list of movies from TMDB based on provided filter parameters.
@@ -175,16 +217,24 @@ namespace MovieFinder.API.Services
 
             queryParameters["vote_average.gte"] = parameter.MinimumRating.ToString(CultureInfo.InvariantCulture);
 
-
-
             var url = QueryHelpers.AddQueryString(baseUrl, queryParameters);
 
-            return await _httpClient.GetFromJsonAsync<SearchResult>(url)
-                    ?? new SearchResult { Results = new List<Movie>() };
+            try
+            {
+                var response = await _httpClient.GetAsync(url);
+                if (!response.IsSuccessStatusCode) return new SearchResult { Results = new List<Movie>() };
+
+                return await response.Content.ReadFromJsonAsync<SearchResult>()
+                       ?? new SearchResult { Results = new List<Movie>() };
+            }
+            catch
+            {
+                return new SearchResult { Results = new List<Movie>() };
+            }
         }
 
         //Get list of all actors in a movie
-        public async Task<Actor> GetActorsForMovieAsync(int movieId)
+        public async Task<Actor?> GetActorsForMovieAsync(int movieId)
         {
             var baseUrl = $"https://api.themoviedb.org/3/movie/{movieId}/credits";
 
@@ -194,12 +244,20 @@ namespace MovieFinder.API.Services
             };
 
             var url = QueryHelpers.AddQueryString(baseUrl, queryParameters);
-            var response = await _httpClient.GetFromJsonAsync<Actor>(url);
-            return response;
+
+            try
+            {
+                return await _httpClient.GetFromJsonAsync<Actor?>(url);
+            }
+
+            catch
+            {
+                return null;
+            }
         }
 
         //Get details about a specific actor
-        public async Task<ActorDetail> GetActorDetailsAsync(int actorId)
+        public async Task<ActorDetail?> GetActorDetailsAsync(int actorId)
         {
             var baseUrl = $"https://api.themoviedb.org/3/person/{actorId}";
 
@@ -210,8 +268,17 @@ namespace MovieFinder.API.Services
             };
 
             var url = QueryHelpers.AddQueryString(baseUrl, queryParameters);
-            var response = await _httpClient.GetFromJsonAsync<ActorDetail>(url);
-            return response;
+
+            try
+            {
+                return await _httpClient.GetFromJsonAsync<ActorDetail?>(url);
+            }
+
+            catch
+            {
+                return null;
+            }
         }
     }
 }
+
