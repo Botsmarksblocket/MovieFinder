@@ -3,8 +3,8 @@ name: Deploy Frontend (Cloudflare Pages)
 on:
   push:
     branches:
-      - master
-    paths:
+      - master # On master
+    paths: 
       - 'MovieFinder.Client/**'
       - 'MovieFinder.Shared/**'
 
