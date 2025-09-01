@@ -3,35 +3,40 @@ name: Deploy Frontend (Cloudflare Pages)
 on:
   push:
     branches:
-      - master  # or your default branch
+      - master
     paths:
-      - 'MovieFinder.Client/**'  # only trigger if frontend changes
+      - 'MovieFinder.Client/**'
+      - 'MovieFinder.Shared/**'
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
+      # Checkout the repo
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      # Setup .NET
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: '9.0.x'
 
+      # Restore dependencies
       - name: Restore dependencies
         working-directory: MovieFinder.Client
         run: dotnet restore
 
-      - name: Build
+      # Build & publish
+      - name: Build & publish
         working-directory: MovieFinder.Client
         run: dotnet publish -c Release -o publish
 
+      # Deploy using Wrangler
       - name: Deploy to Cloudflare Pages
-        uses: cloudflare/pages-action@v1
+        uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: 'moviefinderapp'
-          directory: 'MovieFinder.Client/publish/wwwroot'
+          workingDirectory: MovieFinder.Client/publish
+          command: pages deploy wwwroot --project-name=moviefinderapp
