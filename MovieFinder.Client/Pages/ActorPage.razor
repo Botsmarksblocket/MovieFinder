@@ -1,12 +1,12 @@
 ﻿@using Services
 @using MovieFinder.Shared.Models
 @using Slugify
-@inject IDialogService DialogService
 @using MovieFinder.Client.Dialogs
 @using MovieFinder.Shared.Models.Movies
 @using MovieFinder.Shared.Models.Actors
 @using MovieFinder.Shared.Models.Common
 @using MovieFinder.Client.Components
+@inject IDialogService DialogService
 @inject ISnackbar Snackbar
 @inject IMovieService TMDB
 @page "/actor/{id:int}/{slug}"
