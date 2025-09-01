@@ -27,48 +27,126 @@ namespace MovieFinder.Client.Services
         {
             _httpClient = httpClient;
         }
-
         // Get details about a specific movie
-        public async Task<MovieDetail?> GetMovieDetailsAsync(int movieId) =>
-            await _httpClient.GetFromJsonAsync<MovieDetail>($"movies/{movieId}");
+        public async Task<MovieDetail?> GetMovieDetailsAsync(int movieId)
+        {
+            try
+            {
+                return await _httpClient.GetFromJsonAsync<MovieDetail?>($"movies/{movieId}");
+            }
+            catch
+            {
+                return null;
+            }
+        }
 
         // Get all images for a movie
-        public async Task<MovieImage?> GetMovieImagesAsync(int movieId) =>
-            await _httpClient.GetFromJsonAsync<MovieImage>($"movies/{movieId}/images");
+        public async Task<MovieImage?> GetMovieImagesAsync(int movieId)
+        {
+            try
+            {
+                return await _httpClient.GetFromJsonAsync<MovieImage?>($"movies/{movieId}/images");
+            }
+            catch
+            {
+                return null;
+            }
+        }
 
         // Get all YouTube trailers for a movie
-        public async Task<List<MovieVideoItem>> GetYoutubeTrailersAsync(int movieId) =>
-            await _httpClient.GetFromJsonAsync<List<MovieVideoItem>>($"movies/{movieId}/trailers")
-            ?? new List<MovieVideoItem>();
+        public async Task<List<MovieVideoItem>> GetYoutubeTrailersAsync(int movieId)
+        {
+            try
+            {
+                return await _httpClient.GetFromJsonAsync<List<MovieVideoItem>>($"movies/{movieId}/trailers")
+                       ?? new List<MovieVideoItem>();
+            }
+            catch
+            {
+                return new List<MovieVideoItem>();
+            }
+        }
 
         // Get all genres
-        public async Task<List<Genre>> GetGenresAsync() =>
-            await _httpClient.GetFromJsonAsync<List<Genre>>("genres")
-            ?? new List<Genre>();
+        public async Task<List<Genre>> GetGenresAsync()
+        {
+            try
+            {
+                return await _httpClient.GetFromJsonAsync<List<Genre>>("genres")
+                       ?? new List<Genre>();
+            }
+            catch
+            {
+                return new List<Genre>();
+            }
+        }
 
         // Search for movies by keyword
-        public async Task<List<Movie>> GetSearchedMoviesAsync(string searchWord) =>
-            await _httpClient.GetFromJsonAsync<List<Movie>>($"movies/search/?query={searchWord}")
-            ?? new List<Movie>();
+        public async Task<List<Movie>> GetSearchedMoviesAsync(string searchWord)
+        {
+            try
+            {
+                return await _httpClient.GetFromJsonAsync<List<Movie>>($"movies/search/?query={searchWord}")
+                       ?? new List<Movie>();
+            }
+            catch
+            {
+                return new List<Movie>();
+            }
+        }
 
         // Get similar movies
-        public async Task<SearchResult?> GetSimilarMoviesAsync(int movieId, int page) =>
-            await _httpClient.GetFromJsonAsync<SearchResult>($"movies/{movieId}/similar?page={page}");
+        public async Task<SearchResult?> GetSimilarMoviesAsync(int movieId, int page)
+        {
+            try
+            {
+                return await _httpClient.GetFromJsonAsync<SearchResult?>($"movies/{movieId}/similar?page={page}");
+            }
+            catch
+            {
+                return null;
+            }
+        }
 
         // Get filtered movies (POST request)
         public async Task<SearchResult?> GetFilteredMoviesAsync(FilterParameter parameter)
         {
-            var response = await _httpClient.PostAsJsonAsync("movies/filter", parameter);
-            return await response.Content.ReadFromJsonAsync<SearchResult>();
+            try
+            {
+                var response = await _httpClient.PostAsJsonAsync("movies/filter", parameter);
+                return await response.Content.ReadFromJsonAsync<SearchResult?>();
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         // Get list of actors in a movie
-        public async Task<Actor?> GetActorsForMovieAsync(int movieId) =>
-            await _httpClient.GetFromJsonAsync<Actor>($"actors/movie/{movieId}");
+        public async Task<Actor?> GetActorsForMovieAsync(int movieId)
+        {
+            try
+            {
+                return await _httpClient.GetFromJsonAsync<Actor?>($"actors/movie/{movieId}");
+            }
+            catch
+            {
+                return null;
+            }
+        }
 
         // Get details about a specific actor
-        public async Task<ActorDetail?> GetActorDetailsAsync(int actorId) =>
-            await _httpClient.GetFromJsonAsync<ActorDetail>($"actors/{actorId}");
+        public async Task<ActorDetail?> GetActorDetailsAsync(int actorId)
+        {
+            try
+            {
+                return await _httpClient.GetFromJsonAsync<ActorDetail?>($"actors/{actorId}");
+            }
+            catch
+            {
+                return null;
+            }
+        }
     }
 }
 

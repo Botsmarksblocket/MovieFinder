@@ -110,16 +110,10 @@ namespace MovieFinder.API.Services
 
             try
             {
-                var response = await _httpClient.GetAsync(url);
-
-                if (!response.IsSuccessStatusCode)
-                {
-                    return new List<Genre>();
-                }
-
-                var result = await response.Content.ReadFromJsonAsync<GenreResult>();
+                var result = await _httpClient.GetFromJsonAsync<GenreResult?>(url);
                 return result?.Genres ?? new List<Genre>();
             }
+
             catch
             {
                 return new List<Genre>();
@@ -141,15 +135,7 @@ namespace MovieFinder.API.Services
 
             try
             {
-                var response = await _httpClient.GetAsync(url);
-
-                if (!response.IsSuccessStatusCode)
-                {
-                    return new List<Movie>();
-                }
-
-
-                var result = await response.Content.ReadFromJsonAsync<SearchResult>();
+                var result = await _httpClient.GetFromJsonAsync<SearchResult?>(url);
                 return result?.Results ?? new List<Movie>();
             }
             catch
@@ -172,16 +158,10 @@ namespace MovieFinder.API.Services
 
             try
             {
-                var response = await _httpClient.GetAsync(url);
-
-                if (!response.IsSuccessStatusCode)
-                {
-                    return new SearchResult { Results = new List<Movie>() };
-                }
-
-                return await response.Content.ReadFromJsonAsync<SearchResult>()
+                return await _httpClient.GetFromJsonAsync<SearchResult?>(url)
                        ?? new SearchResult { Results = new List<Movie>() };
             }
+
             catch
             {
                 return new SearchResult { Results = new List<Movie>() };
@@ -221,12 +201,10 @@ namespace MovieFinder.API.Services
 
             try
             {
-                var response = await _httpClient.GetAsync(url);
-                if (!response.IsSuccessStatusCode) return new SearchResult { Results = new List<Movie>() };
-
-                return await response.Content.ReadFromJsonAsync<SearchResult>()
+                return await _httpClient.GetFromJsonAsync<SearchResult?>(url)
                        ?? new SearchResult { Results = new List<Movie>() };
             }
+
             catch
             {
                 return new SearchResult { Results = new List<Movie>() };
