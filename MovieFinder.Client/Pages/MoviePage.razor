@@ -8,7 +8,7 @@
 @using Slugify
 @inject ISnackbar Snackbar
 @inject IDialogService DialogService
-@inject IMovieApiService TMDB
+@inject IMovieService TMDB
 @page "/movie/{id:int}/{slug}"
 
 <PageTitle>@_movie.Title</PageTitle>
@@ -318,19 +318,14 @@ else
 		_hasMoviesLoaded = false;
 		_loadedMovies.Clear();
 
-		var movieResult = await TMDB.GetMovieDetailsAsync(Id);
-
-		if(movieResult == null)
+		var result = await TMDB.GetMovieDetailsAsync(Id);
+		if (!result.Success)
 		{
-			Snackbar.Add("Unable to retrieve the movie. Please try again later.", Severity.Error);
+			Snackbar.Add("Unable to retrieve movie details. Please try again later.", Severity.Error);
+			return;
 		}
 
-		_movie = movieResult ?? new MovieDetail
-		{
-			Genres = new List<Genre>(),
-			ProductionCompanies = new List<ProductionCompany>(),
-			Languages = new List<AvailableLanguage>(),
-		};
+		_movie = result.Data!;
 
 		var imagesResult = await TMDB.GetMovieImagesAsync(Id);
 		_movieImages = imagesResult ?? new MovieImage

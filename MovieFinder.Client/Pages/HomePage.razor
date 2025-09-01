@@ -4,7 +4,7 @@
 @using MovieFinder.Shared.Models.Common
 @using MovieFinder.Client.Components
 @using Slugify
-@inject IMovieApiService TMDB
+@inject IMovieService TMDB
 @inject ISnackbar Snackbar
 
 @page "/"
@@ -134,16 +134,21 @@ else
 	{
 	<MovieComponent @key=movie.Id Movie="movie" FadeIn="fade-in" />
 	}
-</MudGrid>;
+</MudGrid>
+	;
 
-	private async Task<IEnumerable<Movie>> LoadMoviesAsync(int page)
+private async Task<IEnumerable<Movie>> LoadMoviesAsync(int page)
 	{
 		_parameters.Page = page;
 		var result = await TMDB.GetFilteredMoviesAsync(_parameters);
 
-		var movies = result?.Results ?? new List<Movie>();
+		if (!result.Success)
+		{
+			Snackbar.Add("Unable to load any movies. Please try again later.", Severity.Error);
+			return new List<Movie>();
+		}
 
-		return movies;
+		return result.Data?.Results ?? new List<Movie>();
 	}
 
 	private async Task OnSortByChanged(string sortBy)

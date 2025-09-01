@@ -24,6 +24,6 @@ builder.Services.AddMudServices(config =>
     config.SnackbarConfiguration.VisibleStateDuration = 10000;
 });
 
-builder.Services.AddScoped<IMovieApiService, MovieApiService>();
+builder.Services.AddScoped<IMovieService, MovieService>();
 
 await builder.Build().RunAsync();

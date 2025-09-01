@@ -1,46 +1,53 @@
-﻿using System.Net.Http.Json;
-using MovieFinder.Shared.Models.Movies;
-using MovieFinder.Shared.Models.Actors;
+﻿using MovieFinder.Shared.Models.Actors;
 using MovieFinder.Shared.Models.Common;
+using MovieFinder.Shared.Models.Movies;
+using MudBlazor;
+using System.Net.Http.Json;
 
 namespace MovieFinder.Client.Services
 {
-    public interface IMovieApiService
+    public interface IMovieService
     {
-        Task<MovieDetail?> GetMovieDetailsAsync(int movieId);
+        Task<ServiceResult<MovieDetail>> GetMovieDetailsAsync(int movieId);
         Task<MovieImage?> GetMovieImagesAsync(int movieId);
         Task<List<MovieVideoItem>> GetYoutubeTrailersAsync(int movieId);
         Task<List<Genre>> GetGenresAsync();
         Task<List<Movie>> GetSearchedMoviesAsync(string searchWord);
         Task<SearchResult?> GetSimilarMoviesAsync(int movieId, int page);
-        Task<SearchResult?> GetFilteredMoviesAsync(FilterParameter parameter);
+        Task<ServiceResult<SearchResult?>> GetFilteredMoviesAsync(FilterParameter parameter);
         Task<Actor?> GetActorsForMovieAsync(int movieId);
-        Task<ActorDetail?> GetActorDetailsAsync(int actorId);
+        Task<ServiceResult<ActorDetail?>> GetActorDetailsAsync(int actorId);
     }
 
-    public class MovieApiService : IMovieApiService
+    public class MovieService : IMovieService
     {
 
         private readonly HttpClient _httpClient;
 
-        public MovieApiService(HttpClient httpClient)
+        public MovieService(HttpClient httpClient)
         {
             _httpClient = httpClient;
         }
-        // Get details about a specific movie
-        public async Task<MovieDetail?> GetMovieDetailsAsync(int movieId)
+        // Fetches all details about a specific movie
+        public async Task<ServiceResult<MovieDetail>> GetMovieDetailsAsync(int movieId)
         {
             try
             {
-                return await _httpClient.GetFromJsonAsync<MovieDetail?>($"movies/{movieId}");
+                var movie = await _httpClient.GetFromJsonAsync<MovieDetail?>($"movies/{movieId}");
+                return new ServiceResult<MovieDetail>
+                {
+                    Success = movie != null,
+                    Data = movie
+                };
             }
+
             catch
             {
-                return null;
+                return new ServiceResult<MovieDetail> { Success = false };
             }
         }
 
-        // Get all images for a movie
+        // Fetches all images for a movie
         public async Task<MovieImage?> GetMovieImagesAsync(int movieId)
         {
             try
@@ -53,7 +60,7 @@ namespace MovieFinder.Client.Services
             }
         }
 
-        // Get all YouTube trailers for a movie
+        // Fetches all YouTube trailers for a movie
         public async Task<List<MovieVideoItem>> GetYoutubeTrailersAsync(int movieId)
         {
             try
@@ -67,7 +74,7 @@ namespace MovieFinder.Client.Services
             }
         }
 
-        // Get all genres
+        // Fetches all genres
         public async Task<List<Genre>> GetGenresAsync()
         {
             try
@@ -81,7 +88,7 @@ namespace MovieFinder.Client.Services
             }
         }
 
-        // Search for movies by keyword
+        // Fetches movies by keywords
         public async Task<List<Movie>> GetSearchedMoviesAsync(string searchWord)
         {
             try
@@ -95,7 +102,7 @@ namespace MovieFinder.Client.Services
             }
         }
 
-        // Get similar movies
+        // Fetches similar movies
         public async Task<SearchResult?> GetSimilarMoviesAsync(int movieId, int page)
         {
             try
@@ -108,21 +115,32 @@ namespace MovieFinder.Client.Services
             }
         }
 
-        // Get filtered movies (POST request)
-        public async Task<SearchResult?> GetFilteredMoviesAsync(FilterParameter parameter)
+        // Fetches filtered movies and wraps the result in a ServiceResult indicating success or failure
+        public async Task<ServiceResult<SearchResult?>> GetFilteredMoviesAsync(FilterParameter parameter)
         {
             try
             {
                 var response = await _httpClient.PostAsJsonAsync("movies/filter", parameter);
-                return await response.Content.ReadFromJsonAsync<SearchResult?>();
+
+                var result = await response.Content.ReadFromJsonAsync<SearchResult?>();
+                return new ServiceResult<SearchResult?>
+                {
+                    Success = result != null,
+                    Data = result
+                };
             }
             catch
             {
-                return null;
+                return new ServiceResult<SearchResult?>
+                {
+                    Success = false,
+                    Data = null
+                };
             }
         }
 
-        // Get list of actors in a movie
+
+        // Fetches list of actors in a movie
         public async Task<Actor?> GetActorsForMovieAsync(int movieId)
         {
             try
@@ -135,16 +153,25 @@ namespace MovieFinder.Client.Services
             }
         }
 
-        // Get details about a specific actor
-        public async Task<ActorDetail?> GetActorDetailsAsync(int actorId)
+        // Fetches details for a specific actor and wraps the result in a ServiceResult indicating success or failure
+        public async Task<ServiceResult<ActorDetail?>> GetActorDetailsAsync(int actorId)
         {
             try
             {
-                return await _httpClient.GetFromJsonAsync<ActorDetail?>($"actors/{actorId}");
+                var data = await _httpClient.GetFromJsonAsync<ActorDetail?>($"actors/{actorId}");
+                return new ServiceResult<ActorDetail?>
+                {
+                    Success = data != null,
+                    Data = data
+                };
             }
             catch
             {
-                return null;
+                return new ServiceResult<ActorDetail?>
+                {
+                    Success = false,
+                    Data = null
+                };
             }
         }
     }
