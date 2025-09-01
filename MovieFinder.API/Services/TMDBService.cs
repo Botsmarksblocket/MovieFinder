@@ -1,19 +1,19 @@
 ﻿using Microsoft.AspNetCore.WebUtilities;
-using System.Globalization;
 using MovieFinder.Shared.Models.Actors;
-using MovieFinder.Shared.Models.Movies;
 using MovieFinder.Shared.Models.Common;
+using MovieFinder.Shared.Models.Movies;
+using MovieFinder.Shared.Result;
+using System.Globalization;
 using System.Net.Http.Json;
+using System.Text.Json;
 using static System.Net.WebRequestMethods;
 
 namespace MovieFinder.API.Services
 {
-    //Service which calls TMDB API to retrieve movie genres, list of filtered movies and specific movies
-
     public interface ITMDBService
     {
         Task<MovieDetail> GetMovieDetailsAsync(int movieId);
-        Task<MovieImage> GetMovieImagesAsync(int movieId);
+        Task<Result<MovieImage>> GetMovieImagesAsync(int movieId);
         Task<List<MovieVideoItem>> GetYoutubeTrailersAsync(int movieId);
         Task<List<Genre>> GetGenresAsync();
         Task<List<Movie>> GetSearchedMoviesAsync(string searchWord);
@@ -50,7 +50,7 @@ namespace MovieFinder.API.Services
         }
 
         //Returns all images from a movie
-        public async Task<MovieImage> GetMovieImagesAsync(int movieId)
+        public async Task<Result<MovieImage>> GetMovieImagesAsync(int movieId)
         {
             var baseUrl = $"https://api.themoviedb.org/3/movie/{movieId}/images";
 
@@ -60,8 +60,32 @@ namespace MovieFinder.API.Services
             };
 
             var url = QueryHelpers.AddQueryString(baseUrl, queryParameters);
-            var response = await _httpClient.GetFromJsonAsync<MovieImage>(url);
-            return response;
+
+            try
+            {
+                var response = await _httpClient.GetAsync(url);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    return Result<MovieImage>.Fail("Failed to fetch images from TMDB");
+                }
+
+                var result = await response.Content.ReadFromJsonAsync<MovieImage>();
+
+                return result is not null
+                    ? Result<MovieImage>.Ok(result)
+                    : Result<MovieImage>.Fail("No data returned from TMDB");
+            }
+            catch (HttpRequestException)
+            {
+                // network issues
+                return Result<MovieImage>.Fail("Could not reach TMDB");
+            }
+            catch (JsonException)
+            {
+                // unexpected schema
+                return Result<MovieImage>.Fail("Invalid response from TMDB");
+            }
         }
 
         //Returns all videos from a movie
