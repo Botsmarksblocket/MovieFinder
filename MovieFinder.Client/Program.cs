@@ -11,10 +11,11 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 
 builder.Services.AddMudServices();
 
-//TODO: Update for production
+var backendUrl = Environment.GetEnvironmentVariable("API_BASE_URL") ?? "https://localhost:7282/api/v1/"; 
+
 builder.Services.AddScoped(sp => new HttpClient
 {
-    BaseAddress = new Uri("https://localhost:7282/api/v1/")
+    BaseAddress = new Uri(backendUrl)
 });
 
 builder.Services.AddMudServices(config =>
