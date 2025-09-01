@@ -16,90 +16,99 @@
 			StartIcon="@Icons.Material.Filled.ArrowCircleUp" />
 </MudScrollToTop>
 
-<MudPaper Class="d-flex justify-center" Elevation="0">
-	<MudPaper Width="75%" Style="min-height: 100vh;" Elevation="0" Class="mt-6">
-		<MudGrid>
-			<MudItem xs="12" md="6">
-				<MudSelect MultiSelectionTextFunc="@(new Func<List<string>, string>(GetMultiSelectionText))"
-						   T="int"
-						   Clearable="true"
-						   Label="Genres"
-						   MultiSelection="true"
-						   Variant="Variant.Outlined"
-						   SelectedValuesChanged="OnGenreSelectionChanged">
-					@foreach (var genre in _genres)
-					{
-						<MudSelectItem Value="@genre.Id">@genre.Name</MudSelectItem>
-					}
-				</MudSelect>
-			</MudItem>
+@if (_isLoading)
+{
+	<div class="d-flex justify-center align-center" style="height: 100vh;">
+		<MudProgressCircular Color="Color.Primary" Rounded="true" Style="height:100px;width:100px;" Indeterminate="true" />
+	</div>
+}
+else
+{
+	<MudPaper Class="d-flex justify-center" Elevation="0">
+		<MudPaper Width="75%" Style="min-height: 100vh;" Elevation="0" Class="mt-6">
+			<MudGrid>
+				<MudItem xs="12" md="6">
+					<MudSelect MultiSelectionTextFunc="@(new Func<List<string>, string>(GetMultiSelectionText))"
+							   T="int"
+							   Clearable="true"
+							   Label="Genres"
+							   MultiSelection="true"
+							   Variant="Variant.Outlined"
+							   SelectedValuesChanged="OnGenreSelectionChanged">
+						@foreach (var genre in _genres)
+						{
+							<MudSelectItem Value="@genre.Id">@genre.Name</MudSelectItem>
+						}
+					</MudSelect>
+				</MudItem>
 
-			<MudItem xs="12" md="6">
-				<MudSelect T="int"
-						   Value="@_parameters.ReleaseYear"
-						   ValueChanged="OnReleaseYearChanged"
-						   Label="Release year"
-						   Variant="Variant.Outlined">
+				<MudItem xs="12" md="6">
+					<MudSelect T="int"
+							   Value="@_parameters.ReleaseYear"
+							   ValueChanged="OnReleaseYearChanged"
+							   Label="Release year"
+							   Variant="Variant.Outlined">
 
-					<MudSelectItem Value="0">None</MudSelectItem>
-					@for (int i = DateTime.Now.Year; i > 1900; i--)
-					{
-						var localVariable = i;
-						<MudSelectItem Value="@i">
-							@localVariable
-						</MudSelectItem>
-					}
-				</MudSelect>
-			</MudItem>
-			<MudItem xs="12" md="6">
-				<MudSelect T="string"
-						   Value="@_parameters.SortBy"
-						   ValueChanged="OnSortByChanged"
-						   Label="Sort by"
-						   Variant="Variant.Outlined">
-					<MudSelectItem Value="@("None")">None</MudSelectItem>
-					<MudSelectItem Value="@("vote_count.desc")">Most votes</MudSelectItem>
-					<MudSelectItem Value="@("vote_count.asc")">Least votes</MudSelectItem>
-					<MudSelectItem Value="@("vote_average.desc")">Highest rating</MudSelectItem>
-					<MudSelectItem Value="@("vote_average.asc")">Lowest rating</MudSelectItem>
-				</MudSelect>
-			</MudItem>
+						<MudSelectItem Value="0">None</MudSelectItem>
+						@for (int i = DateTime.Now.Year; i > 1900; i--)
+						{
+							var localVariable = i;
+							<MudSelectItem Value="@i">
+								@localVariable
+							</MudSelectItem>
+						}
+					</MudSelect>
+				</MudItem>
+				<MudItem xs="12" md="6">
+					<MudSelect T="string"
+							   Value="@_parameters.SortBy"
+							   ValueChanged="OnSortByChanged"
+							   Label="Sort by"
+							   Variant="Variant.Outlined">
+						<MudSelectItem Value="@("None")">None</MudSelectItem>
+						<MudSelectItem Value="@("vote_count.desc")">Most votes</MudSelectItem>
+						<MudSelectItem Value="@("vote_count.asc")">Least votes</MudSelectItem>
+						<MudSelectItem Value="@("vote_average.desc")">Highest rating</MudSelectItem>
+						<MudSelectItem Value="@("vote_average.asc")">Lowest rating</MudSelectItem>
+					</MudSelect>
+				</MudItem>
 
-			<MudItem xs="12" md="3">
-				<MudSlider T="double"
-						   Value="@_parameters.MinimumRating"
-						   ValueChanged="OnMinimumRatingChanged"
-						   Min="0"
-						   Max="10"
-						   Step="0.1"
-						   Immediate="false"
-						   Size="Size.Medium">
-					Minimum rating: @_parameters.MinimumRating.ToString()
-				</MudSlider>
-			</MudItem>
+				<MudItem xs="12" md="3">
+					<MudSlider T="double"
+							   Value="@_parameters.MinimumRating"
+							   ValueChanged="OnMinimumRatingChanged"
+							   Min="0"
+							   Max="10"
+							   Step="0.1"
+							   Immediate="false"
+							   Size="Size.Medium">
+						Minimum rating: @_parameters.MinimumRating.ToString()
+					</MudSlider>
+				</MudItem>
 
-			<MudItem xs="12" md="3">
-				<MudSlider T="int"
-						   Value="@_parameters.MinimumVotes"
-						   ValueChanged="OnMinimumVotesChanged"
-						   Min="0"
-						   Max="1000"
-						   Step="1"
-						   Immediate="false"
-						   Size="Size.Medium">
-					Minimum votes: @_parameters.MinimumVotes.ToString()
-				</MudSlider>
-			</MudItem>
-		</MudGrid>
+				<MudItem xs="12" md="3">
+					<MudSlider T="int"
+							   Value="@_parameters.MinimumVotes"
+							   ValueChanged="OnMinimumVotesChanged"
+							   Min="0"
+							   Max="1000"
+							   Step="1"
+							   Immediate="false"
+							   Size="Size.Medium">
+						Minimum votes: @_parameters.MinimumVotes.ToString()
+					</MudSlider>
+				</MudItem>
+			</MudGrid>
 
-		<InfiniteScroll @ref="_infiniteScroll"
-						TItem="Movie"
-						LoadData="LoadMoviesAsync"
-						ChildContent="MovieTemplate">
-		</InfiniteScroll>
+			<InfiniteScroll @ref="_infiniteScroll"
+							TItem="Movie"
+							LoadData="LoadMoviesAsync"
+							ChildContent="MovieTemplate">
+			</InfiniteScroll>
 
+		</MudPaper>
 	</MudPaper>
-</MudPaper>
+}
 
 @code {
 	private List<Movie> _allMovies = new();
@@ -107,27 +116,34 @@
 	private SlugHelper _slugHelper = new();
 	private FilterParameter _parameters = new();
 	private InfiniteScroll<Movie> _infiniteScroll;
+	private bool _isLoading;
+
 
 	//Loads genres, trending movies and invokes JS upon page initialization
 	protected override async Task OnInitializedAsync()
 	{
-		_genres = await TMDB.GetGenresAsync();
+		_isLoading = true;
+		_genres = await TMDB.GetGenresAsync() ?? new List<Genre>();
+		_isLoading = false;
 	}
 
 	//Renderfragment which gets passed down into the InfiniteScroll component to display and load more movies
 	private RenderFragment<IEnumerable<Movie>> MovieTemplate => movies =>
 	@<MudGrid>
-			@foreach (var movie in movies)
-		{
-		<MovieComponent @key=movie.Id Movie="movie" FadeIn="fade-in" />
-		}
-	</MudGrid>;
+@foreach (var movie in movies)
+	{
+	<MovieComponent @key=movie.Id Movie="movie" FadeIn="fade-in" />
+	}
+</MudGrid>;
 
 	private async Task<IEnumerable<Movie>> LoadMoviesAsync(int page)
 	{
 		_parameters.Page = page;
 		var result = await TMDB.GetFilteredMoviesAsync(_parameters);
-		return result.Results;
+
+		var movies = result?.Results ?? new List<Movie>();
+
+		return movies;
 	}
 
 	private async Task OnSortByChanged(string sortBy)
