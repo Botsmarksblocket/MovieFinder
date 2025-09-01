@@ -104,8 +104,8 @@ else
 											FixedContent
 											Outlined="true"
 											Style="max-width-full">
-								<MudToggleItem Value="@("ActorPhotos")" Text="Photos" />
-								<MudToggleItem Value="@("ActedIn")" Text="Acted in" />
+								<MudToggleItem Value="@("ActedIn")" Text="Photos" />
+								<MudToggleItem Value="@("ActorPhotos")" Text="Acted in" />
 							</MudToggleGroup>
 						</MudStack>
 					</MudStack>
@@ -121,7 +121,27 @@ else
 									   Variant="Variant.Text" />
 					</div>
 
-					@if (_activeTab == "ActorPhotos")
+					@if (_activeTab == "ActedIn")
+					{
+						@if (!_actor.MovieCredits.Cast.Any())
+						{
+							<div class="d-flex justify-center align-center flex-column">
+								<MudIcon Icon="@Icons.Material.Outlined.SearchOff" Size="Size.Large" Color="Color.Error" Title="Not found" />
+								<MudText>No movies found</MudText>
+							</div>
+						}
+
+						else
+						{
+							<MudGrid Spacing="6">
+								@foreach (var movie in GetPage(_actor.MovieCredits.Cast))
+								{
+									<MovieComponent @key="movie.Id" Movie="movie" />
+								}
+							</MudGrid>
+						}
+					}
+					else if (_activeTab == "ActorPhotos")
 					{
 						@if (!_actor.Images.Profiles.Any())
 						{
@@ -142,27 +162,6 @@ else
 												  FallbackSrc="Images/notfound.png"
 												  @onclick="() => OpenDialogAsync(actor.FilePath)" />
 									</MudItem>
-								}
-							</MudGrid>
-						}
-					}
-
-					else if (_activeTab == "ActedIn")
-					{
-						@if (!_actor.MovieCredits.Cast.Any())
-						{
-							<div class="d-flex justify-center align-center flex-column">
-								<MudIcon Icon="@Icons.Material.Outlined.SearchOff" Size="Size.Large" Color="Color.Error" Title="Not found" />
-								<MudText>No movies found</MudText>
-							</div>
-						}
-
-						else
-						{
-							<MudGrid Spacing="6">
-								@foreach (var movie in GetPage(_actor.MovieCredits.Cast))
-								{
-									<MovieComponent @key="movie.Id" Movie="movie" />
 								}
 							</MudGrid>
 						}
@@ -234,7 +233,7 @@ else
 		{
 			_actor = result.Data;
 		}
-		
+
 		_pageCount = CalculateTotalPages();
 
 		_isLoading = false;
@@ -242,7 +241,7 @@ else
 
 	private int _selected = 1;
 	private int _pageCount;
-	private string _activeTab = "ActorPhotos";
+	private string _activeTab = "ActedIn";
 
 	private void OnTabChanged(string newValue)
 	{
