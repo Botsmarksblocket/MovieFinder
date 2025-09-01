@@ -6,8 +6,9 @@
 @using MudBlazor.Services
 @using Services
 @using Slugify
+@inject ISnackbar Snackbar
 @inject IDialogService DialogService
-@inject IMovieApiService TMDB
+@inject IMovieService TMDB
 @page "/movie/{id:int}/{slug}"
 
 <PageTitle>@_movie.Title</PageTitle>
@@ -317,10 +318,29 @@ else
 		_hasMoviesLoaded = false;
 		_loadedMovies.Clear();
 
-		_movie = await TMDB.GetMovieDetailsAsync(Id);
-		_movieImages = await TMDB.GetMovieImagesAsync(Id);
-		_youtubeTrailers = await TMDB.GetYoutubeTrailersAsync(Id);
-		_actors = await TMDB.GetActorsForMovieAsync(Id);
+		var result = await TMDB.GetMovieDetailsAsync(Id);
+		if (!result.Success)
+		{
+			Snackbar.Add("Unable to retrieve movie details. Please try again later.", Severity.Error);
+			return;
+		}
+
+		_movie = result.Data!;
+
+		var imagesResult = await TMDB.GetMovieImagesAsync(Id);
+		_movieImages = imagesResult ?? new MovieImage
+		{
+			Posters = new List<MovieImages>()
+		};
+
+		_youtubeTrailers = await TMDB.GetYoutubeTrailersAsync(Id) ?? new List<MovieVideoItem>(); 
+		
+		var actorsResult = await TMDB.GetActorsForMovieAsync(Id);
+		_actors = actorsResult ?? new Actor
+		{
+			MovieCast = new List<Cast>()
+		};
+
 		_tabPageCount = CalculateTotalTabPages();
 
 		_isLoading = false;
@@ -418,6 +438,11 @@ else
 	private async Task<IEnumerable<Movie>> LoadMoviesAsync(int page)
 	{
 		var result = await TMDB.GetSimilarMoviesAsync(Id, page);
+
+		if (result == null)
+		{
+			return new List<Movie>();
+		}
 
 		var newMovies = result.Results
 								.Where(m => !_loadedMovies.Any(lm => lm.Id == m.Id))

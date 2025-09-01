@@ -7,7 +7,8 @@
 @using MovieFinder.Shared.Models.Actors
 @using MovieFinder.Shared.Models.Common
 @using MovieFinder.Client.Components
-@inject IMovieApiService TMDB
+@inject ISnackbar Snackbar
+@inject IMovieService TMDB
 @page "/actor/{id:int}/{slug}"
 
 <PageTitle>@_actor.Name</PageTitle>
@@ -209,7 +210,31 @@ else
 	{
 		_isLoading = true;
 
-		_actor = await TMDB.GetActorDetailsAsync(Id);
+		var result = await TMDB.GetActorDetailsAsync(Id);
+
+		if (!result.Success || result.Data == null)
+		{
+			Snackbar.Add("Unable to retrieve actor details. Please try again later.", Severity.Error);
+			_actor = new ActorDetail
+			{
+				MovieCredits = new MovieCredit
+				{
+					Cast = new List<Movie>(),
+				},
+				Images = new ActorImages
+				{
+					Profiles = new List<ActorImage>()
+				},
+				Biography = "",
+				Name = "Unknown Actor",
+				ProfilePicture = ""
+			};
+		}
+		else
+		{
+			_actor = result.Data;
+		}
+		
 		_pageCount = CalculateTotalPages();
 
 		_isLoading = false;
