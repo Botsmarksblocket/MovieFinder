@@ -1,7 +1,6 @@
 ﻿using MovieFinder.Shared.Models.Actors;
 using MovieFinder.Shared.Models.Common;
 using MovieFinder.Shared.Models.Movies;
-using MudBlazor;
 using System.Net.Http.Json;
 
 namespace MovieFinder.Client.Services
