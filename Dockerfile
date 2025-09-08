@@ -6,6 +6,7 @@ WORKDIR /src
 COPY *.sln .
 COPY MovieFinder.API/*.csproj ./MovieFinder.API/
 COPY MovieFinder.Shared/*.csproj ./MovieFinder.Shared/
+COPY MovieFinder.Client/*.csproj ./MovieFinder.Client/
 RUN dotnet restore
 
 # Copy everything else and build
