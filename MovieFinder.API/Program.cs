@@ -38,10 +38,19 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: MyAllowSpecificOrigins,
                       policy =>
                       {
-                          policy.WithOrigins("https://localhost:7090")
+                          policy.WithOrigins("https://moviefinderapp.pages.dev", "https://localhost:7090")
                                  .AllowAnyHeader()
                                  .AllowAnyMethod();
                       });
+});
+
+var movieDbApiKey = Environment.GetEnvironmentVariable("MOVIEDB_API_KEY");
+builder.Configuration["MovieDb:ApiKey"] = movieDbApiKey;
+
+// Configure HttpClient for TMDBService
+builder.Services.AddHttpClient<ITMDBService, TMDBService>((sp, client) =>
+{
+    client.BaseAddress = new Uri("https://api.themoviedb.org/3/");
 });
 
 var app = builder.Build();
@@ -64,5 +73,3 @@ app.RegisterGenreEndpoints();
 app.UseHttpsRedirection();
 
 app.Run();
-
-
