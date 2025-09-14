@@ -66,6 +66,14 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.MapGet("/api/v1/debug/apikey", () =>
+{
+    var apiKey = Environment.GetEnvironmentVariable("MOVIEDB_API_KEY");
+    return string.IsNullOrWhiteSpace(apiKey)
+        ? "API key not loaded"
+        : "API key loaded";
+});
+
 app.RegisterMovieEndpoints();
 app.RegisterActorEndpoints();
 app.RegisterGenreEndpoints();
