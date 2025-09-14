@@ -45,7 +45,11 @@ builder.Services.AddCors(options =>
 });
 
 var movieDbApiKey = Environment.GetEnvironmentVariable("MOVIEDB_API_KEY");
-builder.Configuration["TMDB:ApiKey"] = movieDbApiKey;
+if (!string.IsNullOrWhiteSpace(movieDbApiKey))
+{
+    builder.Configuration["TMDB:ApiKey"] = movieDbApiKey;
+}
+
 
 // Configure HttpClient for TMDBService
 builder.Services.AddHttpClient<ITMDBService, TMDBService>((sp, client) =>
@@ -65,6 +69,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.MapGet("/ping", () => Results.Ok("pong"));
 
 app.RegisterMovieEndpoints();
 app.RegisterActorEndpoints();

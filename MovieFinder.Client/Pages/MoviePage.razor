@@ -42,7 +42,7 @@ else
 						<MudText Class="width-xs" Typo="Typo.h5">@_movie.Tagline</MudText>
 						<MudText Class="width-xs" Typo="Typo.body1">@_movie.Description</MudText>
 					</MudStack>
-					<MudStack Row="true"
+					<MudStack class="center-xs" Row="true"
 							  Wrap="Wrap.Wrap">
 						@foreach (var genre in _movie.Genres)
 						{
@@ -81,7 +81,7 @@ else
 					<div class="color-wrapper small-font-xs">
 						<MudStack Spacing="6"
 								  Row="true"
-								  Class="justify-md-space-between justify-xs-space-around mt-4 ">
+								  Class="justify-md-space-between justify-xs-space-around mt-4 center-xs">
 							<MudStack Row="false" Spacing="0" Class="flex-equal">
 								<MudText Typo="Typo.h5"><b>Release date</b></MudText>
 								<MudText Typo="Typo.h5">@_movie.ReleaseDate</MudText>
