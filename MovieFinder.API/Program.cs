@@ -42,6 +42,13 @@ builder.Services.AddCors(options =>
                                  .AllowAnyHeader()
                                  .AllowAnyMethod();
                       });
+    options.AddPolicy("OpenPolicy",
+                  policy =>
+                  {
+                      policy.AllowAnyOrigin()
+                            .AllowAnyHeader()
+                            .AllowAnyMethod();
+                  });
 });
 
 var movieDbApiKey = Environment.GetEnvironmentVariable("MOVIEDB_API_KEY");
@@ -70,7 +77,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.MapGet("/ping", () => Results.Ok("pong"));
+app.MapGet("/ping", () => Results.Ok("pong"))
+   .AllowAnonymous()
+   .RequireCors("OpenPolicy")
+   .WithName("Ping");
 
 app.RegisterMovieEndpoints();
 app.RegisterActorEndpoints();
