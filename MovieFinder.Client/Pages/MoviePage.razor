@@ -38,15 +38,15 @@ else
 				</MudItem>
 				<MudItem Class="center-xs" xs="12" md="7" lg="8">
 					<MudStack Class="center-xs mt-6 mx-2" Style="color: rgba(0,0,0,0.85);">
-						<MudText Class="center-xs" Typo="Typo.h4">@(_movie.Title?.ToUpper())</MudText>
-						<MudText Class="width-xs" Typo="Typo.h5">@_movie.Tagline</MudText>
+						<MudText Class="width-xs" Typo="Typo.h4">@(_movie.Title?.ToUpper())</MudText>
+						<MudText Class="width-xs" Typo="Typo.h6">@_movie.Tagline</MudText>
 						<MudText Class="width-xs" Typo="Typo.body1">@_movie.Description</MudText>
 					</MudStack>
 					<MudStack class="center-xs" Row="true"
 							  Wrap="Wrap.Wrap">
 						@foreach (var genre in _movie.Genres)
 						{
-							<MudChip Class="my-4 mx-2" T="string" Color="Color.Primary">@genre.Name</MudChip>
+							<MudChip Class="my-4 mx-2" T="string" Color="Color.Dark">@genre.Name</MudChip>
 						}
 					</MudStack>
 
@@ -167,28 +167,27 @@ else
 				}
 			</MudGrid>
 
-			<div class="d-flex justify-center mt-8 mx-4">
+			<div class="d-flex justify-center mt-8">
 				<MudPaper Class="width-lg width-xs" Style="height: 100%; width: 100%; background-color: transparent;" Elevation="0">
 					<div class="d-flex justify-center">
-					<MudStack Class="d-flex justify-center" Style="max-width: 200px;">
-
-						<MudToggleGroup T="string"
-										Delimiters="true"
-										Size=Size.Large
-										Value="_activeTab"
-										ValueChanged="OnTabChanged"
-										SelectionMode="SelectionMode.SingleSelection"
-										Color="Color.Primary"
-										FixedContent
-										Outlined="true"
-										Class="mud-width-full">
-							<MudToggleItem Value="@("Posters")" Text="Posters" />
-							<MudToggleItem Value="@("Trailers")" Text="Videos" />
-						</MudToggleGroup>
-					</MudStack>
+						<MudStack Style="min-width: 280px; max-width:360;">
+							<MudToggleGroup T="string"
+											Delimiters="true"
+											Size=Size.Medium
+											Value="_activeTab"
+											ValueChanged="OnTabChanged"
+											SelectionMode="SelectionMode.SingleSelection"
+											Color="Color.Primary"
+											FixedContent
+											Outlined="true"
+											Class="mud-width-full">
+								<MudToggleItem Value="@("Posters")" Text="Posters" />
+								<MudToggleItem Value="@("Trailers")" Text="Videos" />
+							</MudToggleGroup>
+						</MudStack>
 					</div>
 
-					<MudDivider DividerType="DividerType.Middle" Class="mt-4 mb-2"></MudDivider>
+					<MudDivider DividerType="DividerType.Middle" Class="mt-8 mb-2"></MudDivider>
 
 					@if (_tabPageCount > 1)
 					{
