@@ -169,23 +169,24 @@ else
 
 			<div class="d-flex justify-center mt-8 mx-4">
 				<MudPaper Class="width-lg width-xs" Style="height: 100%; width: 100%; background-color: transparent;" Elevation="0">
-					<MudStack Class="center-xs">
-						<MudStack Style="max-width: 200px;">
-							<MudToggleGroup T="string"
-											Delimiters="true"
-											Size=Size.Small
-											Value="_activeTab"
-											ValueChanged="OnTabChanged"
-											SelectionMode="SelectionMode.SingleSelection"
-											Color="Color.Primary"
-											FixedContent
-											Outlined="true"
-											Class="mud-width-full">
-								<MudToggleItem Value="@("Posters")" Text="Posters" />
-								<MudToggleItem Value="@("Trailers")" Text="Videos" />
-							</MudToggleGroup>
-						</MudStack>
+					<div class="d-flex justify-center">
+					<MudStack Class="d-flex justify-center" Style="max-width: 200px;">
+
+						<MudToggleGroup T="string"
+										Delimiters="true"
+										Size=Size.Large
+										Value="_activeTab"
+										ValueChanged="OnTabChanged"
+										SelectionMode="SelectionMode.SingleSelection"
+										Color="Color.Primary"
+										FixedContent
+										Outlined="true"
+										Class="mud-width-full">
+							<MudToggleItem Value="@("Posters")" Text="Posters" />
+							<MudToggleItem Value="@("Trailers")" Text="Videos" />
+						</MudToggleGroup>
 					</MudStack>
+					</div>
 
 					<MudDivider DividerType="DividerType.Middle" Class="mt-4 mb-2"></MudDivider>
 
@@ -333,8 +334,8 @@ else
 			Posters = new List<MovieImages>()
 		};
 
-		_youtubeTrailers = await TMDB.GetYoutubeTrailersAsync(Id) ?? new List<MovieVideoItem>(); 
-		
+		_youtubeTrailers = await TMDB.GetYoutubeTrailersAsync(Id) ?? new List<MovieVideoItem>();
+
 		var actorsResult = await TMDB.GetActorsForMovieAsync(Id);
 		_actors = actorsResult ?? new Actor
 		{
