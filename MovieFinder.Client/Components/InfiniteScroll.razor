@@ -10,6 +10,7 @@
 	[Parameter] public int MaxPages { get; set; } = 500;
 
 	private List<TItem> Items = new();
+	private HashSet<string> _itemKeys = new(); // track unique items to avoid duplicates
 	private int _currentPage = 0;
 	private bool _isLoading = false;
 
@@ -31,13 +32,37 @@
 		_currentPage++;
 
 		var newItems = await LoadData(_currentPage);
+
 		if (newItems != null)
 		{
-			Items.AddRange(newItems);
-			StateHasChanged();
+			// Deduplicate by a stable key (fallback: object hash)
+			var uniqueNewItems = newItems
+				.Where(item => _itemKeys.Add(GetItemKey(item)))
+				.ToList();
+
+			if (uniqueNewItems.Count > 0)
+			{
+				Items.AddRange(uniqueNewItems);
+				StateHasChanged();
+			}
 		}
 
 		_isLoading = false;
+	}
+
+	// Resolve a unique key for each item
+	private string GetItemKey(TItem item)
+	{
+		// If Movie has Id property, use it
+		var idProp = typeof(TItem).GetProperty("Id");
+		if (idProp != null)
+		{
+			var idVal = idProp.GetValue(item);
+			return idVal?.ToString() ?? item.GetHashCode().ToString();
+		}
+
+		// Fallback to hashcode if no Id property exists
+		return item.GetHashCode().ToString();
 	}
 
 	//Resets the loaded items and current page, then loads the first page of data async
