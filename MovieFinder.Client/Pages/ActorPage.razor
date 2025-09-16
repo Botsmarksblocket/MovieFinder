@@ -91,12 +91,12 @@ else
 			</MudGrid>
 
 			<div class="d-flex justify-center mt-8 mx-4">
-				<MudPaper Class="width-lg width-xs" Style="height: 100%; width: 100%; background-color:white;" Elevation="0">
-					<MudStack Class="center-xs">
-						<MudStack Style="max-width: 200px">
+				<MudPaper Class="width-lg width-xs" Style="height: 100%; width: 100%; background-color:transparent;" Elevation="0">
+					<div class="d-flex justify-center">
+						<MudStack Style="min-width: 280px; max-width:360;">
 							<MudToggleGroup T="string"
 											Delimiters="true"
-											Size=Size.Small
+											Size=Size.Medium
 											Value="_activeTab"
 											ValueChanged="OnTabChanged"
 											SelectionMode="SelectionMode.SingleSelection"
@@ -108,7 +108,7 @@ else
 								<MudToggleItem Value="@("ActorPhotos")" Text="Photos" />
 							</MudToggleGroup>
 						</MudStack>
-					</MudStack>
+					</div>
 
 					<MudDivider DividerType="DividerType.Middle" Class="mt-4 mb-2"></MudDivider>
 
