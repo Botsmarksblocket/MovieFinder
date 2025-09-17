@@ -3,14 +3,15 @@ FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /src
 
 # Copy project files and restore dependencies
-COPY *.sln .
 COPY MovieFinder.API/*.csproj ./MovieFinder.API/
 COPY MovieFinder.Shared/*.csproj ./MovieFinder.Shared/
-COPY MovieFinder.Client/*.csproj ./MovieFinder.Client/
-RUN dotnet restore
+RUN dotnet restore ./MovieFinder.API/MovieFinder.API.csproj
 
-# Copy everything else and build
-COPY . .
+# Copy only API + Shared sources
+COPY MovieFinder.API ./MovieFinder.API
+COPY MovieFinder.Shared ./MovieFinder.Shared
+
+# Publish API
 WORKDIR /src/MovieFinder.API
 RUN dotnet publish -c Release -o /app/publish
 
