@@ -38,7 +38,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: MyAllowSpecificOrigins,
                       policy =>
                       {
-                          policy.WithOrigins("https://moviefinderapp.pages.dev", "https://localhost:7090")
+                          policy.WithOrigins("https://moviefinderapp.com", "https://localhost:7090")
                                  .AllowAnyHeader()
                                  .AllowAnyMethod();
                       });
