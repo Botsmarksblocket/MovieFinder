@@ -53,22 +53,24 @@
 	// Resolve a unique key for each item
 	private string GetItemKey(TItem item)
 	{
-		// If Movie has Id property, use it
 		var idProp = typeof(TItem).GetProperty("Id");
 		if (idProp != null)
 		{
 			var idVal = idProp.GetValue(item);
-			return idVal?.ToString() ?? item.GetHashCode().ToString();
+			if (idVal != null)
+			
+			return idVal.ToString();
 		}
 
-		// Fallback to hashcode if no Id property exists
-		return item.GetHashCode().ToString();
+		throw new InvalidOperationException(
+			$"TItem of type {typeof(TItem).Name} must have a stable Id property for unique key tracking.");
 	}
 
 	//Resets the loaded items and current page, then loads the first page of data async
 	public async Task ResetAsync()
 	{
 		Items.Clear();
+		_itemKeys.Clear();
 		_currentPage = 0;
 		await LoadMoreAsync();
 	}
