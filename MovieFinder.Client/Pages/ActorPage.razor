@@ -214,6 +214,8 @@ else
 		if (!result.Success || result.Data == null)
 		{
 			Snackbar.Add("Unable to retrieve actor details. Please try again later.", Severity.Error);
+
+			//Create an empty actor object
 			_actor = new ActorDetail
 			{
 				MovieCredits = new MovieCredit
@@ -232,6 +234,12 @@ else
 		else
 		{
 			_actor = result.Data;
+
+			//Remove any duplicates
+			_actor.MovieCredits.Cast = _actor.MovieCredits.Cast
+							.GroupBy(m => m.Id)
+							.Select(g => g.First())
+							.ToList();
 		}
 
 		_pageCount = CalculateTotalPages();
