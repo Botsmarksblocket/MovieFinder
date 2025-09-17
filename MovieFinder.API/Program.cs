@@ -38,17 +38,13 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: MyAllowSpecificOrigins,
                       policy =>
                       {
-                          policy.WithOrigins("https://moviefinderapp.com", "https://localhost:7090")
+                          policy.WithOrigins(
+                               "https://moviefinderapp.com",
+                               "https://www.moviefinderapp.com",
+                               "https://localhost:7090")
                                  .AllowAnyHeader()
                                  .AllowAnyMethod();
                       });
-    options.AddPolicy("OpenPolicy",
-                  policy =>
-                  {
-                      policy.AllowAnyOrigin()
-                            .AllowAnyHeader()
-                            .AllowAnyMethod();
-                  });
 });
 
 var movieDbApiKey = Environment.GetEnvironmentVariable("MOVIEDB_API_KEY");
@@ -78,9 +74,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.MapGet("/ping", () => Results.Ok("pong"))
-   .AllowAnonymous()
-   .RequireCors("OpenPolicy")
-   .WithName("Ping");
+   .AllowAnonymous();
 
 app.RegisterMovieEndpoints();
 app.RegisterActorEndpoints();
