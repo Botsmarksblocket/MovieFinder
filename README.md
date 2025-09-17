@@ -1,4 +1,4 @@
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-brightgreen?style=for-the-badge)](https://moviefinderapp.pages.dev/)
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-brightgreen?style=for-the-badge)](https://www.moviefinderapp.com/)
 
 ![Blazor](https://img.shields.io/badge/Blazor-512BD4?style=flat&logo=blazor&logoColor=white)
 ![MudBlazor](https://img.shields.io/badge/MudBlazor-593D88?style=flat&logo=materialdesign&logoColor=white)
@@ -33,3 +33,4 @@ The solution is organized into three projects.
 - **Features:**
   - Shared DTOs and data contracts
   - Common utilities
+
