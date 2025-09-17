@@ -180,7 +180,7 @@ namespace MovieFinder.API.Services
                 ["page"] = parameter.Page.ToString()
             };
 
-            if (parameter.ReleaseYear != 0)
+            if (parameter.ReleaseYear > 0)
             {
                 queryParameters["primary_release_year"] = parameter.ReleaseYear.ToString();
             }
@@ -190,7 +190,7 @@ namespace MovieFinder.API.Services
                 queryParameters["with_genres"] = string.Join(",", parameter.GenreIds);
             }
 
-            if (!String.IsNullOrEmpty(parameter.SortBy))
+            if (!String.IsNullOrEmpty(parameter.SortBy) && parameter.SortBy != "None")
             {
                 queryParameters["sort_by"] = parameter.SortBy;
             }
