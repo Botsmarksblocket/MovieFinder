@@ -30,7 +30,7 @@ else
 						<MudImage Objectfit="ObjectFit.Cover"
 								  Class="actor-portrait actor-portrait-actorpage portrait-offset-up"
 								  Src="@GetImageUrl("original",_actor.ProfilePicture)"
-								  FallbackSrc="Images/noprofile.png" />
+								  FallbackSrc="images/noprofile.png" />
 					</div>
 				</MudItem>
 				<MudItem xs="12" md="9">
@@ -159,7 +159,7 @@ else
 									<MudItem xs="6" md="3" lg="2" Class="center-xs">
 										<MudImage Class="image-container image rounded-lg mb-2"
 												  Src="@GetImageUrl("w780", actor.FilePath)"
-												  FallbackSrc="Images/notfound.png"
+												  FallbackSrc="images/notfound.png"
 												  @onclick="() => OpenDialogAsync(actor.FilePath)" />
 									</MudItem>
 								}

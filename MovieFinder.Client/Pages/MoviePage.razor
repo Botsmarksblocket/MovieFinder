@@ -33,7 +33,7 @@ else
 					<div class="mt-6 mx-8 center-xs">
 						<MudImage Class="movie-page-poster rounded" Src="@GetImageUrl("original", _movie.PosterPath)"
 								  Alt="Movie Poster"
-								  FallbackSrc="/Images/notfound.png" />
+								  FallbackSrc="/images/notfound.png" />
 					</div>
 				</MudItem>
 				<MudItem Class="center-xs" xs="12" md="7" lg="8">
@@ -150,7 +150,7 @@ else
 								<MudImage Objectfit="ObjectFit.Cover"
 										  Class="actor-portrait actor-portrait-moviepage"
 										  Src="@GetImageUrl("original", actor.ProfilePicture)"
-										  FallbackSrc="Images/noprofile.png" />
+										  FallbackSrc="images/noprofile.png" />
 							</NavLink>
 
 							<div class="small-font-xs-portrait">
@@ -220,7 +220,7 @@ else
 										<MudItem xs="6" md="3" lg="2" Class="center-xs">
 											<MudImage Class="image-container image rounded-lg"
 													  Src="@GetImageUrl("w780", movie.FilePath)"
-													  FallbackSrc="Images/notfound.png"
+													  FallbackSrc="images/notfound.png"
 													  @onclick="() => OpenImageDialogAsync(movie.FilePath)" />
 										</MudItem>
 									}
