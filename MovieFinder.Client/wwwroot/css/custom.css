@@ -194,6 +194,16 @@ actor-photos-actorpage {
 /***********/
 /*HOME PAGE*/
 /*********/
+
+.homepage-width {
+    width: 70%;
+}
+@media (max-width: 768px) {
+    .homepage-width {
+    width: 95%;
+    }
+}
+
 .movie-poster-container {
     position: relative;
     overflow: hidden;
