@@ -1,5 +1,3 @@
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-brightgreen?style=for-the-badge)](https://www.moviefinderapp.com/)
-
 ![Blazor](https://img.shields.io/badge/Blazor-512BD4?style=flat&logo=blazor&logoColor=white)
 ![MudBlazor](https://img.shields.io/badge/MudBlazor-593D88?style=flat&logo=materialdesign&logoColor=white)
 ![ASP.NET Core](https://img.shields.io/badge/ASP.NET%20Core-5C2D91?style=flat&logo=dotnet&logoColor=white)
@@ -33,4 +31,9 @@ The solution is organized into three projects.
 - **Features:**
   - Shared DTOs and data contracts
   - Common utilities
-
+# Images
+<img width="2535" height="1302" alt="image" src="https://github.com/user-attachments/assets/bd734299-1ca8-4b3e-aa9e-e42bf991abf4" />
+<img width="2538" height="1297" alt="image" src="https://github.com/user-attachments/assets/bfd298c2-33f5-4189-8688-edbd4f3f9a12" />
+<img width="2534" height="1297" alt="image" src="https://github.com/user-attachments/assets/abf83de0-c16e-4203-8d27-de43d63e88ec" />
+<img width="2532" height="1297" alt="image" src="https://github.com/user-attachments/assets/b3e7e1ed-9a59-4627-8b51-39033365fff9" />
+<img width="551" height="1164" alt="image" src="https://github.com/user-attachments/assets/ede579f7-13b9-4917-8846-f410e8e4de1c" />
