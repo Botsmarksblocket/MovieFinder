@@ -1,6 +1,8 @@
 ![Blazor](https://img.shields.io/badge/Blazor-512BD4?style=flat&logo=blazor&logoColor=white)
 ![MudBlazor](https://img.shields.io/badge/MudBlazor-593D88?style=flat&logo=materialdesign&logoColor=white)
 ![ASP.NET Core](https://img.shields.io/badge/ASP.NET%20Core-5C2D91?style=flat&logo=dotnet&logoColor=white)
+
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-brightgreen?style=for-the-badge)](https://www.moviefinderapp.com/)
 # MovieFinder
 
 MovieFinder is a web application built with Blazor WebAssembly and .NET 9, designed to help users search and discover movies efficiently using The Movie Database API. 
